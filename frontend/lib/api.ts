@@ -1,4 +1,16 @@
-export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://informal-rodina-bave-hub-2e898989.koyeb.app/api';
+let rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://informal-rodina-bave-hub-2e898989.koyeb.app/api';
+
+// Remove trailing slash if present
+if (rawBaseUrl.endsWith('/')) {
+  rawBaseUrl = rawBaseUrl.slice(0, -1);
+}
+
+// Ensure it ends with /api if not present
+if (!rawBaseUrl.endsWith('/api')) {
+  rawBaseUrl = `${rawBaseUrl}/api`;
+}
+
+export const BASE_URL = rawBaseUrl;
 
 export interface Category {
   id: number;
