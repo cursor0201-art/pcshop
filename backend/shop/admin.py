@@ -5,6 +5,7 @@ from .models import Category, Product, ProductCharacteristic, Order, OrderItem, 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name_ru', 'name_uz', 'created_at')
     search_fields = ('name_ru', 'name_uz')
+    prepopulated_fields = {'slug': ('name_ru',)}
 
 class ProductCharacteristicInline(admin.TabularInline):
     model = ProductCharacteristic
@@ -15,6 +16,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'name_ru', 'name_uz', 'price', 'stock', 'category')
     list_filter = ('category',)
     search_fields = ('name_ru', 'name_uz')
+    prepopulated_fields = {'slug': ('name_ru',)}
     inlines = [ProductCharacteristicInline]
 
 class OrderItemInline(admin.TabularInline):
