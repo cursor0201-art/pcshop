@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, BarChart2, ShoppingCart } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart } from '@/hooks/useCart';
+import { getProducts } from '@/lib/api';
+
 
 interface Product {
   id: number;
@@ -38,18 +40,11 @@ export default function ComparePage() {
 
       setLoading(true);
       try {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-        const ids = compareItems.join(',');
-        const res = await fetch(
-          `${supabaseUrl}/rest/v1/products?id=in.(${ids})&select=*`,
-          { headers: { apikey: supabaseKey || '' } }
-        );
-        const data = await res.json();
+        const allProducts = await getProducts();
+        const data = allProducts.filter(p => compareItems.includes(p.id));
         // Preserve order from compareItems
         const ordered = compareItems.map(id => data.find((p: Product) => p.id === id)).filter(Boolean);
-        setProducts(ordered);
+        setProducts(ordered as Product[]);
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
@@ -166,6 +161,7 @@ export default function ComparePage() {
                         name_uz: product.name_uz,
                         price: product.price,
                         image: product.images?.[0] || '',
+                        slug: product.slug,
                       })}
                       className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition-colors"
                     >

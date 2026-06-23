@@ -7,6 +7,8 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Cpu, Monitor, Headphones, Zap, Truck, Shield, Clock, ChevronRight, Star } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart } from '@/hooks/useCart';
+import { getCategories, getProducts } from '@/lib/api';
+
 
 // Stats counter component
 function StatCounter({ value, label }: { value: number; label: string }) {
@@ -205,6 +207,7 @@ function ProductCard({ product, index }: { product: any; index: number }) {
                     name_uz: product.name_uz,
                     price: product.price,
                     image: product.images?.[0] || '',
+                    slug: product.slug,
                   });
                 }}
                 className="p-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"
@@ -265,36 +268,8 @@ export default function HomePage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL || ''}/rest/v1/categories?select=*&order=created_at.asc`, {
-      headers: {
-        'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-      },
-    })
-      .then((res) => res.json())
-      .then(setCategories)
-      .catch(() => {
-        setCategories([
-          { name_ru: 'Готовые ПК', name_uz: 'Tayyor PK', slug: 'ready-pc' },
-          { name_ru: 'Процессоры', name_uz: 'Protserlar', slug: 'processors' },
-          { name_ru: 'Видеокарты', name_uz: 'Videokartalar', slug: 'videocards' },
-          { name_ru: 'Материнские платы', name_uz: 'Platalar', slug: 'motherboards' },
-          { name_ru: 'Оперативная память', name_uz: 'Operativ xotira', slug: 'ram' },
-          { name_ru: 'SSD', name_uz: 'SSD', slug: 'ssd' },
-          { name_ru: 'Мониторы', name_uz: 'Monitorlar', slug: 'monitors' },
-          { name_ru: 'Клавиатуры', name_uz: 'Klaviaturalar', slug: 'keyboards' },
-        ]);
-      });
-
-    fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL || ''}/rest/v1/products?select=*&is_featured.eq.true&limit=8`, {
-      headers: {
-        'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-      },
-    })
-      .then((res) => res.json())
-      .then(setProducts)
-      .catch(() => {
-        setProducts([]);
-      });
+    getCategories().then(setCategories);
+    getProducts({ limit: 8 }).then(setProducts);
   }, []);
 
   useEffect(() => {

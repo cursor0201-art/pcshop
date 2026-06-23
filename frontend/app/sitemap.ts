@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { getProducts } from '@/lib/api';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pcshop.uz';
@@ -58,27 +59,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }));
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    return [...staticPages, ...cityCategoryPages, ...blogPages];
-  }
-
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/products?select=slug,created_at`, {
-      headers: { 
-        'apikey': supabaseKey,
-        'Content-Type': 'application/json'
-      },
-      next: { revalidate: 3600 }
-    });
-    
-    if (!res.ok) {
-      return [...staticPages, ...cityCategoryPages, ...blogPages];
-    }
-
-    const products = await res.json();
+    const products = await getProducts();
     const productPages = [];
 
     for (const product of (products || [])) {

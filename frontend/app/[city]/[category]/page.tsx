@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Truck, Shield, Phone } from 'lucide-react';
 import CityCategoryClient from './CityCategoryClient';
 import ProductPageClient from '@/app/product/[slug]/ProductClient';
+import { getProducts, getProductBySlug, getReviews as getReviewsApi } from '@/lib/api';
+
 
 interface Props {
   params: {
@@ -42,18 +44,9 @@ const categoriesMap: Record<string, { ru: string; uz: string; id: number }> = {
 };
 
 async function getProductsByCategory(categoryId: number) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) return [];
-
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/products?category_id=eq.${categoryId}&select=*`, {
-      headers: { 'apikey': supabaseKey },
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return [];
-    return await res.json();
+    const products = await getProducts();
+    return products.filter(p => p.category_id === categoryId);
   } catch (error) {
     console.error('Error fetching products for programmatic SEO:', error);
     return [];
@@ -61,19 +54,8 @@ async function getProductsByCategory(categoryId: number) {
 }
 
 async function getProduct(slug: string) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) return null;
-
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/products?slug=eq.${slug}&select=*`, {
-      headers: { 'apikey': supabaseKey },
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data[0] || null;
+    return await getProductBySlug(slug);
   } catch (error) {
     console.error('Error fetching product in programmatic SEO:', error);
     return null;
@@ -81,18 +63,8 @@ async function getProduct(slug: string) {
 }
 
 async function getReviews(productId: number) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) return [];
-
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/reviews?product_id=eq.${productId}&is_approved=eq.true&select=*`, {
-      headers: { 'apikey': supabaseKey },
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return [];
-    return await res.json();
+    return await getReviewsApi(productId);
   } catch (error) {
     console.error('Error fetching reviews in programmatic SEO:', error);
     return [];
@@ -113,26 +85,17 @@ export async function generateStaticParams() {
   }
 
   // Product path combinations
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (supabaseUrl && supabaseKey) {
-    try {
-      const res = await fetch(`${supabaseUrl}/rest/v1/products?select=slug`, {
-        headers: { 'apikey': supabaseKey }
-      });
-      if (res.ok) {
-        const products = await res.json();
-        for (const city of cities) {
-          for (const p of products) {
-            if (p.slug) {
-              params.push({ city, category: p.slug });
-            }
-          }
+  try {
+    const products = await getProducts();
+    for (const city of cities) {
+      for (const p of products) {
+        if (p.slug) {
+          params.push({ city, category: p.slug });
         }
       }
-    } catch (e) {
-      console.error('Error in generateStaticParams for programmatic products:', e);
     }
+  } catch (e) {
+    console.error('Error in generateStaticParams for programmatic products:', e);
   }
   
   return params;

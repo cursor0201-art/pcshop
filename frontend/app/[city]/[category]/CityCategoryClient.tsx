@@ -214,6 +214,7 @@ export default function CityCategoryClient({ initialProducts, categorySlug, city
                             name_uz: product.name_uz,
                             price: product.price,
                             image: product.images?.[0] || '',
+                            slug: product.slug,
                           });
                         }}
                         className="p-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"

@@ -9,7 +9,7 @@ def cyrillic_to_latin(text):
         'A', 'B', 'V', 'G', 'D', 'E', 'Yo', 'Zh', 'Z', 'i', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', 'Kh', 'Ts', 'Ch', 'Sh', 'Shch', '', 'Y', '', 'E', 'Yu', 'Ya'
     ]
     char_map = dict(zip(cyrillic, latin))
-    result = []
+    result = [] 
     for char in text:
         result.append(char_map.get(char, char))
     return ''.join(result)

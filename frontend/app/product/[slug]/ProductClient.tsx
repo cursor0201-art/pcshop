@@ -12,6 +12,8 @@ import {
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart } from '@/hooks/useCart';
 import { blogPosts } from '@/lib/blogData';
+import { getProductBySlug, getSimilarProducts, getReviews } from '@/lib/api';
+
 
 const getRelatedArticles = (productName: string, categoryId: number) => {
   const nameLower = productName.toLowerCase();
@@ -79,33 +81,18 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
     const fetchProduct = async () => {
       setLoading(true);
       try {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-        const res = await fetch(
-          `${supabaseUrl}/rest/v1/products?slug=eq.${slug}&select=*`,
-          { headers: { apikey: supabaseKey || '' } }
-        );
-        const data = await res.json();
-        const productData = data[0];
+        const productData = await getProductBySlug(slug);
 
         if (productData) {
           setProduct(productData);
 
-          // Fetch similar products
-          const similarRes = await fetch(
-            `${supabaseUrl}/rest/v1/products?category_id=eq.${productData.category_id}&id=neq.${productData.id}&limit=4`,
-            { headers: { apikey: supabaseKey || '' } }
-          );
-          const similarData = await similarRes.json();
-          setSimilarProducts(similarData || []);
+          // Fetch similar products and reviews in parallel
+          const [similarData, reviewsData] = await Promise.all([
+            getSimilarProducts(productData.category_id, productData.id, 4),
+            getReviews(productData.id),
+          ]);
 
-          // Fetch reviews
-          const reviewsRes = await fetch(
-            `${supabaseUrl}/rest/v1/reviews?product_id=eq.${productData.id}&is_approved=eq.true`,
-            { headers: { apikey: supabaseKey || '' } }
-          );
-          const reviewsData = await reviewsRes.json();
+          setSimilarProducts(similarData || []);
           setReviews(reviewsData || []);
         }
       } catch (error) {
@@ -135,6 +122,7 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
         name_uz: product.name_uz,
         price: product.price,
         image: product.images?.[0] || '',
+        slug: product.slug,
       });
     }
     setShowAddedToCart(true);

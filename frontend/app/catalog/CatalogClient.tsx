@@ -11,6 +11,8 @@ import {
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart } from '@/hooks/useCart';
 import Link from 'next/link';
+import { getCategories, getProducts } from '@/lib/api';
+
 
 interface Product {
   id: number;
@@ -144,21 +146,10 @@ export default function CatalogPage() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-        const [productsRes, categoriesRes] = await Promise.all([
-          fetch(`${supabaseUrl}/rest/v1/products?select=*`, {
-            headers: { apikey: supabaseKey || '' },
-          }),
-          fetch(`${supabaseUrl}/rest/v1/categories?select=*&order=created_at.asc`, {
-            headers: { apikey: supabaseKey || '' },
-          }),
+        const [productsData, categoriesData] = await Promise.all([
+          getProducts(),
+          getCategories(),
         ]);
-
-        const productsData = await productsRes.json();
-        const categoriesData = await categoriesRes.json();
-
         setProducts(productsData || []);
         setCategories(categoriesData || []);
       } catch (error) {
@@ -340,6 +331,7 @@ export default function CatalogPage() {
                     name_uz: product.name_uz,
                     price: product.price,
                     image: product.images?.[0] || '',
+                    slug: product.slug,
                   });
                 }}
                 className="p-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"

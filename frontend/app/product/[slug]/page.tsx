@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import ProductPageClient from './ProductClient';
+import { getProducts, getProductBySlug, getReviews as getReviewsApi } from '@/lib/api';
 
 export const dynamicParams = false;
 
@@ -8,19 +9,8 @@ interface Props {
 }
 
 async function getProduct(slug: string) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) return null;
-
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/products?slug=eq.${slug}&select=*`, {
-      headers: { 'apikey': supabaseKey },
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data[0] || null;
+    return await getProductBySlug(slug);
   } catch (error) {
     console.error('Error fetching product in getProduct:', error);
     return null;
@@ -28,18 +18,8 @@ async function getProduct(slug: string) {
 }
 
 async function getReviews(productId: number) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) return [];
-
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/reviews?product_id=eq.${productId}&is_approved=eq.true&select=*`, {
-      headers: { 'apikey': supabaseKey },
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return [];
-    return await res.json();
+    return await getReviewsApi(productId);
   } catch (error) {
     console.error('Error fetching reviews in getReviews:', error);
     return [];
@@ -47,31 +27,12 @@ async function getReviews(productId: number) {
 }
 
 export async function generateStaticParams() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    console.warn('Supabase environment variables missing during build. Generating placeholder static params.');
-    return [{ slug: 'placeholder' }];
-  }
-
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/products?select=slug`, {
-      headers: { 
-        'apikey': supabaseKey,
-        'Content-Type': 'application/json'
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch product slugs: ${res.statusText}`);
-    }
-
-    const data = await res.json();
-    if (!data || data.length === 0) {
+    const products = await getProducts();
+    if (!products || products.length === 0) {
       return [{ slug: 'placeholder' }];
     }
-    return data.map((product: { slug: string }) => ({
+    return products.map((product) => ({
       slug: product.slug,
     }));
   } catch (error) {

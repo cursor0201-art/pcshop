@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { ChevronRight, Calendar, Clock, User, ArrowLeft, Zap } from 'lucide-react';
 import { blogPosts } from '@/lib/blogData';
 import { notFound } from 'next/navigation';
+import { getProducts } from '@/lib/api';
+
 
 export const dynamicParams = false;
 
@@ -35,18 +37,9 @@ function getCategoryIdFromBlogSlug(slug: string): number {
 
 async function getRelatedProducts(slug: string) {
   const categoryId = getCategoryIdFromBlogSlug(slug);
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) return [];
-
   try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/products?category_id=eq.${categoryId}&limit=4&select=*`, {
-      headers: { 'apikey': supabaseKey },
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return [];
-    return await res.json();
+    const products = await getProducts();
+    return products.filter(p => p.category_id === categoryId).slice(0, 4);
   } catch (error) {
     console.error('Error fetching related products for blog:', error);
     return [];

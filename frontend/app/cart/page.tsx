@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Minus, Plus, X, ShoppingCart, ArrowRight, Send } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart, CartItem } from '@/hooks/useCart';
+import { BASE_URL } from '@/lib/api';
+
 
 export default function CartPage() {
   const { t, language } = useLanguage();
@@ -32,64 +34,43 @@ export default function CartPage() {
     setIsSubmitting(true);
 
     try {
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      // 1. Save order to Django REST API
+      const combinedComment = [
+        formData.address ? `Адрес доставки: ${formData.address}` : '',
+        formData.comment ? `Комментарий: ${formData.comment}` : ''
+      ].filter(Boolean).join('\n');
 
-      if (!supabaseUrl || !supabaseKey) {
-        throw new Error('Supabase configuration is missing.');
-      }
+      const orderPayload = {
+        client_name: formData.name,
+        client_phone: formData.phone,
+        total_amount: getTotal(),
+        comment: combinedComment || null,
+        items: items.map(item => ({
+          product: item.id,
+          quantity: item.quantity,
+          price: item.price,
+        }))
+      };
 
-      // 1. Save order to Supabase
-      const orderRes = await fetch(`${supabaseUrl}/rest/v1/orders`, {
+      const orderRes = await fetch(`${BASE_URL}/orders/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': supabaseKey,
-          'Prefer': 'return=representation',
         },
-        body: JSON.stringify({
-          customer_name: formData.name,
-          customer_phone: formData.phone,
-          customer_address: formData.address,
-          comment: formData.comment || null,
-          total: getTotal(),
-          status: 'new',
-        }),
+        body: JSON.stringify(orderPayload),
       });
 
       if (!orderRes.ok) {
-        throw new Error('Failed to save order to database');
+        throw new Error('Failed to save order to Django database');
       }
 
-      const createdOrders = await orderRes.json();
-      const newOrder = createdOrders[0];
+      const newOrder = await orderRes.json();
 
       if (!newOrder || !newOrder.id) {
         throw new Error('No order ID returned from database');
       }
 
-      // 2. Save order items to Supabase
-      const orderItems = items.map(item => ({
-        order_id: newOrder.id,
-        product_id: item.id,
-        quantity: item.quantity,
-        price: item.price,
-      }));
-
-      const itemsRes = await fetch(`${supabaseUrl}/rest/v1/order_items`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': supabaseKey,
-        },
-        body: JSON.stringify(orderItems),
-      });
-
-      if (!itemsRes.ok) {
-        throw new Error('Failed to save order items to database');
-      }
-
-      // 3. Construct and trigger Telegram redirect
+      // 2. Construct and trigger Telegram redirect
       const title = language === 'ru' ? '🆕 Новый заказ' : '🆕 Yangi buyurtma';
       const orderNum = `#${newOrder.id}`;
       const customerHeader = language === 'ru' ? '👤 Клиент:' : '👤 Mijoz:';
@@ -100,8 +81,9 @@ export default function CartPage() {
 
       const itemsText = items.map(item => {
         const name = language === 'ru' ? item.name_ru : item.name_uz;
-        return `— ${name} x${item.quantity} = ${formatPrice(item.price * item.quantity)}`;
-      }).join('\n');
+        const itemPhoto = item.image ? `\n🖼 Фото: ${item.image}` : '';
+        return `— ${name} x${item.quantity} = ${formatPrice(item.price * item.quantity)}${itemPhoto}`;
+      }).join('\n\n');
 
       const totalText = language === 'ru' ? `💰 Итого: ${formatPrice(getTotal())}` : `💰 Jami: ${formatPrice(getTotal())}`;
 
@@ -118,7 +100,7 @@ export default function CartPage() {
       const telegramUrl = `https://t.me/${adminUsername}?text=${encodeURIComponent(message)}`;
       window.open(telegramUrl, '_blank');
 
-      // 4. Update UI and clear cart
+      // 3. Update UI and clear cart
       setOrderSuccess(true);
       clearCart();
     } catch (error) {
