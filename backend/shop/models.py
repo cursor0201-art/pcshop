@@ -47,7 +47,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Цена")
     stock = models.IntegerField(default=0, verbose_name="В наличии")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name="Категория")
-    image = models.CharField(max_length=1000, blank=True, null=True, verbose_name="Изображение (ссылка)", help_text="Введите прямую ссылку на изображение (например, с imgbb.com, telegram или другого фотохостинга).")
+    image = models.CharField(max_length=1000, blank=True, null=True, verbose_name="Изображение (ссылка)", help_text="Ссылка на изображение. Заполняется автоматически при загрузке файла с ПК, либо можно указать ссылку вручную.")
+    image_file = models.ImageField(upload_to='temp_products/', blank=True, null=True, verbose_name="Изображение (загрузить с ПК)", help_text="Выберите изображение с вашего компьютера. Оно автоматически загрузится в постоянное облачное хранилище.")
     brand = models.CharField(max_length=255, blank=True, null=True, verbose_name="Бренд")
     warranty_months = models.IntegerField(default=12, verbose_name="Гарантия (месяцев)")
     
@@ -89,6 +90,27 @@ class Product(models.Model):
         if not self.seo_keywords_uz:
             self.seo_keywords_uz = f"{self.name_uz}, sotib olish, Toshkent, narxi, PcShop_uz"
             
+        if self.image_file:
+            import requests
+            try:
+                # Read file from memory
+                file_name = self.image_file.name
+                file_content = self.image_file.read()
+                self.image_file.seek(0)
+                
+                res = requests.post(
+                    'https://catbox.moe/user/api.php',
+                    data={'reqtype': 'fileupload'},
+                    files={'fileToUpload': (file_name, file_content)},
+                    timeout=30
+                )
+                if res.status_code == 200 and res.text.startswith('http'):
+                    self.image = res.text.strip()
+                    # Clear image_file so it does not get saved on the local ephemeral disk
+                    self.image_file = None
+            except Exception as e:
+                print("Catbox upload failed:", e)
+
         super().save(*args, **kwargs)
 
     class Meta:
