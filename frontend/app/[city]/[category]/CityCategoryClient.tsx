@@ -166,7 +166,7 @@ export default function CityCategoryClient({ initialProducts, categorySlug, city
                   viewMode === 'list' ? 'flex' : ''
                 }`}
               >
-                <Link href={`/product/${product.slug}`} className={viewMode === 'list' ? 'flex w-full' : 'block'}>
+                <Link href={`/product?slug=${product.slug}`} className={viewMode === 'list' ? 'flex w-full' : 'block'}>
                   <div className={`relative overflow-hidden bg-gradient-to-br from-neutral-800 to-neutral-900 ${
                     viewMode === 'list' ? 'w-48 flex-shrink-0' : 'aspect-square'
                   }`}>

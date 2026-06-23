@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Truck, Shield, Phone } from 'lucide-react';
 import CityCategoryClient from './CityCategoryClient';
-import ProductPageClient from '@/app/product/[slug]/ProductClient';
+import ProductPageClient from '@/app/product/ProductClient';
 import { getProducts, getProductBySlug, getReviews as getReviewsApi } from '@/lib/api';
 
 

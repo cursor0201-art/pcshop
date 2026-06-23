@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node --max-old-space-size=4096 node_modules/next/dist/bin/next build && node -e \"const fs = require('fs'); if (fs.existsSync('out/product/placeholder.html')) { fs.copyFileSync('out/product/placeholder.html', 'out/product-placeholder.html'); }\"",
+    "build": "node --max-old-space-size=4096 node_modules/next/dist/bin/next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -64,7 +64,8 @@ interface Review {
 
 export default function ProductPage({ overrideSlug }: { overrideSlug?: string }) {
   const params = useParams();
-  const slug = overrideSlug || (params.slug as string);
+  const searchParams = useSearchParams();
+  const slug = overrideSlug || searchParams.get('slug') || (params?.slug as string);
   const { t, language } = useLanguage();
   const { addItem, addToCompare, compareItems } = useCart();
 
@@ -85,6 +86,8 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
 
         if (productData) {
           setProduct(productData);
+          const name = language === 'ru' ? productData.name_ru : productData.name_uz;
+          document.title = `${name} | PcShop_uz`;
 
           // Fetch similar products and reviews in parallel
           const [similarData, reviewsData] = await Promise.all([
@@ -104,6 +107,13 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
 
     fetchProduct();
   }, [slug]);
+
+  useEffect(() => {
+    if (product) {
+      const name = language === 'ru' ? product.name_ru : product.name_uz;
+      document.title = `${name} | PcShop_uz`;
+    }
+  }, [product, language]);
 
   const formatPrice = (price: number) => {
     return price.toLocaleString('ru-RU') + ' ' + t.currency;
@@ -576,7 +586,7 @@ function SimilarProductCard({ product, index }: { product: Product; index: numbe
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
     >
-      <Link href={`/product/${product.slug}`}>
+      <Link href={`/product?slug=${product.slug}`}>
         <div className="group bg-neutral-900 rounded-xl overflow-hidden border border-gray-800 hover:border-red-500/50 transition-all">
           <div className="relative aspect-square bg-neutral-800">
             {product.images?.[0] ? (

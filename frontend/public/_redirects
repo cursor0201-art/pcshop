@@ -1,1 +1,1 @@
-/product/* /product-placeholder.html 200
+/product/:slug /product?slug=:slug 302

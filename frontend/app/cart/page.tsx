@@ -178,7 +178,7 @@ export default function CartPage() {
                       className="flex gap-4 p-4 bg-neutral-900 rounded-xl border border-gray-800"
                     >
                       {/* Image */}
-                      <Link href={`/product/${item.id}`} className="flex-shrink-0">
+                      <Link href={item.slug ? `/product?slug=${item.slug}` : `/product/${item.id}`} className="flex-shrink-0">
                         <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-neutral-800">
                           {item.image ? (
                             <Image src={item.image} alt="" fill className="object-cover" />
@@ -192,7 +192,7 @@ export default function CartPage() {
 
                       {/* Info */}
                       <div className="flex-1 min-w-0">
-                        <Link href={`/product/${item.id}`}>
+                        <Link href={item.slug ? `/product?slug=${item.slug}` : `/product/${item.id}`}>
                           <h3 className="font-medium text-white hover:text-red-500 transition-colors line-clamp-2">
                             {language === 'ru' ? item.name_ru : item.name_uz}
                           </h3>

@@ -179,7 +179,7 @@ export default async function BlogPostPage({ params }: Props) {
               {relatedProducts.map((product: any) => (
                 <Link 
                   key={product.id} 
-                  href={`/product/${product.slug}`}
+                  href={`/product?slug=${product.slug}`}
                   className="group bg-neutral-900 rounded-xl overflow-hidden border border-gray-800 hover:border-red-500/50 transition-all p-3 block"
                 >
                   <div className="relative aspect-square rounded-lg overflow-hidden bg-neutral-800 mb-3">

@@ -126,7 +126,7 @@ function ProductCard({ product, index }: { product: any; index: number }) {
       transition={{ delay: index * 0.1 }}
       viewport={{ once: true }}
     >
-      <Link href={`/product/${product.slug}`}>
+      <Link href={`/product?slug=${product.slug}`}>
         <motion.div
           whileHover={{ y: -5 }}
           className="group bg-neutral-900 rounded-2xl overflow-hidden border border-gray-800 hover:border-red-500/50 transition-all duration-300"

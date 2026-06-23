@@ -126,7 +126,7 @@ export default function ComparePage() {
                   </button>
 
                   {/* Image */}
-                  <Link href={`/product/${product.slug}`}>
+                  <Link href={`/product?slug=${product.slug}`}>
                     <div className="aspect-square relative bg-neutral-800">
                       {product.images?.[0] ? (
                         <Image
@@ -146,7 +146,7 @@ export default function ComparePage() {
                   {/* Info */}
                   <div className="p-4">
                     <p className="text-xs text-gray-500 mb-1">{product.brand}</p>
-                    <Link href={`/product/${product.slug}`}>
+                    <Link href={`/product?slug=${product.slug}`}>
                       <h3 className="font-medium text-white line-clamp-2 hover:text-red-500 transition-colors mb-2">
                         {language === 'ru' ? product.name_ru : product.name_uz}
                       </h3>
@@ -197,7 +197,7 @@ export default function ComparePage() {
                     </th>
                     {products.map((product) => (
                       <th key={product.id} className="px-6 py-4 text-left text-sm font-medium text-white">
-                        <Link href={`/product/${product.slug}`} className="hover:text-red-500 transition-colors line-clamp-2">
+                        <Link href={`/product?slug=${product.slug}`} className="hover:text-red-500 transition-colors line-clamp-2">
                           {language === 'ru' ? product.name_ru : product.name_uz}
                         </Link>
                       </th>
