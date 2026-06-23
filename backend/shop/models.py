@@ -47,7 +47,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Цена")
     stock = models.IntegerField(default=0, verbose_name="В наличии")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name="Категория")
-    image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Изображение")
+    image = models.CharField(max_length=1000, blank=True, null=True, verbose_name="Изображение (ссылка)", help_text="Введите прямую ссылку на изображение (например, с imgbb.com, telegram или другого фотохостинга).")
     brand = models.CharField(max_length=255, blank=True, null=True, verbose_name="Бренд")
     warranty_months = models.IntegerField(default=12, verbose_name="Гарантия (месяцев)")
     
