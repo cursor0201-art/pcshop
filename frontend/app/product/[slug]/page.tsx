@@ -29,12 +29,15 @@ async function getReviews(productId: number) {
 export async function generateStaticParams() {
   try {
     const products = await getProducts();
-    if (!products || products.length === 0) {
-      return [{ slug: 'placeholder' }];
+    const params = [{ slug: 'placeholder' }];
+    if (products && products.length > 0) {
+      products.forEach((product) => {
+        if (product.slug) {
+          params.push({ slug: product.slug });
+        }
+      });
     }
-    return products.map((product) => ({
-      slug: product.slug,
-    }));
+    return params;
   } catch (error) {
     console.error('Error in generateStaticParams:', error);
     return [{ slug: 'placeholder' }];
