@@ -436,14 +436,24 @@ export default function HomePage() {
                 >
                   <div className="relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-neutral-800 to-neutral-900 border border-gray-800 shadow-2xl">
                     <Image
-                      src="https://images.pexels.com/photos/13019724/pexels-photo-13019724.jpeg"
+                      src="/hero-pc.png"
                       alt="Gaming PC"
                       fill
                       className="object-cover"
                       priority
                     />
                     {/* Glowing border */}
-                    <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-red-500/20" />
+                    <motion.div
+                      animate={{
+                        opacity: [0.3, 0.7, 0.3],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      }}
+                      className="absolute inset-0 rounded-3xl ring-2 ring-inset ring-red-500/50 pointer-events-none"
+                    />
                   </div>
                 </motion.div>
 
@@ -453,7 +463,18 @@ export default function HomePage() {
                   transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
                   className="absolute -inset-4 rounded-full border border-dashed border-red-500/20"
                 />
-                <div className="absolute -inset-8 rounded-full bg-gradient-to-r from-red-500/5 to-transparent blur-3xl" />
+                <motion.div
+                  animate={{
+                    opacity: [0.4, 0.8, 0.4],
+                    scale: [0.95, 1.05, 0.95],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  className="absolute -inset-8 rounded-full bg-gradient-to-r from-red-500/20 via-red-500/5 to-transparent blur-3xl"
+                />
               </div>
             </motion.div>
           </div>
