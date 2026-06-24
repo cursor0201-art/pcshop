@@ -201,8 +201,8 @@ export default function AboutPage() {
                   </h4>
                   <p className="text-gray-400 text-sm">
                     {language === 'ru'
-                      ? 'Доставка в течение 1-2 дней. Стоимость от 50 000 сум.'
-                      : "1-2 kun ichida yetkazib berish. Qiymati 50 000 so'mdan."}
+                      ? 'Доставка в течение 1-2 дней.'
+                      : "1-2 kun ichida yetkazib berish."}
                   </p>
                 </div>
               </div>
