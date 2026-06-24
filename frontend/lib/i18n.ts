@@ -102,7 +102,7 @@ export const translations = {
     },
     footer: {
       contacts: 'Контакты',
-      address: 'Юнусабад, Киёт 57',
+      address: 'ул. Лабзак, 2А, Ташкент',
       phone: '+998 (99) 823-09-90',
       telegram: '@pcshop_uzz',
       rights: 'Все права защищены',
@@ -214,7 +214,7 @@ export const translations = {
     },
     footer: {
       contacts: 'Aloqa',
-      address: 'Yunusobod, Kiyor 57',
+      address: "Labzak ko'chasi, 2A, Toshkent",
       phone: '+998 (99) 823-09-90',
       telegram: '@pcshop_uzz',
       rights: 'Barcha huquqlar himoyalangan',

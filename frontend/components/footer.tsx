@@ -74,7 +74,14 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-gray-400">
                 <MapPin className="w-5 h-5 text-red-500" />
-                <span>{t.footer.address}</span>
+                <a
+                  href="https://maps.app.goo.gl/9nR8HzUUeveYd7MD6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  {t.footer.address}
+                </a>
               </div>
               <div className="flex items-center gap-3 text-gray-400">
                 <Phone className="w-5 h-5 text-red-500" />

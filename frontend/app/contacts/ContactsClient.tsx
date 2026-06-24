@@ -13,13 +13,13 @@ export default function ContactsPage() {
       document.title = 'Контакты | Компьютерный магазин PcShop_uz';
       const descMeta = document.querySelector('meta[name="description"]');
       if (descMeta) {
-        descMeta.setAttribute('content', 'Свяжитесь с PcShop_uz. 📍 Адрес: Юнусабад, Киёт 57. 📞 Телефон: +998 (99) 823-09-90. Telegram: @pcshop_uzz. Быстрый ответ и качественный сервис.');
+        descMeta.setAttribute('content', 'Свяжитесь с PcShop_uz. 📍 Адрес: ул. Лабзак, 2А. 📞 Телефон: +998 (99) 823-09-90. Telegram: @pcshop_uzz. Быстрый ответ и качественный сервис.');
       }
     } else {
       document.title = 'Aloqa | PcShop_uz kompyuter do\'koni';
       const descMeta = document.querySelector('meta[name="description"]');
       if (descMeta) {
-        descMeta.setAttribute('content', 'PcShop_uz bilan bog\'laning. 📍 Manzil: Yunusobod, Kiyot 57. 📞 Telefon: +998 (99) 823-09-90. Telegram: @pcshop_uzz. Tezkor javob va sifatli xizmat.');
+        descMeta.setAttribute('content', 'PcShop_uz bilan bog\'laning. 📍 Manzil: Labzak ko\'chasi, 2A. 📞 Telefon: +998 (99) 823-09-90. Telegram: @pcshop_uzz. Tezkor javob va sifatli xizmat.');
       }
     }
   }, [language]);
@@ -51,7 +51,7 @@ export default function ContactsPage() {
       icon: MapPin,
       title: language === 'ru' ? 'Адрес' : 'Manzil',
       value: t.footer.address,
-      link: null,
+      link: 'https://maps.app.goo.gl/9nR8HzUUeveYd7MD6',
     },
     {
       icon: Phone,
@@ -137,7 +137,7 @@ export default function ContactsPage() {
             >
               <div className="aspect-video relative">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.8765!2d69.2793!3d41.3111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE4JzQwLjAiTiA2OcKwMTYnNDUuNSJF!5e0!3m2!1sen!2s!4v1234567890"
+                  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2996.3832996372876!2d69.26527779999999!3d41.322277799999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDHCsDE5JzIwLjIiTiA2OcKwMTUnNTUuMCJF!5e0!3m2!1sru!2s!4v1782319340379!5m2!1sru!2s"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -152,8 +152,8 @@ export default function ContactsPage() {
                 <p className="text-white font-medium">{t.footer.address}</p>
                 <p className="text-sm text-gray-400">
                   {language === 'ru'
-                    ? 'Мы находимся в Юнусабадском районе'
-                    : 'Biz Yunusobod tumanida joylashganmiz'}
+                    ? 'Мы находимся в Шайхантахурском районе'
+                    : 'Biz Shayxontohur tumanida joylashganmiz'}
                 </p>
               </div>
             </motion.div>

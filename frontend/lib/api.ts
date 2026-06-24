@@ -52,7 +52,7 @@ export interface Review {
 
 export async function getCategories(): Promise<Category[]> {
   try {
-    const res = await fetch(`${BASE_URL}/categories/`);
+    const res = await fetch(`${BASE_URL}/categories/`, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to fetch categories');
     const data = await res.json();
     return data.map((cat: any) => ({
@@ -80,7 +80,7 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function getProducts(options?: { category_slug?: string; limit?: number }): Promise<Product[]> {
   try {
-    const res = await fetch(`${BASE_URL}/products/`);
+    const res = await fetch(`${BASE_URL}/products/`, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to fetch products');
     const data = await res.json();
 
@@ -144,7 +144,7 @@ export async function getSimilarProducts(categoryId: number, excludeId: number, 
 
 export async function getReviews(productId: number): Promise<Review[]> {
   try {
-    const res = await fetch(`${BASE_URL}/reviews/`);
+    const res = await fetch(`${BASE_URL}/reviews/`, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to fetch reviews');
     const data = await res.json();
     
