@@ -34,6 +34,7 @@ export interface Product {
   stock: number;
   specs: Record<string, string>;
   images: string[];
+  images_detail?: { url: string; color_name: string | null; color_code: string | null }[];
   is_featured: boolean;
   is_new: boolean;
   warranty_months: number;
@@ -105,6 +106,7 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
         stock: p.stock || 0,
         specs,
         images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
+        images_detail: p.images_detail || [],
         is_featured: true,
         is_new: true,
         warranty_months: p.warranty_months || 12,

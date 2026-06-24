@@ -205,6 +205,8 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images_rel', verbose_name="Товар")
     image = models.CharField(max_length=1000, blank=True, null=True, verbose_name="Ссылка на изображение", help_text="Заполняется автоматически при загрузке с ПК, либо укажите ссылку вручную.")
     image_file = models.ImageField(upload_to='temp_products/', blank=True, null=True, verbose_name="Загрузить файл с ПК", help_text="Выберите файл изображения с вашего устройства.")
+    color_name = models.CharField(max_length=100, blank=True, null=True, verbose_name="Название цвета", help_text="Например: Синий, Черный")
+    color_code = models.CharField(max_length=7, blank=True, null=True, verbose_name="Код цвета (HEX)", help_text="Например: #0000FF, #000000")
 
     def __str__(self):
         return f"Изображение для {self.product.name_ru}"

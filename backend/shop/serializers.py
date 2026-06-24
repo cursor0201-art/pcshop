@@ -18,6 +18,7 @@ class ProductSerializer(serializers.ModelSerializer):
         queryset=Category.objects.all(), source='category', write_only=True
     )
     images = serializers.SerializerMethodField()
+    images_detail = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -31,6 +32,23 @@ class ProductSerializer(serializers.ModelSerializer):
             if img_rel.image and img_rel.image not in image_list:
                 image_list.append(img_rel.image)
         return image_list
+
+    def get_images_detail(self, obj):
+        detail_list = []
+        if obj.image:
+            detail_list.append({
+                'url': obj.image,
+                'color_name': None,
+                'color_code': None
+            })
+        for img_rel in obj.images_rel.all():
+            if img_rel.image:
+                detail_list.append({
+                    'url': img_rel.image,
+                    'color_name': img_rel.color_name,
+                    'color_code': img_rel.color_code
+                })
+        return detail_list
 
 class OrderItemSerializer(serializers.ModelSerializer):
     product_name = serializers.ReadOnlyField(source='product.name_ru')

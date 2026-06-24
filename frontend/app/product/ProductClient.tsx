@@ -47,6 +47,7 @@ interface Product {
   stock: number;
   specs: Record<string, string>;
   images: string[];
+  images_detail?: { url: string; color_name: string | null; color_code: string | null }[];
   is_featured: boolean;
   is_new: boolean;
   warranty_months: number;
@@ -177,6 +178,25 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
   const name = language === 'ru' ? product.name_ru : product.name_uz;
   const description = language === 'ru' ? product.description_ru : product.description_uz;
   const isInCompare = compareItems.includes(product.id);
+
+  // Get list of unique colors that have both a name and a code
+  const uniqueColors = product.images_detail
+    ? product.images_detail.reduce((acc: { color_name: string; color_code: string; image_index: number }[], img, idx) => {
+        if (img.color_name && img.color_code) {
+          const alreadyExists = acc.some(c => c.color_name.toLowerCase() === img.color_name?.toLowerCase());
+          if (!alreadyExists) {
+            acc.push({
+              color_name: img.color_name,
+              color_code: img.color_code,
+              image_index: idx
+            });
+          }
+        }
+        return acc;
+      }, [])
+    : [];
+
+  const currentColor = product.images_detail?.[selectedImage]?.color_name || null;
 
   return (
     <div className="min-h-screen py-8">
@@ -330,6 +350,37 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
                 <Shield className="w-5 h-5 text-red-500" />
                 <span>{t.product.warranty}: {product.warranty_months} {t.product.months}</span>
               </div>
+
+              {/* Color swatches */}
+              {uniqueColors.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-sm font-medium text-gray-400 mb-3">
+                    {language === 'ru' ? 'Выберите цвет:' : 'Rangni tanlang:'}
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    {uniqueColors.map((color, idx) => {
+                      const isActive = currentColor?.toLowerCase() === color.color_name.toLowerCase();
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedImage(color.image_index)}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-all ${
+                            isActive
+                              ? 'border-red-500 bg-red-500/10 text-white shadow-[0_0_15px_rgba(239,68,68,0.2)]'
+                              : 'border-gray-800 bg-neutral-900 text-gray-400 hover:border-gray-600 hover:text-white'
+                          }`}
+                        >
+                          <span
+                            className="w-4 h-4 rounded-full border border-black/20"
+                            style={{ backgroundColor: color.color_code }}
+                          />
+                          <span>{color.color_name}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               {/* Quantity & Actions */}
               <div className="flex flex-wrap items-center gap-4 mb-8">
