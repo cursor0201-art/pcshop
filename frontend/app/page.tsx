@@ -508,10 +508,10 @@ export default function HomePage() {
       <section className="py-16 bg-neutral-900/50 border-y border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatCounter value={150} label={t.stats.products} />
+            <StatCounter value={500} label={t.stats.products} />
             <StatCounter value={2000} label={t.stats.customers} />
             <StatCounter value={3500} label={t.stats.orders} />
-            <StatCounter value={10} label={t.stats.years} />
+            <StatCounter value={5} label={t.stats.years} />
           </div>
         </div>
       </section>
@@ -826,8 +826,8 @@ export default function HomePage() {
               </div>
               <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-xl shadow-red-500/25">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-white">10+</p>
-                  <p className="text-xs text-white/80">{language === 'ru' ? 'лет' : 'yil'}</p>
+                  <p className="text-2xl font-bold text-white">5+</p>
+                  <p className="text-xs text-white/80">лет</p>
                 </div>
               </div>
             </motion.div>

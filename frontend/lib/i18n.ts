@@ -202,7 +202,7 @@ export const translations = {
       products: 'Mahsulotlar',
       customers: 'Mijozlar',
       orders: 'Buyurtmalar',
-      years: 'yillik tajriba',
+      years: 'Yil tajriba',
     },
     about: {
       title: 'Biz haqimizda',
