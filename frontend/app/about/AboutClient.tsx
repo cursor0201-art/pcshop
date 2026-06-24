@@ -257,12 +257,7 @@ export default function AboutPage() {
                     ? 'Бесплатный ремонт в гарантийный период'
                     : 'Kafolat davrida bepul ta\'mirlash'}
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-red-500" />
-                  {language === 'ru'
-                    ? 'Обмен товара в течение 14 дней'
-                    : '14 kun ichida mahsulotni almashtirish'}
-                </li>
+
               </ul>
             </div>
           </div>
