@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, ProductCharacteristic, Order, OrderItem, Review, TelegramSettings
+from .models import Category, Product, ProductCharacteristic, Order, OrderItem, Review, TelegramSettings, ProductImage
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -11,13 +11,17 @@ class ProductCharacteristicInline(admin.TabularInline):
     model = ProductCharacteristic
     extra = 1
 
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 3
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'name_ru', 'name_uz', 'price', 'stock', 'category')
     list_filter = ('category',)
     search_fields = ('name_ru', 'name_uz')
     prepopulated_fields = {'slug': ('name_ru',)}
-    inlines = [ProductCharacteristicInline]
+    inlines = [ProductCharacteristicInline, ProductImageInline]
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem

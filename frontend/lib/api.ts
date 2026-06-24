@@ -104,7 +104,7 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
         old_price: null,
         stock: p.stock || 0,
         specs,
-        images: p.image ? [p.image] : [],
+        images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
         is_featured: true,
         is_new: true,
         warranty_months: p.warranty_months || 12,

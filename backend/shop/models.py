@@ -200,3 +200,36 @@ class TelegramSettings(models.Model):
     class Meta:
         verbose_name = 'Настройки Telegram'
         verbose_name_plural = 'Настройки Telegram'
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images_rel', verbose_name="Товар")
+    image = models.CharField(max_length=1000, blank=True, null=True, verbose_name="Ссылка на изображение", help_text="Заполняется автоматически при загрузке с ПК, либо укажите ссылку вручную.")
+    image_file = models.ImageField(upload_to='temp_products/', blank=True, null=True, verbose_name="Загрузить файл с ПК", help_text="Выберите файл изображения с вашего устройства.")
+
+    def __str__(self):
+        return f"Изображение для {self.product.name_ru}"
+
+    def save(self, *args, **kwargs):
+        if self.image_file:
+            import requests
+            try:
+                file_name = self.image_file.name
+                file_content = self.image_file.read()
+                self.image_file.seek(0)
+                res = requests.post(
+                    'https://catbox.moe/user/api.php',
+                    data={'reqtype': 'fileupload'},
+                    files={'fileToUpload': (file_name, file_content)},
+                    timeout=30
+                )
+                if res.status_code == 200 and res.text.startswith('http'):
+                    self.image = res.text.strip()
+                    self.image_file = None
+            except Exception as e:
+                print("Catbox upload failed for additional image:", e)
+        super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Дополнительное изображение'
+        verbose_name_plural = 'Дополнительные изображения'
+

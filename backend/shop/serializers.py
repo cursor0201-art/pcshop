@@ -17,10 +17,20 @@ class ProductSerializer(serializers.ModelSerializer):
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), source='category', write_only=True
     )
+    images = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = '__all__'
+
+    def get_images(self, obj):
+        image_list = []
+        if obj.image:
+            image_list.append(obj.image)
+        for img_rel in obj.images_rel.all():
+            if img_rel.image and img_rel.image not in image_list:
+                image_list.append(img_rel.image)
+        return image_list
 
 class OrderItemSerializer(serializers.ModelSerializer):
     product_name = serializers.ReadOnlyField(source='product.name_ru')
