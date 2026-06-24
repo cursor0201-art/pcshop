@@ -10,12 +10,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/about',
     '/contacts',
     '/blog',
-  ].map(route => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'daily' as const,
-    priority: route === '' ? 1.0 : 0.8,
-  }));
+    '/configurator',
+    '/faq',
+  ].map(route => {
+    const url = `${baseUrl}${route}`;
+    return {
+      url,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: route === '' ? 1.0 : 0.8,
+      alternates: {
+        languages: {
+          'ru-RU': `${url}?lang=ru`,
+          'uz-UZ': `${url}?lang=uz`,
+        }
+      }
+    };
+  });
 
   const cities = ['tashkent', 'samarkand', 'bukhara', 'andijan', 'namangan', 'fergana', 'nukus', 'uzbekistan'];
   const categories = [
@@ -32,11 +43,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const cityCategoryPages = [];
   for (const city of cities) {
     for (const category of categories) {
+      const url = `${baseUrl}/${city}/${category}`;
       cityCategoryPages.push({
-        url: `${baseUrl}/${city}/${category}`,
+        url,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.6,
+        alternates: {
+          languages: {
+            'ru-RU': `${url}?lang=ru`,
+            'uz-UZ': `${url}?lang=uz`,
+          }
+        }
       });
     }
   }
@@ -52,12 +70,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'gaming-monitors'
   ];
 
-  const blogPages = blogPostsList.map(slug => ({
-    url: `${baseUrl}/blog/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.5,
-  }));
+  const blogPages = blogPostsList.map(slug => {
+    const url = `${baseUrl}/blog/${slug}`;
+    return {
+      url,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+      alternates: {
+        languages: {
+          'ru-RU': `${url}?lang=ru`,
+          'uz-UZ': `${url}?lang=uz`,
+        }
+      }
+    };
+  });
 
   try {
     const products = await getProducts();
@@ -66,20 +93,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const product of (products || [])) {
       if (product.slug) {
         // Base product page
+        const baseUrlForProduct = `${baseUrl}/product?slug=${product.slug}`;
         productPages.push({
-          url: `${baseUrl}/product/${product.slug}`,
+          url: baseUrlForProduct,
           lastModified: product.created_at ? new Date(product.created_at) : new Date(),
           changeFrequency: 'weekly' as const,
           priority: 0.7,
+          alternates: {
+            languages: {
+              'ru-RU': `${baseUrlForProduct}&lang=ru`,
+              'uz-UZ': `${baseUrlForProduct}&lang=uz`,
+            }
+          }
         });
 
         // City specific product pages
         for (const city of cities) {
+          const cityProductUrl = `${baseUrl}/${city}/${product.slug}`;
           productPages.push({
-            url: `${baseUrl}/${city}/${product.slug}`,
+            url: cityProductUrl,
             lastModified: product.created_at ? new Date(product.created_at) : new Date(),
             changeFrequency: 'weekly' as const,
             priority: 0.6,
+            alternates: {
+              languages: {
+                'ru-RU': `${cityProductUrl}?lang=ru`,
+                'uz-UZ': `${cityProductUrl}?lang=uz`,
+              }
+            }
           });
         }
       }

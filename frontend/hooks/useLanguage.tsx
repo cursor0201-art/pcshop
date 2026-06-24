@@ -15,6 +15,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('ru');
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const langParam = params.get('lang') as Language;
+      if (langParam && (langParam === 'ru' || langParam === 'uz')) {
+        setLanguage(langParam);
+        localStorage.setItem('language', langParam);
+        return;
+      }
+    }
+
     const saved = localStorage.getItem('language') as Language;
     if (saved && (saved === 'ru' || saved === 'uz')) {
       setLanguage(saved);
