@@ -63,7 +63,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL', '').strip().strip('\'"')
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
