@@ -10,42 +10,48 @@ import { useCart } from '@/hooks/useCart';
 import { getProducts, getCategories, Product, Category } from '@/lib/api';
 
 const STEP_TEMPLATES = [
-  { id: 'cpu', defaultCategoryId: 2, name_ru: 'Процессор', name_uz: 'Protsessor', icon: Cpu },
-  { id: 'motherboard', defaultCategoryId: 4, name_ru: 'Материнская плата', name_uz: 'Ona plata', icon: Layers },
-  { id: 'ram', defaultCategoryId: 5, name_ru: 'Оперативная память', name_uz: 'Operativ xotira', icon: Database },
-  { id: 'gpu', defaultCategoryId: 3, name_ru: 'Видеокарта', name_uz: 'Videokarta', icon: Award },
-  { id: 'ssd', defaultCategoryId: 6, name_ru: 'SSD Накопитель', name_uz: 'SSD Disk', icon: Disc },
+  { id: 'cpu', slug: 'processors', name_ru: 'Процессор', name_uz: 'Protsessor', icon: Cpu },
+  { id: 'motherboard', slug: 'motherboards', name_ru: 'Материнская плата', name_uz: 'Ona plata', icon: Layers },
+  { id: 'ram', slug: 'ram', name_ru: 'Оперативная память', name_uz: 'Operativ xotira', icon: Database },
+  { id: 'gpu', slug: 'videocards', name_ru: 'Видеокарта', name_uz: 'Videokarta', icon: Award },
+  { id: 'ssd', slug: 'ssd', name_ru: 'SSD Накопитель', name_uz: 'SSD Disk', icon: Disc },
 ];
 
-const findCategoryIdForStep = (stepId: string, categories: Category[]) => {
-  const lowercaseStep = stepId.toLowerCase();
-  const match = categories.find(cat => {
+const findCategoryIdForStep = (stepSlug: string, categories: Category[]) => {
+  // Try exact match on slug
+  let match = categories.find(cat => cat.slug === stepSlug);
+  if (match) return match.id;
+
+  // Try partial match on slug/name
+  const stepLower = stepSlug.toLowerCase();
+  match = categories.find(cat => {
     const slug = (cat.slug || '').toLowerCase();
     const nameRu = (cat.name_ru || '').toLowerCase();
     const nameUz = (cat.name_uz || '').toLowerCase();
     
-    if (lowercaseStep === 'cpu') {
+    if (stepLower === 'processors' || stepLower === 'cpu') {
       return slug.includes('cpu') || slug.includes('processor') || slug.includes('protsessor') ||
              nameRu.includes('процессор') || nameUz.includes('protsessor');
     }
-    if (lowercaseStep === 'motherboard') {
+    if (stepLower === 'motherboards' || stepLower === 'motherboard') {
       return slug.includes('motherboard') || slug.includes('plata') || slug.includes('mb') || slug.includes('materinskaya') ||
              nameRu.includes('материнская') || nameRu.includes('плата') || nameUz.includes('plata') || nameUz.includes('ona-plata');
     }
-    if (lowercaseStep === 'ram') {
+    if (stepLower === 'ram') {
       return slug.includes('ram') || slug.includes('pamyat') || slug.includes('xotira') || slug.includes('operativ') ||
              nameRu.includes('память') || nameRu.includes('оперативная') || nameUz.includes('xotira') || nameUz.includes('operativ');
     }
-    if (lowercaseStep === 'gpu') {
+    if (stepLower === 'videocards' || stepLower === 'gpu') {
       return slug.includes('gpu') || slug.includes('video') || slug.includes('card') || slug.includes('kart') ||
              nameRu.includes('видеокарт') || nameUz.includes('videokart');
     }
-    if (lowercaseStep === 'ssd') {
+    if (stepLower === 'ssd') {
       return slug.includes('ssd') || slug.includes('nakopitel') || slug.includes('disk') || slug.includes('drive') ||
              nameRu.includes('ssd') || nameRu.includes('накопител') || nameUz.includes('ssd');
     }
     return false;
   });
+
   return match ? match.id : null;
 };
 
@@ -54,8 +60,8 @@ export default function ConfiguratorPage() {
   const { addItem } = useCart();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [steps, setSteps] = useState(
-    STEP_TEMPLATES.map(step => ({ ...step, categoryId: step.defaultCategoryId }))
+  const [steps, setSteps] = useState<(typeof STEP_TEMPLATES[0] & { categoryId: number | null })[]>(
+    STEP_TEMPLATES.map(step => ({ ...step, categoryId: null }))
   );
   const [selectedComponents, setSelectedComponents] = useState<Record<string, Product>>({});
   const [loading, setLoading] = useState(true);
@@ -74,10 +80,10 @@ export default function ConfiguratorPage() {
         
         if (categoriesData && categoriesData.length > 0) {
           const updatedSteps = STEP_TEMPLATES.map(step => {
-            const dynamicId = findCategoryIdForStep(step.id, categoriesData);
+            const dynamicId = findCategoryIdForStep(step.slug, categoriesData);
             return {
               ...step,
-              categoryId: dynamicId !== null ? dynamicId : step.defaultCategoryId
+              categoryId: dynamicId
             };
           });
           setSteps(updatedSteps);
@@ -112,7 +118,8 @@ export default function ConfiguratorPage() {
     });
   };
 
-  const getFilteredProducts = (categoryId: number) => {
+  const getFilteredProducts = (categoryId: number | null) => {
+    if (categoryId === null) return [];
     return products.filter(p => p.category_id === categoryId);
   };
 

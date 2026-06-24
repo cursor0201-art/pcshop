@@ -1,10 +1,12 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Send, Instagram, Clock, Shield, Truck, Headphones } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
+import { getCategories } from '@/lib/api';
 
 const footerLinks = [
   { href: '/', key: 'home' },
@@ -25,8 +27,26 @@ const advantages = [
 ];
 
 export function Footer() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
+  const [categories, setCategories] = useState<{ slug: string; name_ru: string; name_uz: string }[]>(() => [
+    { slug: 'ready-pc', name_ru: 'Готовые ПК', name_uz: 'Tayyor PK' },
+    { slug: 'processors', name_ru: 'Процессоры', name_uz: 'Protsessorlar' },
+    { slug: 'videocards', name_ru: 'Видеокарты', name_uz: 'Videokartalar' },
+    { slug: 'motherboards', name_ru: 'Материнские платы', name_uz: 'Platalar' },
+    { slug: 'ram', name_ru: 'Оперативная память', name_uz: 'Operativ xotira' },
+    { slug: 'ssd', name_ru: 'SSD', name_uz: 'SSD' },
+  ]);
+
+  useEffect(() => {
+    getCategories()
+      .then((data) => {
+        if (data && data.length > 0) {
+          setCategories(data);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   return (
     <footer className="bg-neutral-900 border-t border-gray-800">
@@ -121,17 +141,22 @@ export function Footer() {
 
           {/* Categories */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Категории</h3>
+            <h3 className="text-white font-semibold mb-4">
+              {language === 'ru' ? 'Категории' : 'Kategoriyalar'}
+            </h3>
             <nav className="space-y-2">
-              {Object.entries(t.categories).slice(0, 6).map(([slug, name]) => (
-                <Link
-                  key={slug}
-                  href={`/catalog?category=${slug}`}
-                  className="block text-gray-400 hover:text-red-500 transition-colors"
-                >
-                  {name}
-                </Link>
-              ))}
+              {categories.slice(0, 6).map((cat) => {
+                const name = language === 'ru' ? cat.name_ru : cat.name_uz;
+                return (
+                  <Link
+                    key={cat.slug}
+                    href={`/catalog?category=${cat.slug}`}
+                    className="block text-gray-400 hover:text-red-500 transition-colors"
+                  >
+                    {name}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         </div>
