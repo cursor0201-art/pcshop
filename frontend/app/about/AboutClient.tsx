@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Truck, Shield, Award, Headphones, CheckCircle, Users, Package, Clock } from 'lucide-react';
+import { Truck, Shield, Award, Headphones, CheckCircle, Users, Package, Clock, Cpu, Heart } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/hooks/useLanguage';
 
@@ -25,48 +25,48 @@ export default function AboutPage() {
     }
   }, [language]);
 
-  const advantages = [
-    {
-      icon: Truck,
-      title: language === 'ru' ? 'Быстрая доставка' : 'Tez yetkazib berish',
-      description: language === 'ru'
-        ? 'Доставляем по всему Узбекистану в кратчайшие сроки'
-        : "O'zbekiston bo'ylab eng qisqa muddatlarda yetkazib beramiz",
-    },
-    {
-      icon: Shield,
-      title: language === 'ru' ? 'Гарантия качества' : 'Sifat kafolati',
-      description: language === 'ru'
-        ? 'Официальная гарантия на все товары от 12 месяцев'
-        : 'Barcha mahsulotlarga 12 oydan kam bo\'lmagan rasmiy kafolat',
-    },
-    {
-      icon: Award,
-      title: language === 'ru' ? 'Лучшие цены' : 'Eng yaxshi narxlar',
-      description: language === 'ru'
-        ? 'Работаем напрямую с поставщиками без посредников'
-        : 'Vositachilarsiz bevosita yetkazib beruvchilar bilan ishlaymiz',
-    },
-    {
-      icon: Headphones,
-      title: language === 'ru' ? 'Консультации' : 'Konsultatsiya',
-      description: language === 'ru'
-        ? 'Бесплатные консультации специалистов по подбору техники'
-        : 'Texnikani tanlash bo\'yicha mutaxassis maslahatlari bepul',
-    },
-  ];
-
   const stats = [
     { icon: Users, value: '2000+', label: language === 'ru' ? 'Довольных клиентов' : 'Mamnun mijozlar' },
     { icon: Package, value: '5000+', label: language === 'ru' ? 'Выполненных заказов' : 'Yetkazilgan buyurtmalar' },
     { icon: Clock, value: '10+', label: language === 'ru' ? 'Лет на рынке' : 'yillik tajriba' },
   ];
 
-  const achievements = [
-    language === 'ru' ? 'Официальный представитель ведущих брендов' : "Keng qamrovli markalarning rasmiy vakili",
-    language === 'ru' ? 'Сертифицированные специалисты' : 'Malakali mutaxassislar',
-    language === 'ru' ? 'Сервисный центр в Ташкенте' : "Toshkentda ishlar markazi",
-    language === 'ru' ? 'Более 150 товаров в каталоге' : 'Katalogda 150 dan ortiq mahsulot',
+  const whyChooseUs = [
+    {
+      icon: Clock,
+      text_ru: 'Более 10 лет опыта в сфере компьютерной техники',
+      text_uz: 'Kompyuter texnikasi sohasida 10 yildan ortiq tajriba',
+    },
+    {
+      icon: Cpu,
+      text_ru: 'Профессиональная сборка ПК под любые задачи и бюджет',
+      text_uz: 'Har qanday vazifa va byudjet uchun professional PK yig\'ish',
+    },
+    {
+      icon: Package,
+      text_ru: 'Большой выбор комплектующих, ноутбуков и периферии',
+      text_uz: 'Butlovchi qismlar, noutbuklar va periferiyaning keng tanlovi',
+    },
+    {
+      icon: Award,
+      text_ru: 'Техника и аксессуары от популярных и надежных брендов',
+      text_uz: 'Mashhur va ishonchli brendlarning texnikasi va aksessuarlari',
+    },
+    {
+      icon: Shield,
+      text_ru: 'Гарантия качества на товары и сборки',
+      text_uz: 'Mahsulotlar va yig\'malarga sifat kafolati',
+    },
+    {
+      icon: Heart,
+      text_ru: 'Доступные цены и честный подход без навязывания лишнего',
+      text_uz: 'Ortiqcha narsalarni majburlamasdan hamyonbop narxlar va halol yondashuv',
+    },
+    {
+      icon: Headphones,
+      text_ru: 'Помощь с подбором, консультацией и выбором оптимального решения',
+      text_uz: 'Tanlashda yordam, konsultatsiya va eng maqbul yechimni tanlash',
+    },
   ];
 
   return (
@@ -76,17 +76,49 @@ export default function AboutPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 mb-6">
-            <span className="text-sm text-red-400">
-              {language === 'ru' ? 'С 2019 года' : '2019 dan beri'}
-            </span>
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+            {language === 'ru' ? 'О нас' : 'Biz haqimizda'}
+          </h1>
+        </motion.div>
+
+        {/* Main Text Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="grid lg:grid-cols-3 gap-8 mb-16"
+        >
+          <div className="lg:col-span-2 space-y-6 text-gray-300 leading-relaxed text-base text-justify">
+            <p>
+              {language === 'ru'
+                ? 'Мы — магазин компьютерной техники с более чем 10-летним опытом работы. За это время мы помогли сотням клиентов подобрать надежные решения для дома, учебы, офиса, игр, работы с графикой, монтажа, программирования и других задач.'
+                : 'Biz — kompyuter texnikasi sohasida 10 yildan ortiq tajribaga ega do\'konmiz. Shu vaqt ichida biz yuzlab mijozlarga uy, o\'qish, idora, o\'yinlar, grafika bilan ishlash, montaj, dasturlash va boshqa vazifalar uchun ishonchli yechimlarni tanlashda yordam berdik.'}
+            </p>
+            <p>
+              {language === 'ru'
+                ? 'Наша главная специализация — подбор и сборка компьютеров под любой бюджет и любые цели. Мы знаем, как собрать оптимальную конфигурацию без переплат: от недорогого домашнего ПК до мощной игровой или профессиональной станции. Каждая сборка продумывается с учетом задач клиента, совместимости комплектующих, производительности и дальнейшего апгрейда.'
+                : 'Bizning asosiy ixtisosligimiz — har qanday byudjet va maqsadlar uchun kompyuterlarni tanlash va yig\'ishdir. Biz ortiqcha to\'lovlar va ortiqcha xarajatlarsiz maqbul konfiguratsiyani qanday yig\'ishni bilamiz: arzon uy shaxsiy kompyuteridan tortib, kuchli o\'yin yoki professional stansiyagacha. Har bir yig\'ma mijozning vazifalari, butlovchi qismlarning mosligi, unumdorligi va keyinchalik yangilanishi (upgrade) imkoniyatlarini hisobga olgan holda puxta o\'ylab chiqiladi.'}
+            </p>
+            <p>
+              {language === 'ru'
+                ? 'В нашем ассортименте вы найдете не только комплектующие и готовые ПК, но и ноутбуки, мониторы, периферию, аксессуары и технику от известных мировых брендов. Мы внимательно подходим к выбору товаров, поэтому предлагаем только проверенные решения с гарантией качества.'
+                : 'Assortimentimizda nafaqat butlovchi qismlar va tayyor shaxsiy kompyuterlar, balki noutbuklar, monitorlar, periferiya qurilmalari, aksessuarlar va dunyoga mashhur brendlarning texnikasini ham topishingiz mumkin. Biz mahsulotlarni tanlashga juda ehtiyotkorlik bilan yondashamiz, shuning uchun faqat sifat kafolatiga ega ishonchli yechimlarni taklif etamiz.'}
+            </p>
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-6">{t.about.title}</h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            {t.about.description}
-          </p>
+          <div className="bg-gradient-to-br from-neutral-900 to-neutral-950 p-8 rounded-2xl border border-red-500/20 flex flex-col justify-center relative overflow-hidden h-full">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-3xl" />
+            <p className="text-lg font-semibold text-white mb-4 relative z-10">
+              {language === 'ru'
+                ? 'Надежная техника, грамотный подбор и честный сервис — основа нашей работы.'
+                : 'Ishonchli texnika, malakali tanlov va halol xizmat — ishimizning asosidir.'}
+            </p>
+            <p className="text-sm text-gray-400 relative z-10 leading-relaxed">
+              {language === 'ru'
+                ? 'Мы стремимся сделать покупку техники простой и понятной: объясняем, подбираем, собираем, проверяем и помогаем выбрать именно то, что действительно подойдет вам.'
+                : 'Biz texnika sotib olishni oson va tushunarli qilishga intilamiz: tushuntiramiz, tanlaymiz, yig\'amiz, tekshiramiz va sizga haqiqatan ham mos keladigan narsani tanlashda yordam beramiz.'}
+            </p>
+          </div>
         </motion.div>
 
         {/* Stats */}
@@ -106,67 +138,43 @@ export default function AboutPage() {
             >
               <stat.icon className="w-10 h-10 text-red-500 mx-auto mb-4" />
               <p className="text-3xl font-bold text-white mb-2">{stat.value}</p>
-              <p className="text-gray-400">{stat.label}</p>
+              <p className="text-gray-400 text-sm">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Advantages */}
-        <div className="mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-bold text-white text-center mb-8"
-          >
-            {language === 'ru' ? 'Наши преимущества' : 'Bizning afzalliklarimiz'}
-          </motion.h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {advantages.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="p-6 rounded-2xl bg-neutral-900 border border-gray-800 hover:border-red-500/30 transition-colors"
-              >
-                <div className="w-14 h-14 rounded-xl bg-red-500/10 flex items-center justify-center mb-4">
-                  <item.icon className="w-7 h-7 text-red-500" />
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
-                <p className="text-gray-400 text-sm">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Achievements */}
+        {/* Why Choose Us */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8">
-            {language === 'ru' ? 'Наши достижения' : 'Bizning muvaffaqiyatlarimiz'}
+          <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-10">
+            {language === 'ru' ? 'Почему выбирают нас' : 'Nima uchun bizni tanlashadi'}
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {achievements.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center gap-3 p-4 rounded-xl bg-neutral-900 border border-gray-800"
-              >
-                <CheckCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-                <span className="text-white">{item}</span>
-              </motion.div>
-            ))}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {whyChooseUs.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  className="flex gap-4 p-5 rounded-2xl bg-neutral-900 border border-gray-800 hover:border-red-500/20 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6 text-red-500" />
+                  </div>
+                  <p className="text-gray-300 text-sm md:text-base leading-relaxed self-center">
+                    {language === 'ru' ? item.text_ru : item.text_uz}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
 
