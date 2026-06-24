@@ -66,7 +66,7 @@ export default function AboutPage() {
     language === 'ru' ? 'Официальный представитель ведущих брендов' : "Keng qamrovli markalarning rasmiy vakili",
     language === 'ru' ? 'Сертифицированные специалисты' : 'Malakali mutaxassislar',
     language === 'ru' ? 'Сервисный центр в Ташкенте' : "Toshkentda ishlar markazi",
-    language === 'ru' ? 'Более 500 товаров в каталоге' : 'Katalogda 500 dan ortiq mahsulot',
+    language === 'ru' ? 'Более 150 товаров в каталоге' : 'Katalogda 150 dan ortiq mahsulot',
   ];
 
   return (

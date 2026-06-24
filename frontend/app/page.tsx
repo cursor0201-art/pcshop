@@ -508,7 +508,7 @@ export default function HomePage() {
       <section className="py-16 bg-neutral-900/50 border-y border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatCounter value={500} label={t.stats.products} />
+            <StatCounter value={150} label={t.stats.products} />
             <StatCounter value={2000} label={t.stats.customers} />
             <StatCounter value={3500} label={t.stats.orders} />
             <StatCounter value={10} label={t.stats.years} />
