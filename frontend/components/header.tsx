@@ -62,17 +62,14 @@ export function Header() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center"
+                className="flex items-center gap-2"
               >
-                <div className="relative w-36 h-10 bg-white px-2 rounded-lg flex items-center justify-center">
-                  <Image
-                    src="/logo.png"
-                    alt="PcShop_uz Logo"
-                    fill
-                    className="object-contain p-1.5"
-                    priority
-                  />
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">P</span>
                 </div>
+                <span className="text-xl font-bold text-white">
+                  PcShop<span className="text-red-500">_uz</span>
+                </span>
               </motion.div>
             </Link>
 
