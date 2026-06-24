@@ -20,6 +20,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True, verbose_name="Slug")
     description_ru = models.TextField(blank=True, null=True, verbose_name="Описание (RU)")
     description_uz = models.TextField(blank=True, null=True, verbose_name="Описание (UZ)")
+    is_active = models.BooleanField(default=True, verbose_name="Активна (показывать на сайте)")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создано")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлено")
 
@@ -51,6 +52,7 @@ class Product(models.Model):
     image_file = models.ImageField(upload_to='temp_products/', blank=True, null=True, verbose_name="Изображение (загрузить с ПК)", help_text="Выберите изображение с вашего компьютера. Оно автоматически загрузится в постоянное облачное хранилище.")
     brand = models.CharField(max_length=255, blank=True, null=True, verbose_name="Бренд")
     warranty_months = models.IntegerField(default=12, verbose_name="Гарантия (месяцев)")
+    is_active = models.BooleanField(default=True, verbose_name="Активен (показывать на сайте)")
     
     # Auto SEO fields
     seo_title_ru = models.CharField(max_length=255, blank=True, null=True, verbose_name="SEO Title (RU)")

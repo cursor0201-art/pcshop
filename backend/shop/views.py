@@ -35,8 +35,13 @@ def send_telegram_notification(order):
         print(f"Error sending telegram message: {e}")
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        queryset = Category.objects.all()
+        if self.action in ['list', 'retrieve']:
+            queryset = queryset.filter(is_active=True)
+        return queryset
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -46,8 +51,13 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        if self.action in ['list', 'retrieve']:
+            queryset = queryset.filter(is_active=True, category__is_active=True)
+        return queryset
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:

@@ -3,7 +3,8 @@ from .models import Category, Product, ProductCharacteristic, Order, OrderItem, 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name_ru', 'name_uz', 'created_at')
+    list_display = ('id', 'name_ru', 'name_uz', 'is_active', 'created_at')
+    list_editable = ('is_active',)
     search_fields = ('name_ru', 'name_uz')
     prepopulated_fields = {'slug': ('name_ru',)}
 
@@ -17,8 +18,9 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name_ru', 'name_uz', 'price', 'stock', 'category')
-    list_filter = ('category',)
+    list_display = ('id', 'name_ru', 'name_uz', 'price', 'stock', 'is_active', 'category')
+    list_editable = ('is_active',)
+    list_filter = ('category', 'is_active')
     search_fields = ('name_ru', 'name_uz')
     prepopulated_fields = {'slug': ('name_ru',)}
     exclude = ('image', 'image_file')
