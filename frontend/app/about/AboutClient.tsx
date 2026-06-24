@@ -59,7 +59,7 @@ export default function AboutPage() {
   const stats = [
     { icon: Users, value: '2000+', label: language === 'ru' ? 'Довольных клиентов' : 'Mamnun mijozlar' },
     { icon: Package, value: '5000+', label: language === 'ru' ? 'Выполненных заказов' : 'Yetkazilgan buyurtmalar' },
-    { icon: Clock, value: '5+', label: language === 'ru' ? 'Лет на рынке' : 'Yoq tajriba' },
+    { icon: Clock, value: '5+', label: language === 'ru' ? 'Лет на рынке' : 'yillik tajriba' },
   ];
 
   const achievements = [
