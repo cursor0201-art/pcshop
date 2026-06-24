@@ -7,37 +7,88 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Cpu, Layers, Disc, Database, Award, ShoppingCart, Trash2, ShieldCheck, HelpCircle } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart } from '@/hooks/useCart';
-import { getProducts, Product } from '@/lib/api';
+import { getProducts, getCategories, Product, Category } from '@/lib/api';
 
-const STEPS = [
-  { id: 'cpu', categoryId: 2, name_ru: 'Процессор', name_uz: 'Protsessor', icon: Cpu },
-  { id: 'motherboard', categoryId: 4, name_ru: 'Материнская плата', name_uz: 'Ona plata', icon: Layers },
-  { id: 'ram', categoryId: 5, name_ru: 'Оперативная память', name_uz: 'Operativ xotira', icon: Database },
-  { id: 'gpu', categoryId: 3, name_ru: 'Видеокарта', name_uz: 'Videokarta', icon: Award },
-  { id: 'ssd', categoryId: 6, name_ru: 'SSD Накопитель', name_uz: 'SSD Disk', icon: Disc },
+const STEP_TEMPLATES = [
+  { id: 'cpu', defaultCategoryId: 2, name_ru: 'Процессор', name_uz: 'Protsessor', icon: Cpu },
+  { id: 'motherboard', defaultCategoryId: 4, name_ru: 'Материнская плата', name_uz: 'Ona plata', icon: Layers },
+  { id: 'ram', defaultCategoryId: 5, name_ru: 'Оперативная память', name_uz: 'Operativ xotira', icon: Database },
+  { id: 'gpu', defaultCategoryId: 3, name_ru: 'Видеокарта', name_uz: 'Videokarta', icon: Award },
+  { id: 'ssd', defaultCategoryId: 6, name_ru: 'SSD Накопитель', name_uz: 'SSD Disk', icon: Disc },
 ];
+
+const findCategoryIdForStep = (stepId: string, categories: Category[]) => {
+  const lowercaseStep = stepId.toLowerCase();
+  const match = categories.find(cat => {
+    const slug = (cat.slug || '').toLowerCase();
+    const nameRu = (cat.name_ru || '').toLowerCase();
+    const nameUz = (cat.name_uz || '').toLowerCase();
+    
+    if (lowercaseStep === 'cpu') {
+      return slug.includes('cpu') || slug.includes('processor') || slug.includes('protsessor') ||
+             nameRu.includes('процессор') || nameUz.includes('protsessor');
+    }
+    if (lowercaseStep === 'motherboard') {
+      return slug.includes('motherboard') || slug.includes('plata') || slug.includes('mb') || slug.includes('materinskaya') ||
+             nameRu.includes('материнская') || nameRu.includes('плата') || nameUz.includes('plata') || nameUz.includes('ona-plata');
+    }
+    if (lowercaseStep === 'ram') {
+      return slug.includes('ram') || slug.includes('pamyat') || slug.includes('xotira') || slug.includes('operativ') ||
+             nameRu.includes('память') || nameRu.includes('оперативная') || nameUz.includes('xotira') || nameUz.includes('operativ');
+    }
+    if (lowercaseStep === 'gpu') {
+      return slug.includes('gpu') || slug.includes('video') || slug.includes('card') || slug.includes('kart') ||
+             nameRu.includes('видеокарт') || nameUz.includes('videokart');
+    }
+    if (lowercaseStep === 'ssd') {
+      return slug.includes('ssd') || slug.includes('nakopitel') || slug.includes('disk') || slug.includes('drive') ||
+             nameRu.includes('ssd') || nameRu.includes('накопител') || nameUz.includes('ssd');
+    }
+    return false;
+  });
+  return match ? match.id : null;
+};
 
 export default function ConfiguratorPage() {
   const { t, language } = useLanguage();
   const { addItem } = useCart();
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [steps, setSteps] = useState(
+    STEP_TEMPLATES.map(step => ({ ...step, categoryId: step.defaultCategoryId }))
+  );
   const [selectedComponents, setSelectedComponents] = useState<Record<string, Product>>({});
   const [loading, setLoading] = useState(true);
   const [activeStep, setActiveStep] = useState<string>('cpu');
   const [showAddedToCart, setShowAddedToCart] = useState(false);
 
   useEffect(() => {
-    const fetchAllProducts = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getProducts();
-        setProducts(data || []);
+        const [productsData, categoriesData] = await Promise.all([
+          getProducts(),
+          getCategories()
+        ]);
+        setProducts(productsData || []);
+        setCategories(categoriesData || []);
+        
+        if (categoriesData && categoriesData.length > 0) {
+          const updatedSteps = STEP_TEMPLATES.map(step => {
+            const dynamicId = findCategoryIdForStep(step.id, categoriesData);
+            return {
+              ...step,
+              categoryId: dynamicId !== null ? dynamicId : step.defaultCategoryId
+            };
+          });
+          setSteps(updatedSteps);
+        }
       } catch (err) {
-        console.error('Error fetching products for configurator:', err);
+        console.error('Error fetching data for configurator:', err);
       } finally {
         setLoading(false);
       }
     };
-    fetchAllProducts();
+    fetchData();
   }, []);
 
   const handleSelectComponent = (stepId: string, product: Product) => {
@@ -47,9 +98,9 @@ export default function ConfiguratorPage() {
     }));
     
     // Automatically move to the next incomplete step or wrap up
-    const currentIndex = STEPS.findIndex(s => s.id === stepId);
-    if (currentIndex < STEPS.length - 1) {
-      setActiveStep(STEPS[currentIndex + 1].id);
+    const currentIndex = steps.findIndex(s => s.id === stepId);
+    if (currentIndex < steps.length - 1) {
+      setActiveStep(steps[currentIndex + 1].id);
     }
   };
 
@@ -109,7 +160,7 @@ export default function ConfiguratorPage() {
 
   const compatibility = checkCompatibility();
 
-  const currentStepInfo = STEPS.find(s => s.id === activeStep);
+  const currentStepInfo = steps.find(s => s.id === activeStep);
   const stepProducts = currentStepInfo ? getFilteredProducts(currentStepInfo.categoryId) : [];
 
   // Breadcrumbs schema
@@ -161,7 +212,7 @@ export default function ConfiguratorPage() {
               
               {/* Stepper Navigation */}
               <div className="flex overflow-x-auto pb-2 gap-2 scrollbar-thin">
-                {STEPS.map((step) => {
+                {steps.map((step) => {
                   const Icon = step.icon;
                   const isSelected = selectedComponents[step.id];
                   const isActive = activeStep === step.id;
@@ -276,7 +327,7 @@ export default function ConfiguratorPage() {
               </h3>
 
               <div className="space-y-4">
-                {STEPS.map((step) => {
+                {steps.map((step) => {
                   const component = selectedComponents[step.id];
                   const name = component ? (language === 'ru' ? component.name_ru : component.name_uz) : null;
                   
