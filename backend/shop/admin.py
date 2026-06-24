@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, ProductCharacteristic, Order, OrderItem, Review, TelegramSettings, ProductImage
+from .models import Category, Product, ProductCharacteristic, Order, OrderItem, Review, ProductImage
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -33,12 +33,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status', 'created_at')
     search_fields = ('client_name', 'client_phone')
     inlines = [OrderItemInline]
-
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'product', 'rating', 'created_at')
     list_filter = ('rating',)
-
-@admin.register(TelegramSettings)
-class TelegramSettingsAdmin(admin.ModelAdmin):
-    list_display = ('bot_token', 'chat_id', 'is_active')
