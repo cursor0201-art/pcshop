@@ -815,14 +815,14 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="relative aspect-video rounded-2xl overflow-hidden">
+              <div className="relative aspect-video rounded-2xl overflow-hidden border border-gray-800 hover:border-red-500/30 transition-all duration-300">
                 <Image
-                  src="https://images.pexels.com/photos/13019724/pexels-photo-13019724.jpeg"
+                  src="/about-pc.png"
                   alt="PcShop_uz"
                   fill
-                  className="object-cover"
+                  className="object-cover hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent pointer-events-none" />
               </div>
               <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-xl shadow-red-500/25">
                 <div className="text-center">
