@@ -64,7 +64,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASE_URL = os.getenv('DATABASE_URL', '').strip().strip('\'"')
-if not DATABASE_URL or DATABASE_URL.lower() in ('', 'none', 'null', 'false'):
+is_valid_db_url = any(DATABASE_URL.startswith(scheme) for scheme in ('postgres://', 'postgresql://', 'sqlite://'))
+
+if not is_valid_db_url:
     os.environ.pop('DATABASE_URL', None)
     DATABASES = {
         'default': {
