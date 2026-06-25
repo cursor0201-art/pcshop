@@ -52,7 +52,7 @@ function StatCounter({ value, label }: { value: number; label: string }) {
 }
 
 // Category card component
-function CategoryCard({ category, index }: { category: { name_ru: string; name_uz: string; slug: string }; index: number }) {
+function CategoryCard({ category, index, productCount }: { category: { id: number; name_ru: string; name_uz: string; slug: string }; index: number; productCount: number }) {
   const { language } = useLanguage();
   const name = language === 'ru' ? category.name_ru : category.name_uz;
 
@@ -71,6 +71,19 @@ function CategoryCard({ category, index }: { category: { name_ru: string; name_u
     'keyboards': <Headphones className="w-8 h-8" />,
     'mice': <Headphones className="w-8 h-8" />,
     'headphones': <Headphones className="w-8 h-8" />,
+  };
+
+  const getCountText = (count: number) => {
+    if (language !== 'ru') return `${count} ta mahsulot`;
+    const mod10 = count % 10;
+    const mod100 = count % 100;
+    if (mod10 === 1 && mod100 !== 11) {
+      return `${count} товар`;
+    }
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+      return `${count} товара`;
+    }
+    return `${count} товаров`;
   };
 
   return (
@@ -93,7 +106,7 @@ function CategoryCard({ category, index }: { category: { name_ru: string; name_u
             <div>
               <h3 className="font-semibold text-white group-hover:text-red-500 transition-colors">{name}</h3>
               <p className="text-sm text-gray-500 group-hover:text-gray-400 transition-colors">
-                {Math.floor(Math.random() * 50 + 10)} товаров
+                {getCountText(productCount)}
               </p>
             </div>
           </div>
@@ -266,6 +279,7 @@ export default function HomePage() {
   const { t, language } = useLanguage();
   const [categories, setCategories] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
+  const [allProducts, setAllProducts] = useState<any[]>([]);
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -276,7 +290,10 @@ export default function HomePage() {
 
   useEffect(() => {
     getCategories().then(setCategories);
-    getProducts({ limit: 8 }).then(setProducts);
+    getProducts().then((data) => {
+      setAllProducts(data);
+      setProducts(data.slice(0, 8));
+    });
   }, []);
 
   useEffect(() => {
@@ -551,7 +568,12 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {categories.map((cat, index) => (
-              <CategoryCard key={cat.id || cat.slug} category={cat} index={index} />
+              <CategoryCard 
+                key={cat.id || cat.slug} 
+                category={cat} 
+                index={index} 
+                productCount={allProducts.filter(p => p.category_id === cat.id || p.category_slug === cat.slug).length}
+              />
             ))}
           </div>
         </div>
