@@ -31,8 +31,31 @@ class DecimalTextInput(TextInput):
             default_attrs.update(attrs)
         super().__init__(attrs=default_attrs)
 
+from django import forms
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = '__all__'
+        widgets = {
+            'price': DecimalTextInput(attrs={'placeholder': 'UZS'}),
+            'price_usd': DecimalTextInput(attrs={'placeholder': 'USD'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in ['price', 'price_usd']:
+            val = self.initial.get(field)
+            if val is not None:
+                try:
+                    if float(val) == 0.0:
+                        self.initial[field] = ''
+                except (ValueError, TypeError):
+                    pass
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    form = ProductForm
     list_display = ('id', 'name_ru', 'name_uz', 'price', 'price_usd', 'stock', 'is_active', 'category')
     list_editable = ('is_active',)
     list_filter = ('category', 'is_active')
@@ -40,9 +63,6 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name_ru',)}
     exclude = ('image', 'image_file')
     inlines = [ProductCharacteristicInline, ProductImageInline]
-    formfield_overrides = {
-        models.DecimalField: {'widget': DecimalTextInput},
-    }
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem

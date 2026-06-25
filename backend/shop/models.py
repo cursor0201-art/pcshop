@@ -153,9 +153,8 @@ class Product(models.Model):
         except Exception:
             rate = decimal.Decimal('12800.00')
 
-        if not self.price and not self.price_usd:
-            self.price = decimal.Decimal('0.00')
-            self.price_usd = decimal.Decimal('0.00')
+        if self.price is None and self.price_usd is None:
+            pass
         elif self.price_usd and not self.price:
             self.price = (self.price_usd * rate).quantize(decimal.Decimal('1.00'))
         elif self.price and not self.price_usd:
