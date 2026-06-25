@@ -66,7 +66,8 @@ export default function CatalogPage() {
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
   const [selectedBrand, setSelectedBrand] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000000]);
+  const [minPriceInput, setMinPriceInput] = useState<string>('');
+  const [maxPriceInput, setMaxPriceInput] = useState<string>('');
   const [inStockOnly, setInStockOnly] = useState(false);
   const [sortBy, setSortBy] = useState('newest');
   const [searchQuery, setSearchQuery] = useState('');
@@ -95,7 +96,9 @@ export default function CatalogPage() {
     }
 
     // Price filter
-    result = result.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
+    const minP = minPriceInput === '' ? 0 : Number(minPriceInput);
+    const maxP = maxPriceInput === '' ? Infinity : Number(maxPriceInput);
+    result = result.filter(p => p.price >= minP && p.price <= maxP);
 
     // Stock filter
     if (inStockOnly) {
@@ -134,7 +137,7 @@ export default function CatalogPage() {
     }
 
     return result;
-  }, [products, selectedCategory, selectedBrand, priceRange, inStockOnly, sortBy, searchQuery, categories, language]);
+  }, [products, selectedCategory, selectedBrand, minPriceInput, maxPriceInput, inStockOnly, sortBy, searchQuery, categories, language]);
 
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -220,7 +223,8 @@ export default function CatalogPage() {
   const clearFilters = () => {
     setSelectedCategory('');
     setSelectedBrand([]);
-    setPriceRange([0, 100000000]);
+    setMinPriceInput('');
+    setMaxPriceInput('');
     setInStockOnly(false);
     setSearchQuery('');
     setCurrentPage(1);
@@ -231,11 +235,11 @@ export default function CatalogPage() {
     let count = 0;
     if (selectedCategory) count++;
     if (selectedBrand.length > 0) count++;
-    if (priceRange[0] > 0 || priceRange[1] < 100000000) count++;
+    if (minPriceInput !== '' || maxPriceInput !== '') count++;
     if (inStockOnly) count++;
     if (searchQuery) count++;
     return count;
-  }, [selectedCategory, selectedBrand, priceRange, inStockOnly, searchQuery]);
+  }, [selectedCategory, selectedBrand, minPriceInput, maxPriceInput, inStockOnly, searchQuery]);
 
   // Product card component
   const ProductCard = ({ product, index }: { product: Product; index: number }) => {
@@ -519,16 +523,28 @@ export default function CatalogPage() {
                   <div className="space-y-4">
                     <div className="flex gap-3">
                       <input
-                        type="number"
-                        value={priceRange[0]}
-                        onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
+                        type="text"
+                        inputMode="decimal"
+                        pattern="[0-9]*"
+                        value={minPriceInput}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/[^0-9]/g, '');
+                          setMinPriceInput(val);
+                          setCurrentPage(1);
+                        }}
                         placeholder="Min"
                         className="w-full px-3 py-2 rounded-lg bg-neutral-800 border border-gray-700 text-white text-sm focus:border-red-500 focus:outline-none"
                       />
                       <input
-                        type="number"
-                        value={priceRange[1]}
-                        onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
+                        type="text"
+                        inputMode="decimal"
+                        pattern="[0-9]*"
+                        value={maxPriceInput}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/[^0-9]/g, '');
+                          setMaxPriceInput(val);
+                          setCurrentPage(1);
+                        }}
                         placeholder="Max"
                         className="w-full px-3 py-2 rounded-lg bg-neutral-800 border border-gray-700 text-white text-sm focus:border-red-500 focus:outline-none"
                       />
