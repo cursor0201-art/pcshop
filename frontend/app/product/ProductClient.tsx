@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Star, Minus, Plus, ShoppingCart, Send, ChevronLeft, ChevronRight,
-  Check, Shield, Truck, Clock, Phone, ArrowLeft
+  Check, Shield, Truck, Clock, Phone, ArrowLeft, Scale
 } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart } from '@/hooks/useCart';
@@ -424,18 +424,21 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
 
                 {/* Compare */}
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => addToCompare(product.id)}
-                  className={`p-4 rounded-xl border transition-colors ${
+                  className={`flex items-center justify-center gap-2 px-6 py-4 rounded-xl border transition-all ${
                     isInCompare
-                      ? 'bg-red-500 border-red-500 text-white'
+                      ? 'bg-red-600 border-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.2)]'
                       : 'border-gray-700 text-gray-400 hover:border-red-500 hover:text-red-500'
                   }`}
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M16 3h5v5M8 3H3v5M21 3l-7 7M3 3l7 7M16 21h5v-5M8 21H3v-5M21 21l-7-7M3 21l7-7" />
-                  </svg>
+                  <Scale className="w-5 h-5" />
+                  <span className="text-sm font-semibold">
+                    {isInCompare
+                      ? (language === 'ru' ? 'В сравнении' : 'Taqqoslashda')
+                      : (language === 'ru' ? 'Сравнить' : 'Taqqoslash')}
+                  </span>
                 </motion.button>
               </div>
 
