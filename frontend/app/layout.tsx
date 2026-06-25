@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   title: 'PcShop_uz - Игровые ПК и комплектующие в Узбекистане (Ташкент)',
   description: 'Купить готовые игровые ПК и качественные комплектующие для компьютеров в Ташкенте с доставкой по всему Узбекистану. Официальная гарантия 1 год. Сборка ПК под заказ.',
   keywords: 'купить компьютер в Ташкенте, игровой компьютер Ташкент, видеокарта Ташкент, RTX Ташкент, процессор Ташкент, сборка ПК Ташкент, компьютерный магазин Узбекистан, комплектующие для ПК Узбекистан, PcShop_uz',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'PcShop_uz',
+  },
   icons: {
     icon: '/icon.png',
     shortcut: '/icon.png',
@@ -128,6 +134,10 @@ export default function RootLayout({
   return (
     <html lang="ru" className="dark">
       <head>
+        <meta name="theme-color" content="#ef4444" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
@@ -140,11 +150,26 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                    console.log('SW registered:', reg.scope);
+                  }).catch(function(err) {
+                    console.log('SW reg failed:', err);
+                  });
+                });
+              }
+            `
+          }}
+        />
       </head>
       <body className={`${inter.className} min-h-screen bg-neutral-950 text-white`}>
         <Providers>
           <Header />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen pb-20 lg:pb-0">{children}</main>
           <Footer />
         </Providers>
       </body>

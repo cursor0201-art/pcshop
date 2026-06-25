@@ -391,9 +391,9 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
               )}
 
               {/* Quantity & Actions */}
-              <div className="flex flex-wrap items-center gap-4 mb-8">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-8">
                 {/* Quantity selector */}
-                <div className="flex items-center gap-1 bg-neutral-900 rounded-lg border border-gray-700">
+                <div className="flex items-center justify-between sm:justify-start gap-1 bg-neutral-900 rounded-lg border border-gray-700 w-full sm:w-auto">
                   <button
                     onClick={() => setQuantity(q => Math.max(1, q - 1))}
                     className="p-3 text-gray-400 hover:text-white transition-colors"
@@ -416,7 +416,7 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
                   whileTap={{ scale: 0.98 }}
                   onClick={handleAddToCart}
                   disabled={product.stock === 0}
-                  className="flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold disabled:opacity-50"
+                  className="w-full sm:flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold disabled:opacity-50"
                 >
                   <ShoppingCart className="w-5 h-5" />
                   {t.product.addToCart}
@@ -427,7 +427,7 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => addToCompare(product.id)}
-                  className={`flex items-center justify-center gap-2 px-6 py-4 rounded-xl border transition-all ${
+                  className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 rounded-xl border transition-all ${
                     isInCompare
                       ? 'bg-red-600 border-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.2)]'
                       : 'border-gray-700 text-gray-400 hover:border-red-500 hover:text-red-500'
