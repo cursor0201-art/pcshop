@@ -1,0 +1,53 @@
+{% extends "admin/change_form.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+/* Hide number input spinners in Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide number input spinners in Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Style inputs to look clean and neat on mobile */
+input[type=number], input.vDecimalField {
+  font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all price/number inputs in the admin
+    const inputs = document.querySelectorAll('input[type="number"], input.vDecimalField');
+    
+    inputs.forEach(function(input) {
+        // Clear value on focus if it is '0'
+        input.addEventListener('focus', function() {
+            if (this.value === '0' || this.value === '0.00' || this.value === '0,00') {
+                this.value = '';
+            } else {
+                // Workaround for some mobile browsers that select text poorly
+                const element = this;
+                setTimeout(function() {
+                    element.select();
+                }, 50);
+            }
+        });
+
+        // Set value back to '0' on blur if empty
+        input.addEventListener('blur', function() {
+            if (this.value === '') {
+                this.value = '0';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
