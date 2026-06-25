@@ -28,9 +28,20 @@ class ProductSerializer(serializers.ModelSerializer):
         image_list = []
         if obj.image:
             image_list.append(obj.image)
+        elif obj.image_file:
+            request = self.context.get('request')
+            url = request.build_absolute_uri(obj.image_file.url) if request else obj.image_file.url
+            image_list.append(url)
+
         for img_rel in obj.images_rel.all():
-            if img_rel.image and img_rel.image not in image_list:
-                image_list.append(img_rel.image)
+            if img_rel.image:
+                if img_rel.image not in image_list:
+                    image_list.append(img_rel.image)
+            elif img_rel.image_file:
+                request = self.context.get('request')
+                url = request.build_absolute_uri(img_rel.image_file.url) if request else img_rel.image_file.url
+                if url not in image_list:
+                    image_list.append(url)
         return image_list
 
     def get_images_detail(self, obj):
@@ -41,10 +52,27 @@ class ProductSerializer(serializers.ModelSerializer):
                 'color_name': None,
                 'color_code': None
             })
+        elif obj.image_file:
+            request = self.context.get('request')
+            url = request.build_absolute_uri(obj.image_file.url) if request else obj.image_file.url
+            detail_list.append({
+                'url': url,
+                'color_name': None,
+                'color_code': None
+            })
+
         for img_rel in obj.images_rel.all():
             if img_rel.image:
                 detail_list.append({
                     'url': img_rel.image,
+                    'color_name': img_rel.color_name,
+                    'color_code': img_rel.color_code
+                })
+            elif img_rel.image_file:
+                request = self.context.get('request')
+                url = request.build_absolute_uri(img_rel.image_file.url) if request else img_rel.image_file.url
+                detail_list.append({
+                    'url': url,
                     'color_name': img_rel.color_name,
                     'color_code': img_rel.color_code
                 })
