@@ -190,7 +190,14 @@ function ProductCard({ product, index }: { product: any; index: number }) {
             {/* Price */}
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-lg font-bold text-red-500">{formatPrice(product.price)}</p>
+                <p className="text-lg font-bold text-red-500">
+                  {formatPrice(product.price)}
+                  {product.price_usd && (
+                    <span className="text-xs text-gray-400 font-normal block">
+                      ~ {Number(product.price_usd).toLocaleString('en-US')} $
+                    </span>
+                  )}
+                </p>
                 {product.old_price && (
                   <p className="text-sm text-gray-500 line-through">{formatPrice(product.old_price)}</p>
                 )}

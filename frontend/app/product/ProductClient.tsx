@@ -43,6 +43,7 @@ interface Product {
   description_ru: string;
   description_uz: string;
   price: number;
+  price_usd?: number | null;
   old_price: number | null;
   stock: number;
   specs: Record<string, string>;
@@ -324,13 +325,20 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
               </div>
 
               {/* Price */}
-              <div className="flex items-end gap-4 mb-6">
-                <span className="text-3xl md:text-4xl font-bold text-red-500">
-                  {formatPrice(product.price)}
-                </span>
-                {product.old_price && (
-                  <span className="text-xl text-gray-500 line-through">
-                    {formatPrice(product.old_price)}
+              <div className="flex flex-col gap-1 mb-6">
+                <div className="flex items-end gap-4">
+                  <span className="text-3xl md:text-4xl font-bold text-red-500">
+                    {formatPrice(product.price)}
+                  </span>
+                  {product.old_price && (
+                    <span className="text-xl text-gray-500 line-through">
+                      {formatPrice(product.old_price)}
+                    </span>
+                  )}
+                </div>
+                {product.price_usd && (
+                  <span className="text-sm text-gray-400 font-normal">
+                    ~ {Number(product.price_usd).toLocaleString('en-US')} $
                   </span>
                 )}
               </div>

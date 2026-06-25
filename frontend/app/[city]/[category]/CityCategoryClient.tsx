@@ -17,6 +17,7 @@ interface Product {
   description_ru: string;
   description_uz: string;
   price: number;
+  price_usd?: number | null;
   old_price: number | null;
   stock: number;
   specs: Record<string, string>;
@@ -199,7 +200,14 @@ export default function CityCategoryClient({ initialProducts, categorySlug, city
 
                     <div className="mt-4 pt-2 border-t border-gray-800/40 flex items-center justify-between">
                       <div>
-                        <p className="text-base font-bold text-red-500">{formatPrice(product.price)}</p>
+                        <p className="text-base font-bold text-red-500">
+                          {formatPrice(product.price)}
+                          {product.price_usd && (
+                            <span className="text-xs text-gray-400 font-normal block">
+                              ~ {Number(product.price_usd).toLocaleString('en-US')} $
+                            </span>
+                          )}
+                        </p>
                         {product.old_price && (
                           <p className="text-xs text-gray-500 line-through">{formatPrice(product.old_price)}</p>
                         )}

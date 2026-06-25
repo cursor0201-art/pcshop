@@ -23,6 +23,7 @@ interface Product {
   description_ru: string;
   description_uz: string;
   price: number;
+  price_usd?: number | null;
   old_price: number | null;
   stock: number;
   specs: Record<string, string>;
@@ -314,7 +315,14 @@ export default function CatalogPage() {
 
             <div className={`flex items-end justify-between ${viewMode === 'list' ? 'mt-auto pt-4' : ''}`}>
               <div>
-                <p className="text-lg font-bold text-red-500">{formatPrice(product.price)}</p>
+                <p className="text-lg font-bold text-red-500">
+                  {formatPrice(product.price)}
+                  {product.price_usd && (
+                    <span className="text-xs text-gray-400 font-normal block">
+                      ~ {Number(product.price_usd).toLocaleString('en-US')} $
+                    </span>
+                  )}
+                </p>
                 {product.old_price && (
                   <p className="text-sm text-gray-500 line-through">{formatPrice(product.old_price)}</p>
                 )}
