@@ -473,8 +473,13 @@ export default function CatalogPage() {
                 {/* Mobile filter header */}
                 <div className="lg:hidden flex items-center justify-between mb-6">
                   <h2 className="text-lg font-semibold text-white">{t.filter.filter}</h2>
-                  <button onClick={() => setIsFilterOpen(false)}>
-                    <X className="w-5 h-5 text-gray-400" />
+                  <button
+                    type="button"
+                    onClick={() => setIsFilterOpen(false)}
+                    className="p-2 -mr-2 rounded-lg text-gray-400 hover:text-white hover:bg-neutral-800 transition-colors flex items-center justify-center min-w-[44px] min-h-[44px]"
+                    aria-label="Close filters"
+                  >
+                    <X className="w-6 h-6" />
                   </button>
                 </div>
 
