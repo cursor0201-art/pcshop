@@ -99,7 +99,7 @@ class Product(models.Model):
     price_usd = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, verbose_name="Цена (USD)")
     stock = models.IntegerField(default=0, verbose_name="В наличии")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name="Категория")
-    image = models.CharField(max_length=1000, blank=True, null=True, verbose_name="Изображение (ссылка)", help_text="Ссылка на изображение. Заполняется автоматически при загрузке файла с ПК, либо можно указать ссылку вручную.")
+    image = models.TextField(blank=True, null=True, verbose_name="Изображение (ссылка)", help_text="Ссылка на изображение. Заполняется автоматически при загрузке файла с ПК, либо можно указать ссылку вручную.")
     image_file = models.ImageField(upload_to='temp_products/', blank=True, null=True, verbose_name="Изображение (загрузить с ПК)", help_text="Выберите изображение с вашего компьютера. Оно автоматически загрузится в постоянное облачное хранилище.")
     brand = models.CharField(max_length=255, blank=True, null=True, verbose_name="Бренд")
     warranty_months = models.IntegerField(default=12, verbose_name="Гарантия (месяцев)")
@@ -176,6 +176,24 @@ class Product(models.Model):
             if cloud_url:
                 self.image = cloud_url
                 self.image_file = None
+            else:
+                try:
+                    self.image_file.seek(0)
+                    file_name = self.image_file.name
+                    file_content = self.image_file.read()
+                    self.image_file.seek(0)
+                    
+                    import mimetypes
+                    mime_type, _ = mimetypes.guess_type(file_name)
+                    if not mime_type:
+                        mime_type = "image/jpeg"
+                    
+                    import base64
+                    base64_data = base64.b64encode(file_content).decode('utf-8')
+                    self.image = f"data:{mime_type};base64,{base64_data}"
+                    self.image_file = None
+                except Exception as e:
+                    print("Base64 conversion failed:", e)
 
         super().save(*args, **kwargs)
 
@@ -269,7 +287,7 @@ class TelegramSettings(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images_rel', verbose_name="Товар")
-    image = models.CharField(max_length=1000, blank=True, null=True, verbose_name="Ссылка на изображение", help_text="Заполняется автоматически при загрузке с ПК, либо укажите ссылку вручную.")
+    image = models.TextField(blank=True, null=True, verbose_name="Ссылка на изображение", help_text="Заполняется автоматически при загрузке с ПК, либо укажите ссылку вручную.")
     image_file = models.ImageField(upload_to='temp_products/', blank=True, null=True, verbose_name="Загрузить файл с ПК", help_text="Выберите файл изображения с вашего устройства.")
     color_name = models.CharField(max_length=100, blank=True, null=True, verbose_name="Название цвета", help_text="Например: Синий, Черный")
     color_code = models.CharField(max_length=7, blank=True, null=True, verbose_name="Код цвета (HEX)", help_text="Например: #0000FF, #000000")
@@ -283,6 +301,24 @@ class ProductImage(models.Model):
             if cloud_url:
                 self.image = cloud_url
                 self.image_file = None
+            else:
+                try:
+                    self.image_file.seek(0)
+                    file_name = self.image_file.name
+                    file_content = self.image_file.read()
+                    self.image_file.seek(0)
+                    
+                    import mimetypes
+                    mime_type, _ = mimetypes.guess_type(file_name)
+                    if not mime_type:
+                        mime_type = "image/jpeg"
+                    
+                    import base64
+                    base64_data = base64.b64encode(file_content).decode('utf-8')
+                    self.image = f"data:{mime_type};base64,{base64_data}"
+                    self.image_file = None
+                except Exception as e:
+                    print("Base64 conversion failed:", e)
         super().save(*args, **kwargs)
 
     class Meta:
