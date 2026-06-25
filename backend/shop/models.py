@@ -14,6 +14,56 @@ def cyrillic_to_latin(text):
         result.append(char_map.get(char, char))
     return ''.join(result)
 
+def upload_file_to_cloud(image_file):
+    import requests
+    # 1. Try Catbox
+    try:
+        image_file.seek(0)
+        file_name = image_file.name
+        file_content = image_file.read()
+        image_file.seek(0)
+        
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+        res = requests.post(
+            'https://catbox.moe/user/api.php',
+            data={'reqtype': 'fileupload'},
+            files={'fileToUpload': (file_name, file_content)},
+            headers=headers,
+            timeout=15
+        )
+        if res.status_code == 200 and res.text.strip().startswith('http'):
+            return res.text.strip()
+    except Exception as e:
+        print("Catbox upload failed:", e)
+
+    # 2. Try Telegraph as fallback
+    try:
+        image_file.seek(0)
+        file_name = image_file.name
+        file_content = image_file.read()
+        image_file.seek(0)
+        
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+        res = requests.post(
+            'https://telegra.ph/upload',
+            files={'file': (file_name, file_content)},
+            headers=headers,
+            timeout=15
+        )
+        if res.status_code == 200:
+            data = res.json()
+            if isinstance(data, list) and len(data) > 0 and 'src' in data[0]:
+                return "https://telegra.ph" + data[0]['src']
+    except Exception as e:
+        print("Telegraph upload failed:", e)
+
+    return None
+
+
 class Category(models.Model):
     name_ru = models.CharField(max_length=255, verbose_name="Название (RU)", default='')
     name_uz = models.CharField(max_length=255, verbose_name="Название (UZ)", default='')
@@ -122,25 +172,10 @@ class Product(models.Model):
                     pass
             
         if self.image_file:
-            import requests
-            try:
-                # Read file from memory
-                file_name = self.image_file.name
-                file_content = self.image_file.read()
-                self.image_file.seek(0)
-                
-                res = requests.post(
-                    'https://catbox.moe/user/api.php',
-                    data={'reqtype': 'fileupload'},
-                    files={'fileToUpload': (file_name, file_content)},
-                    timeout=30
-                )
-                if res.status_code == 200 and res.text.startswith('http'):
-                    self.image = res.text.strip()
-                    # Clear image_file so it does not get saved on the local ephemeral disk
-                    self.image_file = None
-            except Exception as e:
-                print("Catbox upload failed:", e)
+            cloud_url = upload_file_to_cloud(self.image_file)
+            if cloud_url:
+                self.image = cloud_url
+                self.image_file = None
 
         super().save(*args, **kwargs)
 
@@ -244,22 +279,10 @@ class ProductImage(models.Model):
 
     def save(self, *args, **kwargs):
         if self.image_file:
-            import requests
-            try:
-                file_name = self.image_file.name
-                file_content = self.image_file.read()
-                self.image_file.seek(0)
-                res = requests.post(
-                    'https://catbox.moe/user/api.php',
-                    data={'reqtype': 'fileupload'},
-                    files={'fileToUpload': (file_name, file_content)},
-                    timeout=30
-                )
-                if res.status_code == 200 and res.text.startswith('http'):
-                    self.image = res.text.strip()
-                    self.image_file = None
-            except Exception as e:
-                print("Catbox upload failed for additional image:", e)
+            cloud_url = upload_file_to_cloud(self.image_file)
+            if cloud_url:
+                self.image = cloud_url
+                self.image_file = None
         super().save(*args, **kwargs)
 
     class Meta:

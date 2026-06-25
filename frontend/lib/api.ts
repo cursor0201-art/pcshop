@@ -102,6 +102,7 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
         description_ru: p.description_ru || '',
         description_uz: p.description_uz || '',
         price: Number(p.price),
+        price_usd: p.price_usd ? Number(p.price_usd) : null,
         old_price: null,
         stock: p.stock || 0,
         specs,
