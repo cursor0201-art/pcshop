@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db import models
 from .models import Category, Product, ProductCharacteristic, Order, OrderItem, Review, ProductImage, CurrencyRate
 
 @admin.register(Category)
@@ -16,6 +17,8 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 3
 
+from django.forms import NumberInput
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'name_ru', 'name_uz', 'price', 'price_usd', 'stock', 'is_active', 'category')
@@ -25,6 +28,9 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name_ru',)}
     exclude = ('image', 'image_file')
     inlines = [ProductCharacteristicInline, ProductImageInline]
+    formfield_overrides = {
+        models.DecimalField: {'widget': NumberInput(attrs={'onfocus': 'this.select()'})},
+    }
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
