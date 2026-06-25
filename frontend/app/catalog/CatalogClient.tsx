@@ -60,6 +60,7 @@ export default function CatalogPage() {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
@@ -482,15 +483,25 @@ export default function CatalogPage() {
                   </button>
                 </div>
 
-                {/* Categories */}
-                <div>
-                  <h3 className="text-sm font-medium text-white mb-3">{t.nav.catalog}</h3>
-                  <div className="space-y-1">
+                {/* Categories Accordion */}
+                <div className="border-b border-neutral-800/60 pb-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsCategoriesExpanded(!isCategoriesExpanded)}
+                    className="w-full flex items-center justify-between text-sm font-semibold text-white py-2 group focus:outline-none"
+                  >
+                    <span className="group-hover:text-red-500 transition-colors">{t.nav.catalog}</span>
+                    <ChevronDown className={`w-4 h-4 text-gray-400 group-hover:text-white transition-transform duration-300 ${isCategoriesExpanded ? 'rotate-180' : ''}`} />
+                  </button>
+                  <div className={`space-y-1 mt-2 overflow-hidden transition-all duration-300 ${isCategoriesExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
                     <button
-                      onClick={() => handleCategoryChange('')}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                      onClick={() => {
+                        handleCategoryChange('');
+                        // Keep open on desktop but can auto-close on mobile if desired
+                      }}
+                      className={`w-full text-left px-3 py-3 rounded-lg text-sm transition-colors min-h-[44px] flex items-center ${
                         !selectedCategory
-                          ? 'bg-red-500/10 text-red-500'
+                          ? 'bg-red-500/10 text-red-500 font-medium'
                           : 'text-gray-400 hover:text-white hover:bg-white/5'
                       }`}
                     >
@@ -500,9 +511,9 @@ export default function CatalogPage() {
                       <button
                         key={cat.id}
                         onClick={() => handleCategoryChange(cat.slug)}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                        className={`w-full text-left px-3 py-3 rounded-lg text-sm transition-colors min-h-[44px] flex items-center ${
                           selectedCategory === cat.slug
-                            ? 'bg-red-500/10 text-red-500'
+                            ? 'bg-red-500/10 text-red-500 font-medium'
                             : 'text-gray-400 hover:text-white hover:bg-white/5'
                         }`}
                       >
@@ -514,19 +525,22 @@ export default function CatalogPage() {
 
                 {/* Brands */}
                 {brands.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-medium text-white mb-3">{t.filter.brand}</h3>
-                    <div className="space-y-2">
+                  <div className="border-b border-neutral-800/60 pb-4">
+                    <h3 className="text-sm font-semibold text-white mb-3">{t.filter.brand}</h3>
+                    <div className="space-y-1">
                       {brands.map((brand) => (
                         <label
                           key={brand}
-                          className="flex items-center gap-2 cursor-pointer group"
+                          className="flex items-center gap-3 cursor-pointer group min-h-[44px] py-1 px-1 rounded-lg hover:bg-white/5 transition-colors"
                         >
                           <input
                             type="checkbox"
                             checked={selectedBrand.includes(brand)}
-                            onChange={() => handleBrandChange(brand)}
-                            className="w-4 h-4 rounded border-gray-600 bg-neutral-800 text-red-500 focus:ring-red-500 focus:ring-offset-0"
+                            onChange={() => {
+                              handleBrandChange(brand);
+                              setCurrentPage(1);
+                            }}
+                            className="w-5 h-5 rounded border-gray-600 bg-neutral-850 text-red-500 focus:ring-red-500 focus:ring-offset-0 cursor-pointer"
                           />
                           <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
                             {brand}
@@ -538,37 +552,66 @@ export default function CatalogPage() {
                 )}
 
                 {/* Price range */}
-                <div>
-                  <h3 className="text-sm font-medium text-white mb-3">{t.filter.price}</h3>
+                <div className="border-b border-neutral-800/60 pb-4">
+                  <h3 className="text-sm font-semibold text-white mb-3">{t.filter.price}</h3>
                   <div className="space-y-4">
                     <div className="flex gap-3">
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        pattern="[0-9]*"
-                        value={minPriceInput}
-                        onChange={(e) => {
-                          const val = e.target.value.replace(/[^0-9]/g, '');
-                          setMinPriceInput(val);
-                          setCurrentPage(1);
-                        }}
-                        placeholder="Min"
-                        className="w-full px-3 py-2 rounded-lg bg-neutral-800 border border-gray-700 text-white text-sm focus:border-red-500 focus:outline-none"
-                      />
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        pattern="[0-9]*"
-                        value={maxPriceInput}
-                        onChange={(e) => {
-                          const val = e.target.value.replace(/[^0-9]/g, '');
-                          setMaxPriceInput(val);
-                          setCurrentPage(1);
-                        }}
-                        placeholder="Max"
-                        className="w-full px-3 py-2 rounded-lg bg-neutral-800 border border-gray-700 text-white text-sm focus:border-red-500 focus:outline-none"
-                      />
+                      <div className="relative flex-1">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">от</span>
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          pattern="[0-9]*"
+                          value={minPriceInput}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/[^0-9]/g, '');
+                            setMinPriceInput(val);
+                            setCurrentPage(1);
+                          }}
+                          placeholder="Min"
+                          className="w-full pl-8 pr-3 py-2.5 rounded-lg bg-neutral-800 border border-gray-700 text-white text-sm focus:border-red-500 focus:outline-none min-h-[44px]"
+                        />
+                      </div>
+                      <div className="relative flex-1">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">до</span>
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          pattern="[0-9]*"
+                          value={maxPriceInput}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/[^0-9]/g, '');
+                            setMaxPriceInput(val);
+                            setCurrentPage(1);
+                          }}
+                          placeholder="Max"
+                          className="w-full pl-8 pr-3 py-2.5 rounded-lg bg-neutral-800 border border-gray-700 text-white text-sm focus:border-red-500 focus:outline-none min-h-[44px]"
+                        />
+                      </div>
                     </div>
+
+                    {/* Range Slider for fast budget selection */}
+                    <div className="pt-2 px-1">
+                      <input
+                        type="range"
+                        min={priceBounds[0] || 0}
+                        max={priceBounds[1] || 10000000}
+                        value={maxPriceInput ? parseInt(maxPriceInput) : (priceBounds[1] || 10000000)}
+                        onChange={(e) => {
+                          setMaxPriceInput(e.target.value);
+                          setCurrentPage(1);
+                        }}
+                        className="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-red-500"
+                        style={{
+                          background: `linear-gradient(to right, #ef4444 0%, #ef4444 ${((maxPriceInput ? parseInt(maxPriceInput) : priceBounds[1]) - priceBounds[0]) / (priceBounds[1] - priceBounds[0] || 1) * 100}%, #262626 ${((maxPriceInput ? parseInt(maxPriceInput) : priceBounds[1]) - priceBounds[0]) / (priceBounds[1] - priceBounds[0] || 1) * 100}%, #262626 100%)`
+                        }}
+                      />
+                      <div className="flex justify-between text-[10px] text-gray-500 mt-1">
+                        <span>{formatPrice(priceBounds[0])}</span>
+                        <span>{formatPrice(priceBounds[1])}</span>
+                      </div>
+                    </div>
+
                     {products.length > 0 && (
                       <p className="text-xs text-gray-500 mt-2">
                         {formatPrice(priceBounds[0])} — {formatPrice(priceBounds[1])}
@@ -578,9 +621,9 @@ export default function CatalogPage() {
                 </div>
 
                 {/* Availability */}
-                <div>
-                  <h3 className="text-sm font-medium text-white mb-3">{t.filter.availability}</h3>
-                  <label className="flex items-center gap-2 cursor-pointer group">
+                <div className="pb-4">
+                  <h3 className="text-sm font-semibold text-white mb-3">{t.filter.availability}</h3>
+                  <label className="flex items-center gap-3 cursor-pointer group min-h-[44px] py-1 px-1 rounded-lg hover:bg-white/5 transition-colors">
                     <input
                       type="checkbox"
                       checked={inStockOnly}
@@ -588,7 +631,7 @@ export default function CatalogPage() {
                         setInStockOnly(e.target.checked);
                         setCurrentPage(1);
                       }}
-                      className="w-4 h-4 rounded border-gray-600 bg-neutral-800 text-red-500 focus:ring-red-500 focus:ring-offset-0"
+                      className="w-5 h-5 rounded border-gray-600 bg-neutral-800 text-red-500 focus:ring-red-500 focus:ring-offset-0 cursor-pointer"
                     />
                     <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
                       {t.product.inStock}
@@ -596,11 +639,25 @@ export default function CatalogPage() {
                   </label>
                 </div>
 
+                {/* Mobile Show Products / Close Button */}
+                <div className="lg:hidden pt-4 border-t border-neutral-800/80 mt-6 pb-safe">
+                  <button
+                    type="button"
+                    onClick={() => setIsFilterOpen(false)}
+                    className="w-full py-3.5 rounded-xl bg-red-600 hover:bg-red-500 active:scale-[0.98] text-white font-semibold transition-all flex items-center justify-center gap-2 min-h-[48px] shadow-lg shadow-red-600/30"
+                  >
+                    <span>{language === 'ru' ? 'Показать товары' : 'Mahsulotlarni ko\'rsatish'}</span>
+                    <span className="bg-white/20 px-2.5 py-0.5 rounded-full text-xs font-bold">
+                      {filteredProducts.length}
+                    </span>
+                  </button>
+                </div>
+
                 {/* Clear filters */}
                 {activeFiltersCount > 0 && (
                   <button
                     onClick={clearFilters}
-                    className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors"
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors min-h-[44px] text-sm font-medium"
                   >
                     <X className="w-4 h-4" />
                     {t.filter.reset}
