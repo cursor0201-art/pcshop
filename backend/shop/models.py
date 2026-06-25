@@ -45,7 +45,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True, verbose_name="Slug")
     description_ru = models.TextField(verbose_name="Описание (RU)", default='')
     description_uz = models.TextField(verbose_name="Описание (UZ)", default='')
-    price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Цена (UZS)")
+    price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, verbose_name="Цена (UZS)")
     price_usd = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, verbose_name="Цена (USD)")
     stock = models.IntegerField(default=0, verbose_name="В наличии")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name="Категория")
@@ -103,28 +103,23 @@ class Product(models.Model):
         except Exception:
             rate = decimal.Decimal('12800.00')
 
-        if not self.pk:  # Creating new product
-            if self.price_usd and not self.price:
-                self.price = (self.price_usd * rate).quantize(decimal.Decimal('1.00'))
-            elif self.price and not self.price_usd:
-                self.price_usd = (self.price / rate).quantize(decimal.Decimal('1.00'))
-        else:  # Updating existing product
-            try:
-                orig = Product.objects.get(pk=self.pk)
-                if self.price_usd != orig.price_usd:
-                    # USD was edited
-                    if self.price_usd:
+        if not self.price and not self.price_usd:
+            self.price = decimal.Decimal('0.00')
+            self.price_usd = decimal.Decimal('0.00')
+        elif self.price_usd and not self.price:
+            self.price = (self.price_usd * rate).quantize(decimal.Decimal('1.00'))
+        elif self.price and not self.price_usd:
+            self.price_usd = (self.price / rate).quantize(decimal.Decimal('1.00'))
+        else:
+            if self.pk:
+                try:
+                    orig = Product.objects.get(pk=self.pk)
+                    if self.price_usd != orig.price_usd and self.price == orig.price:
                         self.price = (self.price_usd * rate).quantize(decimal.Decimal('1.00'))
-                    else:
-                        self.price = decimal.Decimal('0.00')
-                elif self.price != orig.price:
-                    # UZS was edited
-                    if self.price:
+                    elif self.price != orig.price and self.price_usd == orig.price_usd:
                         self.price_usd = (self.price / rate).quantize(decimal.Decimal('1.00'))
-                    else:
-                        self.price_usd = decimal.Decimal('0.00')
-            except Product.DoesNotExist:
-                pass
+                except Product.DoesNotExist:
+                    pass
             
         if self.image_file:
             import requests
