@@ -461,14 +461,13 @@ export default function CatalogPage() {
 
         <div className="flex gap-8">
           {/* Filters Sidebar */}
-          <AnimatePresence>
-            <motion.aside
-              initial={{ x: -300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              className={`fixed lg:static inset-y-0 left-0 z-[100] lg:z-30 w-72 bg-neutral-900 lg:bg-transparent overflow-y-auto lg:overflow-visible transition-transform lg:transform-none ${
-                isFilterOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-              }`}
-            >
+          <aside
+            className={`fixed lg:static inset-y-0 left-0 z-[100] lg:z-30 w-72 bg-neutral-900 lg:bg-transparent overflow-y-auto lg:overflow-visible transition-all duration-300 ${
+              isFilterOpen 
+                ? 'translate-x-0 opacity-100 pointer-events-auto' 
+                : '-translate-x-full lg:translate-x-0 opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto'
+            }`}
+          >
               <div className="p-6 lg:p-0 space-y-6 pt-[calc(env(safe-area-inset-top)+1.5rem)] lg:pt-0">
                 {/* Mobile filter header */}
                 <div className="lg:hidden flex items-center justify-between mb-6">
@@ -616,8 +615,7 @@ export default function CatalogPage() {
                   onClick={() => setIsFilterOpen(false)}
                 />
               )}
-            </motion.aside>
-          </AnimatePresence>
+            </aside>
 
           {/* Products Grid */}
           <div className="flex-1">
