@@ -392,8 +392,8 @@ export default function CatalogPage() {
           </div>
 
           {/* Search & Controls */}
-          <div className="flex items-center gap-3">
-            <div className="relative">
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <div className="relative flex-1 md:flex-initial min-w-[200px] md:min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
@@ -403,54 +403,59 @@ export default function CatalogPage() {
                   setCurrentPage(1);
                 }}
                 placeholder={t.search.placeholder}
-                className="w-64 pl-10 pr-4 py-2 rounded-lg bg-neutral-900 border border-gray-800 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none"
+                className="w-full md:w-64 pl-10 pr-4 py-2 rounded-lg bg-neutral-900 border border-gray-800 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none"
               />
             </div>
 
-            {/* Sort */}
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-2 rounded-lg bg-neutral-900 border border-gray-800 text-white focus:border-red-500 focus:outline-none cursor-pointer"
-              >
-                {sortOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {t.filter[opt.key as keyof typeof t.filter]}
-                  </option>
-                ))}
-              </select>
-              <ArrowUpDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
-            </div>
+            <div className="flex items-center gap-2 w-full md:w-auto justify-between md:justify-start">
+              {/* Sort */}
+              <div className="relative flex-1 md:flex-initial">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="appearance-none w-full md:w-auto pl-4 pr-10 py-2 rounded-lg bg-neutral-900 border border-gray-800 text-white focus:border-red-500 focus:outline-none cursor-pointer"
+                >
+                  {sortOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {t.filter[opt.key as keyof typeof t.filter]}
+                    </option>
+                  ))}
+                </select>
+                <ArrowUpDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+              </div>
 
-            {/* View mode */}
-            <div className="flex items-center gap-1 bg-neutral-900 rounded-lg border border-gray-800 p-1">
+              {/* View mode */}
+              <div className="hidden sm:flex items-center gap-1 bg-neutral-900 rounded-lg border border-gray-800 p-1">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('grid')}
+                  className={`p-2 rounded-md transition-colors ${
+                    viewMode === 'grid' ? 'bg-red-500 text-white' : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  <Grid3X3 className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('list')}
+                  className={`p-2 rounded-md transition-colors ${
+                    viewMode === 'list' ? 'bg-red-500 text-white' : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  <LayoutList className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Filter toggle (mobile) */}
               <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-md transition-colors ${
-                  viewMode === 'grid' ? 'bg-red-500 text-white' : 'text-gray-400 hover:text-white'
-                }`}
+                type="button"
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+                className="lg:hidden flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-gray-800 text-white flex-1 md:flex-initial"
               >
-                <Grid3X3 className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-2 rounded-md transition-colors ${
-                  viewMode === 'list' ? 'bg-red-500 text-white' : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                <LayoutList className="w-4 h-4" />
+                <SlidersHorizontal className="w-4 h-4" />
+                {t.filter.filter}
               </button>
             </div>
-
-            {/* Filter toggle (mobile) */}
-            <button
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-gray-800 text-white"
-            >
-              <SlidersHorizontal className="w-4 h-4" />
-              {t.filter.filter}
-            </button>
           </div>
         </div>
 
