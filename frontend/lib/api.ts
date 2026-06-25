@@ -33,6 +33,7 @@ export interface Product {
   old_price: number | null;
   stock: number;
   specs: Record<string, string>;
+  characteristics?: { id: number; name_ru: string; name_uz: string; value_ru: string; value_uz: string }[];
   images: string[];
   images_detail?: { url: string; color_name: string | null; color_code: string | null }[];
   is_featured: boolean;
@@ -106,6 +107,7 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
         old_price: null,
         stock: p.stock || 0,
         specs,
+        characteristics: p.characteristics || [],
         images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
         images_detail: p.images_detail || [],
         is_featured: true,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,6 +19,7 @@ interface Product {
   old_price: number | null;
   stock: number;
   specs: Record<string, string>;
+  characteristics?: { id: number; name_ru: string; name_uz: string; value_ru: string; value_uz: string }[];
   images: string[];
   brand: string;
   warranty_months: number;
@@ -59,8 +60,38 @@ export default function ComparePage() {
     return price.toLocaleString('ru-RU') + ' ' + t.currency;
   };
 
-  // Get all unique specs
-  const allSpecs = Array.from(new Set(products.flatMap(p => Object.keys(p.specs || {}))));
+  // Get all unique specs with fallback support
+  const uniqueSpecDefs = useMemo(() => {
+    const defs: { name_ru: string; name_uz: string }[] = [];
+    const seen = new Set<string>();
+    
+    // Collect from characteristics
+    products.forEach(p => {
+      if (p.characteristics && Array.isArray(p.characteristics)) {
+        p.characteristics.forEach(char => {
+          if (!seen.has(char.name_ru)) {
+            seen.add(char.name_ru);
+            defs.push({ name_ru: char.name_ru, name_uz: char.name_uz });
+          }
+        });
+      }
+    });
+    
+    // Fallback to legacy specs if characteristics are empty
+    if (defs.length === 0) {
+      products.forEach(p => {
+        Object.keys(p.specs || {}).forEach(k => {
+          if (!seen.has(k)) {
+            seen.add(k);
+            defs.push({ name_ru: k, name_uz: k });
+          }
+        });
+      });
+    }
+    
+    return defs;
+  }, [products]);
+
   const name = language === 'ru' ? 'name_ru' : 'name_uz';
 
   if (compareItems.length === 0) {
@@ -249,33 +280,55 @@ export default function ComparePage() {
                   </tr>
 
                   {/* Specs rows */}
-                  {allSpecs.map((spec) => (
-                    <tr key={spec} className="border-b border-gray-800 last:border-b-0">
-                      <td className="px-6 py-4 text-sm text-gray-400">{spec}</td>
-                      {products.map((product) => {
-                        const value = product.specs?.[spec];
-                        // Find best value
-                        const allValues = products.map(p => p.specs?.[spec]);
-                        const numericValues = allValues.map(v => {
-                          const num = parseFloat(v || '');
-                          return isNaN(num) ? 0 : num;
-                        });
-                        const isBest = value && numericValues.every(v => {
-                          const current = parseFloat(value);
-                          return isNaN(current) || current >= v;
-                        });
+                  {uniqueSpecDefs.map((specDef) => {
+                    const specTitle = language === 'ru' ? specDef.name_ru : specDef.name_uz;
+                    return (
+                      <tr key={specDef.name_ru} className="border-b border-gray-800 last:border-b-0">
+                        <td className="px-6 py-4 text-sm text-gray-400">{specTitle}</td>
+                        {products.map((product) => {
+                          // Find characteristic by name_ru
+                          let value = '';
+                          if (product.characteristics && Array.isArray(product.characteristics)) {
+                            const char = product.characteristics.find(c => c.name_ru === specDef.name_ru);
+                            if (char) {
+                              value = language === 'ru' ? char.value_ru : char.value_uz;
+                            }
+                          }
+                          if (!value) {
+                            value = product.specs?.[specDef.name_ru] || '';
+                          }
+                          
+                          // Find best value
+                          const allValues = products.map(p => {
+                            let val = '';
+                            if (p.characteristics && Array.isArray(p.characteristics)) {
+                              const char = p.characteristics.find(c => c.name_ru === specDef.name_ru);
+                              if (char) val = language === 'ru' ? char.value_ru : char.value_uz;
+                            }
+                            return val || p.specs?.[specDef.name_ru] || '';
+                          });
 
-                        return (
-                          <td
-                            key={product.id}
-                            className={`px-6 py-4 text-sm ${isBest && value ? 'text-red-500 font-medium' : 'text-white'}`}
-                          >
-                            {value || '-'}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  ))}
+                          const numericValues = allValues.map(v => {
+                            const num = parseFloat(v || '');
+                            return isNaN(num) ? 0 : num;
+                          });
+                          const isBest = value && numericValues.every(v => {
+                            const current = parseFloat(value);
+                            return isNaN(current) || current >= v;
+                          });
+
+                          return (
+                            <td
+                              key={product.id}
+                              className={`px-6 py-4 text-sm ${isBest && value ? 'text-red-500 font-medium' : 'text-white'}`}
+                            >
+                              {value || '-'}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

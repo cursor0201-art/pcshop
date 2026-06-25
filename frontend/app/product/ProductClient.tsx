@@ -47,6 +47,7 @@ interface Product {
   old_price: number | null;
   stock: number;
   specs: Record<string, string>;
+  characteristics?: { id: number; name_ru: string; name_uz: string; value_ru: string; value_uz: string }[];
   images: string[];
   images_detail?: { url: string; color_name: string | null; color_code: string | null }[];
   is_featured: boolean;
@@ -522,17 +523,32 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
                   <p className="text-gray-300 mb-6">{description}</p>
                 )}
 
-                {Object.keys(product.specs || {}).length > 0 && (
+                {((product.characteristics && product.characteristics.length > 0) || Object.keys(product.specs || {}).length > 0) && (
                   <div className="grid md:grid-cols-2 gap-4">
-                    {Object.entries(product.specs).map(([key, value]) => (
-                      <div
-                        key={key}
-                        className="flex justify-between p-4 rounded-xl bg-neutral-900 border border-gray-800"
-                      >
-                        <span className="text-gray-400">{key}</span>
-                        <span className="text-white font-medium">{value}</span>
-                      </div>
-                    ))}
+                    {product.characteristics && product.characteristics.length > 0
+                      ? product.characteristics.map((char) => {
+                          const key = language === 'ru' ? char.name_ru : char.name_uz;
+                          const value = language === 'ru' ? char.value_ru : char.value_uz;
+                          return (
+                            <div
+                              key={char.id}
+                              className="flex justify-between p-4 rounded-xl bg-neutral-900 border border-gray-800"
+                            >
+                              <span className="text-gray-400">{key}</span>
+                              <span className="text-white font-medium">{value}</span>
+                            </div>
+                          );
+                        })
+                      : Object.entries(product.specs).map(([key, value]) => (
+                          <div
+                            key={key}
+                            className="flex justify-between p-4 rounded-xl bg-neutral-900 border border-gray-800"
+                          >
+                            <span className="text-gray-400">{key}</span>
+                            <span className="text-white font-medium">{value}</span>
+                          </div>
+                        ))
+                    }
                   </div>
                 )}
               </motion.div>

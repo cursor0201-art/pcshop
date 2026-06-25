@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Category, Product, Order, OrderItem, Review, TelegramSettings
+from .models import Category, Product, Order, OrderItem, Review, TelegramSettings, ProductCharacteristic
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,6 +12,11 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
+class ProductCharacteristicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductCharacteristic
+        fields = ('id', 'name_ru', 'name_uz', 'value_ru', 'value_uz')
+
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     category_id = serializers.PrimaryKeyRelatedField(
@@ -19,6 +24,7 @@ class ProductSerializer(serializers.ModelSerializer):
     )
     images = serializers.SerializerMethodField()
     images_detail = serializers.SerializerMethodField()
+    characteristics = ProductCharacteristicSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
