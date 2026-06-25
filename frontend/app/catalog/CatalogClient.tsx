@@ -460,10 +460,18 @@ export default function CatalogPage() {
           </div>
         </div>
 
-        <div className="flex gap-8">
+        <div className="flex gap-8 relative">
+          {/* Mobile overlay backdrop */}
+          {isFilterOpen && (
+            <div
+              className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] transition-opacity duration-300"
+              onClick={() => setIsFilterOpen(false)}
+            />
+          )}
+
           {/* Filters Sidebar */}
           <aside
-            className={`fixed lg:static inset-y-0 left-0 z-[100] lg:z-30 w-72 bg-neutral-900 lg:bg-transparent overflow-y-auto lg:overflow-visible transition-all duration-300 ${
+            className={`fixed lg:static inset-y-0 left-0 z-[9999] lg:z-30 w-80 lg:w-72 bg-neutral-950 lg:bg-transparent border-r border-neutral-900 lg:border-none overflow-y-auto lg:overflow-visible transition-all duration-300 ${
               isFilterOpen 
                 ? 'translate-x-0 opacity-100 pointer-events-auto' 
                 : '-translate-x-full lg:translate-x-0 opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto'
@@ -664,14 +672,6 @@ export default function CatalogPage() {
                   </button>
                 )}
               </div>
-
-              {/* Mobile overlay */}
-              {isFilterOpen && (
-                <div
-                  className="lg:hidden fixed inset-0 bg-black/50 -z-10"
-                  onClick={() => setIsFilterOpen(false)}
-                />
-              )}
             </aside>
 
           {/* Products Grid */}
