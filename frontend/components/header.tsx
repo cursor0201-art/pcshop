@@ -28,12 +28,15 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const cartCount = getItemCount();
-  const compareCount = compareItems.length;
+  const [mounted, setMounted] = useState(false);
+
+  const cartCount = mounted ? getItemCount() : 0;
+  const compareCount = mounted ? compareItems.length : 0;
   
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };

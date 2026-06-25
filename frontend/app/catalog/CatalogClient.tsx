@@ -305,6 +305,7 @@ export default function CatalogPage() {
               whileTap={{ scale: 0.9 }}
               onClick={(e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 addToCompare(product.id);
               }}
               className={`absolute top-3 right-3 p-2 rounded-lg transition-all opacity-0 group-hover:opacity-100 ${
@@ -346,6 +347,7 @@ export default function CatalogPage() {
                 whileTap={{ scale: 0.9 }}
                 onClick={(e) => {
                   e.preventDefault();
+                  e.stopPropagation();
                   addItem({
                     id: product.id,
                     name_ru: product.name_ru,
