@@ -17,7 +17,19 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 3
 
-from django.forms import NumberInput
+from django.forms import TextInput
+
+class DecimalTextInput(TextInput):
+    def __init__(self, attrs=None):
+        default_attrs = {
+            'inputmode': 'decimal',
+            'pattern': '[0-9]*[.,]?[0-9]*',
+            'onfocus': 'this.select()',
+            'style': 'width: 150px;',
+        }
+        if attrs:
+            default_attrs.update(attrs)
+        super().__init__(attrs=default_attrs)
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -29,7 +41,7 @@ class ProductAdmin(admin.ModelAdmin):
     exclude = ('image', 'image_file')
     inlines = [ProductCharacteristicInline, ProductImageInline]
     formfield_overrides = {
-        models.DecimalField: {'widget': NumberInput(attrs={'onfocus': 'this.select()'})},
+        models.DecimalField: {'widget': DecimalTextInput},
     }
 
 class OrderItemInline(admin.TabularInline):
