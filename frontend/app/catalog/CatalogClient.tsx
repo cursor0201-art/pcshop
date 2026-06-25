@@ -477,7 +477,7 @@ export default function CatalogPage() {
                 : '-translate-x-full lg:translate-x-0 opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto'
             }`}
           >
-              <div className="p-6 lg:p-0 space-y-6 pt-[calc(env(safe-area-inset-top)+1.5rem)] lg:pt-0">
+              <div className="p-6 lg:p-0 space-y-6 pt-[calc(env(safe-area-inset-top)+1.5rem)] pb-[calc(env(safe-area-inset-bottom)+6rem)] lg:pb-0">
                 {/* Mobile filter header */}
                 <div className="lg:hidden flex items-center justify-between mb-6">
                   <h2 className="text-lg font-semibold text-white">{t.filter.filter}</h2>
@@ -501,7 +501,7 @@ export default function CatalogPage() {
                     <span className="group-hover:text-red-500 transition-colors">{t.nav.catalog}</span>
                     <ChevronDown className={`w-4 h-4 text-gray-400 group-hover:text-white transition-transform duration-300 ${isCategoriesExpanded ? 'rotate-180' : ''}`} />
                   </button>
-                  <div className={`space-y-1 mt-2 overflow-hidden transition-all duration-300 ${isCategoriesExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+                  <div className={`space-y-1 mt-2 overflow-hidden transition-all duration-300 ${isCategoriesExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
                     <button
                       onClick={() => {
                         handleCategoryChange('');
