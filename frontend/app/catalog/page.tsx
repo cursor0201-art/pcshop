@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import CatalogPageClient from './CatalogClient';
 
 export const metadata: Metadata = {
@@ -36,7 +37,9 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <CatalogPageClient />
+      <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center text-white">Загрузка каталога...</div>}>
+        <CatalogPageClient />
+      </Suspense>
     </>
   );
 }

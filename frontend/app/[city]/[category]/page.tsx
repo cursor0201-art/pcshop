@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { Truck, Shield, Phone } from 'lucide-react';
 import CityCategoryClient from './CityCategoryClient';
@@ -429,7 +430,9 @@ export default async function Page({ params }: Props) {
         />
         
         {/* Render Product client details, passing overrideSlug to fetch details */}
-        <ProductPageClient overrideSlug={params.category} />
+        <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center text-white">Загрузка товара...</div>}>
+          <ProductPageClient overrideSlug={params.category} />
+        </Suspense>
       </>
     );
   }
