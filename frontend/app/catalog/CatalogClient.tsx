@@ -78,6 +78,15 @@ export default function CatalogPage() {
     return uniqueBrands.sort();
   }, [products]);
 
+  // Get price bounds of all products
+  const priceBounds = useMemo(() => {
+    if (products.length === 0) return [0, 0];
+    const prices = products.map(p => p.price);
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+    return [min, max];
+  }, [products]);
+
   // Filter and sort products
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -549,6 +558,11 @@ export default function CatalogPage() {
                         className="w-full px-3 py-2 rounded-lg bg-neutral-800 border border-gray-700 text-white text-sm focus:border-red-500 focus:outline-none"
                       />
                     </div>
+                    {products.length > 0 && (
+                      <p className="text-xs text-gray-500 mt-2">
+                        {formatPrice(priceBounds[0])} — {formatPrice(priceBounds[1])}
+                      </p>
+                    )}
                   </div>
                 </div>
 
