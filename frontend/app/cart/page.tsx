@@ -16,7 +16,7 @@ export default function CartPage() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    phone: '+998',
+    phone: '998',
     address: '',
     comment: '',
   });
@@ -42,7 +42,13 @@ export default function CartPage() {
 
   const handleCheckoutSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (items.length === 0) return;
+    if (formData.phone.length !== 12) {
+      alert(language === 'ru' 
+        ? 'Номер телефона должен состоять ровно из 12 цифр (998XXXXXXXXX)' 
+        : 'Telefon raqami rostdan ham 12 ta raqamdan iborat bo‘lishi kerak (998XXXXXXXXX)'
+      );
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -333,18 +339,24 @@ export default function CartPage() {
                         <input
                           type="text"
                           required
+                          maxLength={12}
                           value={formData.phone}
                           onChange={(e) => {
                             let val = e.target.value;
-                            // Keep only digits and '+'
-                            val = val.replace(/[^\d+]/g, '');
-                            // Ensure it starts with '+'
-                            if (val.length > 0 && !val.startsWith('+')) {
-                              val = '+' + val.replace(/\+/g, '');
+                            // Keep only digits
+                            val = val.replace(/\D/g, '');
+                            // Ensure it starts with 998
+                            if (val.length > 0 && !val.startsWith('998')) {
+                              // If they typed something else, reconstruct starting with 998
+                              val = '998' + val.replace(/^998/, '');
                             }
-                            // Prevent deleting the +998 prefix
-                            if (val.length < 4) {
-                              val = '+998';
+                            // Prevent deleting the 998 prefix
+                            if (val.length < 3) {
+                              val = '998';
+                            }
+                            // Limit to 12 digits
+                            if (val.length > 12) {
+                              val = val.slice(0, 12);
                             }
                             setFormData({ ...formData, phone: val });
                           }}
