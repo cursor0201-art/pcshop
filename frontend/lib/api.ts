@@ -52,31 +52,109 @@ export interface Review {
 }
 
 let cachedCategories: Category[] | null = null;
-let hasFetchedCategories = false;
+let categoriesCacheTime = 0;
 
 let cachedProducts: Product[] | null = null;
-let hasFetchedProducts = false;
+let productsCacheTime = 0;
 
 let cachedReviews: any[] | null = null;
 let hasFetchedReviews = false;
 
+const CACHE_DURATION_MS = 2 * 60 * 1000; // 2 minutes cache duration
+
+// Background fetch helpers to avoid blocking UI
+async function fetchCategoriesInBackground() {
+  try {
+    const res = await fetch(`${BASE_URL}/categories/`, { cache: 'no-store' });
+    if (!res.ok) return;
+    const data = await res.json();
+    cachedCategories = data.map((cat: any) => ({
+      id: Number(cat.id),
+      name_ru: cat.name_ru,
+      name_uz: cat.name_uz,
+      slug: cat.slug || '',
+      description_ru: cat.description_ru,
+      description_uz: cat.description_uz,
+    }));
+    categoriesCacheTime = Date.now();
+  } catch (err) {
+    console.error('Background categories fetch failed:', err);
+  }
+}
+
+async function fetchProductsInBackground() {
+  try {
+    const res = await fetch(`${BASE_URL}/products/`, { cache: 'no-store' });
+    if (!res.ok) return;
+    const data = await res.json();
+    cachedProducts = parseProductsData(data);
+    productsCacheTime = Date.now();
+  } catch (err) {
+    console.error('Background products fetch failed:', err);
+  }
+}
+
+function parseProductsData(data: any[]): Product[] {
+  return data.map((p: any) => {
+    const specs: Record<string, string> = {};
+    if (p.characteristics && Array.isArray(p.characteristics)) {
+      p.characteristics.forEach((char: any) => {
+        specs[char.name_ru] = char.value_ru;
+      });
+    }
+
+    return {
+      id: p.id,
+      category_id: p.category ? p.category.id : 0,
+      category_slug: p.category ? p.category.slug : '',
+      name_ru: p.name_ru,
+      name_uz: p.name_uz,
+      slug: p.slug || '',
+      description_ru: p.description_ru || '',
+      description_uz: p.description_uz || '',
+      price: Number(p.price),
+      price_usd: p.price_usd ? Number(p.price_usd) : null,
+      old_price: p.old_price ? Number(p.old_price) : null,
+      stock: p.stock || 0,
+      specs,
+      characteristics: p.characteristics || [],
+      images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
+      images_detail: p.images_detail || [],
+      is_featured: p.is_featured ?? false,
+      is_new: p.is_new ?? false,
+      warranty_months: p.warranty_months || 12,
+      brand: p.brand || '',
+      created_at: p.created_at || '',
+    };
+  });
+}
+
 export async function getCategories(): Promise<Category[]> {
   const isServer = typeof window === 'undefined';
-  if (isServer && hasFetchedCategories) {
-    return cachedCategories || [
-      { id: 1, name_ru: 'Готовые ПК', name_uz: 'Tayyor PK', slug: 'ready-pc' },
-      { id: 2, name_ru: 'Процессоры', name_uz: 'Protsessorlar', slug: 'processors' },
-      { id: 3, name_ru: 'Видеокарты', name_uz: 'Videokartalar', slug: 'videocards' },
-      { id: 4, name_ru: 'Материнские платы', name_uz: 'Platalar', slug: 'motherboards' },
-      { id: 5, name_ru: 'Оперативная память', name_uz: 'Operativ xotira', slug: 'ram' },
-      { id: 6, name_ru: 'SSD', name_uz: 'SSD', slug: 'ssd' },
-      { id: 7, name_ru: 'Мониторы', name_uz: 'Monitorlar', slug: 'monitors' },
-      { id: 8, name_ru: 'Клавиатуры', name_uz: 'Klaviaturalar', slug: 'keyboards' },
-    ];
+  const now = Date.now();
+
+  const fallbacks = [
+    { id: 1, name_ru: 'Готовые ПК', name_uz: 'Tayyor PK', slug: 'ready-pc' },
+    { id: 2, name_ru: 'Процессоры', name_uz: 'Protsessorlar', slug: 'processors' },
+    { id: 3, name_ru: 'Видеокарты', name_uz: 'Videokartalar', slug: 'videocards' },
+    { id: 4, name_ru: 'Материнские платы', name_uz: 'Platalar', slug: 'motherboards' },
+    { id: 5, name_ru: 'Оперативная память', name_uz: 'Operativ xotira', slug: 'ram' },
+    { id: 6, name_ru: 'SSD', name_uz: 'SSD', slug: 'ssd' },
+    { id: 7, name_ru: 'Мониторы', name_uz: 'Monitorlar', slug: 'monitors' },
+    { id: 8, name_ru: 'Клавиатуры', name_uz: 'Klaviaturalar', slug: 'keyboards' },
+  ];
+
+  // If cache is fresh OR we are on the server (which only fetches once during build time)
+  if (cachedCategories && (isServer || (now - categoriesCacheTime < CACHE_DURATION_MS))) {
+    return cachedCategories;
   }
-  if (isServer) {
-    hasFetchedCategories = true;
+
+  // If cache expired on client, revalidate in background and return stale cache
+  if (!isServer && cachedCategories && (now - categoriesCacheTime >= CACHE_DURATION_MS)) {
+    fetchCategoriesInBackground();
+    return cachedCategories;
   }
+
   try {
     const res = await fetch(`${BASE_URL}/categories/`, { 
       cache: 'no-store',
@@ -92,90 +170,60 @@ export async function getCategories(): Promise<Category[]> {
       description_ru: cat.description_ru,
       description_uz: cat.description_uz,
     }));
-    if (isServer) {
-      cachedCategories = parsed;
-    }
+    
+    cachedCategories = parsed;
+    categoriesCacheTime = Date.now();
     return parsed;
   } catch (err) {
     console.error('Error fetching categories:', err);
-    const fallbacks = [
-      { id: 1, name_ru: 'Готовые ПК', name_uz: 'Tayyor PK', slug: 'ready-pc' },
-      { id: 2, name_ru: 'Процессоры', name_uz: 'Protsessorlar', slug: 'processors' },
-      { id: 3, name_ru: 'Видеокарты', name_uz: 'Videokartalar', slug: 'videocards' },
-      { id: 4, name_ru: 'Материнские платы', name_uz: 'Platalar', slug: 'motherboards' },
-      { id: 5, name_ru: 'Оперативная память', name_uz: 'Operativ xotira', slug: 'ram' },
-      { id: 6, name_ru: 'SSD', name_uz: 'SSD', slug: 'ssd' },
-      { id: 7, name_ru: 'Мониторы', name_uz: 'Monitorlar', slug: 'monitors' },
-      { id: 8, name_ru: 'Клавиатуры', name_uz: 'Klaviaturalar', slug: 'keyboards' },
-    ];
-    if (isServer) {
+    if (!cachedCategories) {
       cachedCategories = fallbacks;
+      categoriesCacheTime = Date.now();
     }
-    return fallbacks;
+    return cachedCategories;
   }
 }
 
 export async function getProducts(options?: { category_slug?: string; limit?: number }): Promise<Product[]> {
   const isServer = typeof window === 'undefined';
+  const now = Date.now();
+
+  // If cache is fresh OR we are on the server (which only fetches once during build time)
+  if (cachedProducts && (isServer || (now - productsCacheTime < CACHE_DURATION_MS))) {
+    let products = [...cachedProducts];
+    if (options?.category_slug) {
+      products = products.filter(p => (p as any).category_slug === options.category_slug);
+    }
+    if (options?.limit) {
+      products = products.slice(0, options.limit);
+    }
+    return products;
+  }
+
+  // If cache expired on client, revalidate in background and return stale cache
+  if (!isServer && cachedProducts && (now - productsCacheTime >= CACHE_DURATION_MS)) {
+    fetchProductsInBackground();
+    let products = [...cachedProducts];
+    if (options?.category_slug) {
+      products = products.filter(p => (p as any).category_slug === options.category_slug);
+    }
+    if (options?.limit) {
+      products = products.slice(0, options.limit);
+    }
+    return products;
+  }
+
   try {
-    if (isServer && hasFetchedProducts) {
-      let products = cachedProducts ? [...cachedProducts] : [];
-      if (options?.category_slug) {
-        products = products.filter(p => (p as any).category_slug === options.category_slug);
-      }
-      if (options?.limit) {
-        products = products.slice(0, options.limit);
-      }
-      return products;
-    }
-
-    if (isServer) {
-      hasFetchedProducts = true;
-    }
-
     const res = await fetch(`${BASE_URL}/products/`, { 
       cache: 'no-store',
       ...(isServer ? { signal: AbortSignal.timeout(5000) } : {})
     });
     if (!res.ok) throw new Error('Failed to fetch products');
     const data = await res.json();
-
-    const parsed = data.map((p: any) => {
-      const specs: Record<string, string> = {};
-      if (p.characteristics && Array.isArray(p.characteristics)) {
-        p.characteristics.forEach((char: any) => {
-          specs[char.name_ru] = char.value_ru;
-        });
-      }
-
-      return {
-        id: p.id,
-        category_id: p.category ? p.category.id : 0,
-        category_slug: p.category ? p.category.slug : '',
-        name_ru: p.name_ru,
-        name_uz: p.name_uz,
-        slug: p.slug || '',
-        description_ru: p.description_ru || '',
-        description_uz: p.description_uz || '',
-        price: Number(p.price),
-        price_usd: p.price_usd ? Number(p.price_usd) : null,
-        old_price: null,
-        stock: p.stock || 0,
-        specs,
-        characteristics: p.characteristics || [],
-        images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
-        images_detail: p.images_detail || [],
-        is_featured: true,
-        is_new: true,
-        warranty_months: p.warranty_months || 12,
-        brand: p.brand || '',
-        created_at: p.created_at || '',
-      };
-    });
-
-    if (isServer) {
-      cachedProducts = parsed;
-    }
+    const parsed = parseProductsData(data);
+    
+    cachedProducts = parsed;
+    productsCacheTime = Date.now();
 
     let products = [...parsed];
     if (options?.category_slug) {
@@ -184,14 +232,10 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
     if (options?.limit) {
       products = products.slice(0, options.limit);
     }
-
     return products;
   } catch (err) {
     console.error('Error fetching products:', err);
-    if (isServer) {
-      cachedProducts = [];
-    }
-    return [];
+    return cachedProducts || [];
   }
 }
 
