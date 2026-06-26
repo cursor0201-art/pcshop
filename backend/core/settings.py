@@ -64,6 +64,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASE_URL = os.getenv('DATABASE_URL', '').strip().strip('\'"')
+if DATABASE_URL.startswith('postgres:/') and not DATABASE_URL.startswith('postgres://'):
+    DATABASE_URL = DATABASE_URL.replace('postgres:/', 'postgres://', 1)
+if DATABASE_URL.startswith('postgresql:/') and not DATABASE_URL.startswith('postgresql://'):
+    DATABASE_URL = DATABASE_URL.replace('postgresql:/', 'postgresql://', 1)
+
 is_valid_db_url = any(DATABASE_URL.startswith(scheme) for scheme in ('postgres://', 'postgresql://', 'sqlite://'))
 
 if not is_valid_db_url:
