@@ -61,36 +61,9 @@ let cachedReviews: any[] | null = null;
 let hasFetchedReviews = false;
 
 export async function getCategories(): Promise<Category[]> {
-  if (hasFetchedCategories) return cachedCategories || [
-    { id: 1, name_ru: 'Готовые ПК', name_uz: 'Tayyor PK', slug: 'ready-pc' },
-    { id: 2, name_ru: 'Процессоры', name_uz: 'Protsessorlar', slug: 'processors' },
-    { id: 3, name_ru: 'Видеокарты', name_uz: 'Videokartalar', slug: 'videocards' },
-    { id: 4, name_ru: 'Материнские платы', name_uz: 'Platalar', slug: 'motherboards' },
-    { id: 5, name_ru: 'Оперативная память', name_uz: 'Operativ xotira', slug: 'ram' },
-    { id: 6, name_ru: 'SSD', name_uz: 'SSD', slug: 'ssd' },
-    { id: 7, name_ru: 'Мониторы', name_uz: 'Monitorlar', slug: 'monitors' },
-    { id: 8, name_ru: 'Клавиатуры', name_uz: 'Klaviaturalar', slug: 'keyboards' },
-  ];
-  hasFetchedCategories = true;
-  try {
-    const res = await fetch(`${BASE_URL}/categories/`, { 
-      cache: 'no-store',
-      signal: AbortSignal.timeout(5000)
-    });
-    if (!res.ok) throw new Error('Failed to fetch categories');
-    const data = await res.json();
-    cachedCategories = data.map((cat: any) => ({
-      id: Number(cat.id),
-      name_ru: cat.name_ru,
-      name_uz: cat.name_uz,
-      slug: cat.slug || '',
-      description_ru: cat.description_ru,
-      description_uz: cat.description_uz,
-    }));
-    return cachedCategories!;
-  } catch (err) {
-    console.error('Error fetching categories:', err);
-    cachedCategories = [
+  const isServer = typeof window === 'undefined';
+  if (isServer && hasFetchedCategories) {
+    return cachedCategories || [
       { id: 1, name_ru: 'Готовые ПК', name_uz: 'Tayyor PK', slug: 'ready-pc' },
       { id: 2, name_ru: 'Процессоры', name_uz: 'Protsessorlar', slug: 'processors' },
       { id: 3, name_ru: 'Видеокарты', name_uz: 'Videokartalar', slug: 'videocards' },
@@ -100,56 +73,111 @@ export async function getCategories(): Promise<Category[]> {
       { id: 7, name_ru: 'Мониторы', name_uz: 'Monitorlar', slug: 'monitors' },
       { id: 8, name_ru: 'Клавиатуры', name_uz: 'Klaviaturalar', slug: 'keyboards' },
     ];
-    return cachedCategories!;
+  }
+  if (isServer) {
+    hasFetchedCategories = true;
+  }
+  try {
+    const res = await fetch(`${BASE_URL}/categories/`, { 
+      cache: 'no-store',
+      ...(isServer ? { signal: AbortSignal.timeout(5000) } : {})
+    });
+    if (!res.ok) throw new Error('Failed to fetch categories');
+    const data = await res.json();
+    const parsed = data.map((cat: any) => ({
+      id: Number(cat.id),
+      name_ru: cat.name_ru,
+      name_uz: cat.name_uz,
+      slug: cat.slug || '',
+      description_ru: cat.description_ru,
+      description_uz: cat.description_uz,
+    }));
+    if (isServer) {
+      cachedCategories = parsed;
+    }
+    return parsed;
+  } catch (err) {
+    console.error('Error fetching categories:', err);
+    const fallbacks = [
+      { id: 1, name_ru: 'Готовые ПК', name_uz: 'Tayyor PK', slug: 'ready-pc' },
+      { id: 2, name_ru: 'Процессоры', name_uz: 'Protsessorlar', slug: 'processors' },
+      { id: 3, name_ru: 'Видеокарты', name_uz: 'Videokartalar', slug: 'videocards' },
+      { id: 4, name_ru: 'Материнские платы', name_uz: 'Platalar', slug: 'motherboards' },
+      { id: 5, name_ru: 'Оперативная память', name_uz: 'Operativ xotira', slug: 'ram' },
+      { id: 6, name_ru: 'SSD', name_uz: 'SSD', slug: 'ssd' },
+      { id: 7, name_ru: 'Мониторы', name_uz: 'Monitorlar', slug: 'monitors' },
+      { id: 8, name_ru: 'Клавиатуры', name_uz: 'Klaviaturalar', slug: 'keyboards' },
+    ];
+    if (isServer) {
+      cachedCategories = fallbacks;
+    }
+    return fallbacks;
   }
 }
 
 export async function getProducts(options?: { category_slug?: string; limit?: number }): Promise<Product[]> {
+  const isServer = typeof window === 'undefined';
   try {
-    if (!hasFetchedProducts) {
-      hasFetchedProducts = true;
-      const res = await fetch(`${BASE_URL}/products/`, { 
-        cache: 'no-store',
-        signal: AbortSignal.timeout(5000)
-      });
-      if (!res.ok) throw new Error('Failed to fetch products');
-      const data = await res.json();
-
-      cachedProducts = data.map((p: any) => {
-        const specs: Record<string, string> = {};
-        if (p.characteristics && Array.isArray(p.characteristics)) {
-          p.characteristics.forEach((char: any) => {
-            specs[char.name_ru] = char.value_ru;
-          });
-        }
-
-        return {
-          id: p.id,
-          category_id: p.category ? p.category.id : 0,
-          category_slug: p.category ? p.category.slug : '',
-          name_ru: p.name_ru,
-          name_uz: p.name_uz,
-          slug: p.slug || '',
-          description_ru: p.description_ru || '',
-          description_uz: p.description_uz || '',
-          price: Number(p.price),
-          price_usd: p.price_usd ? Number(p.price_usd) : null,
-          old_price: null,
-          stock: p.stock || 0,
-          specs,
-          characteristics: p.characteristics || [],
-          images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
-          images_detail: p.images_detail || [],
-          is_featured: true,
-          is_new: true,
-          warranty_months: p.warranty_months || 12,
-          brand: p.brand || '',
-          created_at: p.created_at || '',
-        };
-      });
+    if (isServer && hasFetchedProducts) {
+      let products = cachedProducts ? [...cachedProducts] : [];
+      if (options?.category_slug) {
+        products = products.filter(p => (p as any).category_slug === options.category_slug);
+      }
+      if (options?.limit) {
+        products = products.slice(0, options.limit);
+      }
+      return products;
     }
 
-    let products = cachedProducts ? [...cachedProducts] : [];
+    if (isServer) {
+      hasFetchedProducts = true;
+    }
+
+    const res = await fetch(`${BASE_URL}/products/`, { 
+      cache: 'no-store',
+      ...(isServer ? { signal: AbortSignal.timeout(5000) } : {})
+    });
+    if (!res.ok) throw new Error('Failed to fetch products');
+    const data = await res.json();
+
+    const parsed = data.map((p: any) => {
+      const specs: Record<string, string> = {};
+      if (p.characteristics && Array.isArray(p.characteristics)) {
+        p.characteristics.forEach((char: any) => {
+          specs[char.name_ru] = char.value_ru;
+        });
+      }
+
+      return {
+        id: p.id,
+        category_id: p.category ? p.category.id : 0,
+        category_slug: p.category ? p.category.slug : '',
+        name_ru: p.name_ru,
+        name_uz: p.name_uz,
+        slug: p.slug || '',
+        description_ru: p.description_ru || '',
+        description_uz: p.description_uz || '',
+        price: Number(p.price),
+        price_usd: p.price_usd ? Number(p.price_usd) : null,
+        old_price: null,
+        stock: p.stock || 0,
+        specs,
+        characteristics: p.characteristics || [],
+        images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
+        images_detail: p.images_detail || [],
+        is_featured: true,
+        is_new: true,
+        warranty_months: p.warranty_months || 12,
+        brand: p.brand || '',
+        created_at: p.created_at || '',
+      };
+    });
+
+    if (isServer) {
+      cachedProducts = parsed;
+    }
+
+    let products = [...parsed];
     if (options?.category_slug) {
       products = products.filter(p => (p as any).category_slug === options.category_slug);
     }
@@ -160,7 +188,9 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
     return products;
   } catch (err) {
     console.error('Error fetching products:', err);
-    cachedProducts = [];
+    if (isServer) {
+      cachedProducts = [];
+    }
     return [];
   }
 }
@@ -179,19 +209,36 @@ export async function getSimilarProducts(categoryId: number, excludeId: number, 
 }
 
 export async function getReviews(productId: number): Promise<Review[]> {
+  const isServer = typeof window === 'undefined';
   try {
-    if (!hasFetchedReviews) {
+    if (isServer && hasFetchedReviews) {
+      const reviews = cachedReviews || [];
+      return reviews
+        .filter((r: any) => r.product === productId)
+        .map((r: any) => ({
+          id: r.id,
+          author_name: r.username || 'Покупатель',
+          rating: r.rating,
+          text: r.comment || '',
+          created_at: r.created_at || '',
+        }));
+    }
+
+    if (isServer) {
       hasFetchedReviews = true;
-      const res = await fetch(`${BASE_URL}/reviews/`, { 
-        cache: 'no-store',
-        signal: AbortSignal.timeout(5000)
-      });
-      if (!res.ok) throw new Error('Failed to fetch reviews');
-      cachedReviews = await res.json();
+    }
+
+    const res = await fetch(`${BASE_URL}/reviews/`, { 
+      cache: 'no-store',
+      ...(isServer ? { signal: AbortSignal.timeout(5000) } : {})
+    });
+    if (!res.ok) throw new Error('Failed to fetch reviews');
+    const data = await res.json();
+    if (isServer) {
+      cachedReviews = data;
     }
     
-    const reviews = cachedReviews || [];
-    return reviews
+    return data
       .filter((r: any) => r.product === productId)
       .map((r: any) => ({
         id: r.id,
@@ -202,7 +249,9 @@ export async function getReviews(productId: number): Promise<Review[]> {
       }));
   } catch (err) {
     console.error('Error fetching reviews:', err);
-    cachedReviews = [];
+    if (isServer) {
+      cachedReviews = [];
+    }
     return [];
   }
 }
