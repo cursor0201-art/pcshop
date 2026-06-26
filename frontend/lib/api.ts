@@ -149,7 +149,10 @@ async function fetchProductsInBackground() {
 const getImageUrl = (url: string) => {
   if (!url) return '';
   if (url.startsWith('/media/')) {
-    const backendDomain = BASE_URL.replace('/api', '');
+    let backendDomain = BASE_URL.replace('/api', '');
+    if (!backendDomain || !backendDomain.startsWith('http')) {
+      backendDomain = 'https://informal-rodina-bave-hub-2e898989.koyeb.app';
+    }
     return `${backendDomain}${url}`;
   }
   return url;
@@ -286,9 +289,17 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
   if (isServer) {
     const fileCached = readFromFileCache('products');
     if (fileCached) {
-      cachedProducts = fileCached;
+      const normalized = fileCached.map((p: any) => ({
+        ...p,
+        images: (p.images || []).map((img: string) => getImageUrl(img)),
+        images_detail: (p.images_detail || []).map((img: any) => ({
+          ...img,
+          url: getImageUrl(img.url)
+        }))
+      }));
+      cachedProducts = normalized;
       productsCacheTime = Date.now();
-      let products = [...fileCached];
+      let products = [...normalized];
       if (options?.category_slug) {
         products = products.filter(p => (p as any).category_slug === options.category_slug);
       }

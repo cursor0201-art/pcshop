@@ -58,6 +58,18 @@ async function main() {
     console.log('[Prebuild] Fetching products...');
     const productsData = await fetchWithRetry(`${baseUrl}/products/`);
     
+    const getImageUrl = (url) => {
+      if (!url) return '';
+      if (url.startsWith('/media/')) {
+        let backendDomain = baseUrl.replace('/api', '');
+        if (!backendDomain || !backendDomain.startsWith('http')) {
+          backendDomain = 'https://informal-rodina-bave-hub-2e898989.koyeb.app';
+        }
+        return `${backendDomain}${url}`;
+      }
+      return url;
+    };
+
     // Parse products using same logic as api.ts
     const parsedProducts = productsData.map((p) => {
       const specs = {};
@@ -66,6 +78,15 @@ async function main() {
           specs[char.name_ru] = char.value_ru;
         });
       }
+
+      const rawImages = p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []);
+      const images = rawImages.map((img) => getImageUrl(img));
+      
+      const images_detail = (p.images_detail || []).map((img) => ({
+        ...img,
+        url: getImageUrl(img.url)
+      }));
+
       return {
         id: p.id,
         category_id: p.category ? p.category.id : 0,
@@ -81,8 +102,8 @@ async function main() {
         stock: p.stock || 0,
         specs,
         characteristics: p.characteristics || [],
-        images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
-        images_detail: p.images_detail || [],
+        images,
+        images_detail,
         is_featured: p.is_featured ?? false,
         is_new: p.is_new ?? false,
         warranty_months: p.warranty_months || 12,

@@ -708,8 +708,8 @@ export default function HomePage() {
                   {
                     q_ru: 'Какие видеокарты NVIDIA GeForce RTX можно купить в Ташкенте?',
                     q_uz: 'Toshkentda qaysi NVIDIA GeForce RTX videokartalarini sotib olish mumkin?',
-                    a_ru: 'В нашем магазине доступны самые современные видеокарты, включая линейку NVIDIA GeForce RTX 4060, RTX 4070, RTX 4080, RTX 4090, а также новейшую серию RTX 5070 с быстрой доставкой по Ташкенту и Узбекистану.',
-                    a_uz: 'Do\'konimizda NVIDIA GeForce RTX 4060, RTX 4070, RTX 4080, RTX 4090 va eng yangi RTX 5070 videokartalari mavjud. Toshkent va O\'zbekiston bo\'ylab tezkor yetkazib berish xizmati bor.'
+                    a_ru: 'В нашем магазине доступны самые современные видеокарты, включая линейку NVIDIA GeForce RTX 5060, RTX 5070, RTX 5080, а также новейшую RTX 5090 с быстрой доставкой по Ташкенту и Узбекистану.',
+                    a_uz: 'Do\'konimizda NVIDIA GeForce RTX 5060, RTX 5070, RTX 5080 va eng yangi RTX 5090 videokartalari mavjud. Toshkent va O\'zbekiston bo\'ylab tezkor yetkazib berish xizmati bor.'
                   },
                   {
                     q_ru: 'Оказывает ли PcShop_uz помощь в подборе комплектующих для ПК?',
@@ -780,7 +780,7 @@ export default function HomePage() {
                   "name": "Какие видеокарты NVIDIA GeForce RTX можно купить в Ташкенте?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "В нашем магазине доступны самые современные видеокарты, включая линейку NVIDIA GeForce RTX 4060, RTX 4070, RTX 4080, RTX 4090, а также новейшую серию RTX 5070 с быстрой доставкой по Ташкенту и Узбекистану."
+                    "text": "В нашем магазине доступны самые современные видеокарты, включая линейку NVIDIA GeForce RTX 5060, RTX 5070, RTX 5080, а также новейшую RTX 5090 с быстрой доставкой по Ташкенту и Узбекистану."
                   }
                 },
                 {
