@@ -1,5 +1,12 @@
 let rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://informal-rodina-bave-hub-2e898989.koyeb.app/api';
 
+// Safety check: if NEXT_PUBLIC_API_URL contains the legacy pcshop.uz domain,
+// redirect it to the active Koyeb backend to prevent CORS/Failed to fetch errors.
+if (rawBaseUrl.includes('pcshop.uz') && !rawBaseUrl.includes('storepcshop.uz') && !rawBaseUrl.includes('koyeb.app')) {
+  console.warn("[PcShop API] Legacy API domain detected in environment variables. Overriding with active Koyeb backend.");
+  rawBaseUrl = 'https://informal-rodina-bave-hub-2e898989.koyeb.app/api';
+}
+
 // Remove trailing slash if present
 if (rawBaseUrl.endsWith('/')) {
   rawBaseUrl = rawBaseUrl.slice(0, -1);
@@ -8,6 +15,10 @@ if (rawBaseUrl.endsWith('/')) {
 // Ensure it ends with /api if not present
 if (!rawBaseUrl.endsWith('/api')) {
   rawBaseUrl = `${rawBaseUrl}/api`;
+}
+
+if (typeof window !== 'undefined') {
+  console.log("[PcShop API] Initialized with BASE_URL:", rawBaseUrl);
 }
 
 export const BASE_URL = rawBaseUrl;
@@ -175,7 +186,7 @@ export async function getCategories(): Promise<Category[]> {
     categoriesCacheTime = Date.now();
     return parsed;
   } catch (err) {
-    console.error('Error fetching categories:', err);
+    console.error('Error fetching categories from:', `${BASE_URL}/categories/`, err);
     if (!cachedCategories) {
       cachedCategories = fallbacks;
       categoriesCacheTime = Date.now();
@@ -234,7 +245,7 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
     }
     return products;
   } catch (err) {
-    console.error('Error fetching products:', err);
+    console.error('Error fetching products from:', `${BASE_URL}/products/`, err);
     return cachedProducts || [];
   }
 }
