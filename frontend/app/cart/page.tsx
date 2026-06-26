@@ -197,42 +197,37 @@ export default function CartPage() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, x: -100 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex gap-4 p-4 bg-neutral-900 rounded-xl border border-gray-800"
+                      className="flex flex-col sm:flex-row gap-4 p-4 bg-neutral-900 rounded-xl border border-gray-800"
                     >
-                      {/* Image */}
-                      <Link href={item.slug ? `/product?slug=${item.slug}` : `/product/${item.id}`} className="flex-shrink-0">
-                        <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-neutral-800">
-                          {item.image ? (
-                            <Image src={item.image} alt="" fill className="object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-600">
-                              <ShoppingCart className="w-8 h-8" />
-                            </div>
-                          )}
-                        </div>
-                      </Link>
-
-                      {/* Info */}
-                      <div className="flex-1 min-w-0">
-                        <Link href={item.slug ? `/product?slug=${item.slug}` : `/product/${item.id}`}>
-                          <h3 className="font-medium text-white hover:text-red-500 transition-colors line-clamp-2">
-                            {language === 'ru' ? item.name_ru : item.name_uz}
-                          </h3>
+                      <div className="flex gap-4 flex-1 min-w-0">
+                        {/* Image */}
+                        <Link href={item.slug ? `/product?slug=${item.slug}` : `/product/${item.id}`} className="flex-shrink-0">
+                          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-neutral-800">
+                            {item.image ? (
+                              <Image src={item.image} alt="" fill className="object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-gray-600">
+                                <ShoppingCart className="w-8 h-8" />
+                              </div>
+                            )}
+                          </div>
                         </Link>
-                        <p className="text-lg font-bold text-red-500 mt-2">
-                          {formatPrice(item.price)}
-                        </p>
+
+                        {/* Info */}
+                        <div className="flex-1 min-w-0">
+                          <Link href={item.slug ? `/product?slug=${item.slug}` : `/product/${item.id}`}>
+                            <h3 className="font-medium text-white hover:text-red-500 transition-colors line-clamp-2 text-sm sm:text-base">
+                              {language === 'ru' ? item.name_ru : item.name_uz}
+                            </h3>
+                          </Link>
+                          <p className="text-base sm:text-lg font-bold text-red-500 mt-1 sm:mt-2">
+                            {formatPrice(item.price)}
+                          </p>
+                        </div>
                       </div>
 
                       {/* Quantity & Actions */}
-                      <div className="flex flex-col items-end justify-between">
-                        <button
-                          onClick={() => removeItem(item.id)}
-                          className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-                        >
-                          <X className="w-5 h-5" />
-                        </button>
-
+                      <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-between gap-4 pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-800">
                         <div className="flex items-center gap-1 bg-neutral-800 rounded-lg">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -240,7 +235,7 @@ export default function CartPage() {
                           >
                             <Minus className="w-4 h-4" />
                           </button>
-                          <span className="w-8 text-center text-white">{item.quantity}</span>
+                          <span className="w-8 text-center text-white text-sm">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="p-2 text-gray-400 hover:text-white transition-colors"
@@ -248,6 +243,14 @@ export default function CartPage() {
                             <Plus className="w-4 h-4" />
                           </button>
                         </div>
+
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="p-2 text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1 sm:gap-0"
+                        >
+                          <X className="w-5 h-5" />
+                          <span className="sm:hidden text-sm">{language === 'ru' ? 'Удалить' : 'O\'chirish'}</span>
+                        </button>
                       </div>
                     </motion.div>
                   ))}
@@ -256,7 +259,7 @@ export default function CartPage() {
 
               {/* Summary / Checkout Form */}
               <div>
-                <div className="sticky top-24 bg-neutral-900 rounded-xl border border-gray-800 p-6">
+                <div className="sticky top-24 bg-neutral-900 rounded-xl border border-gray-800 p-4 sm:p-6">
                   {!showCheckout ? (
                     <>
                       <h3 className="text-lg font-semibold text-white mb-4">
@@ -264,13 +267,13 @@ export default function CartPage() {
                       </h3>
 
                       <div className="space-y-3 mb-6">
-                        <div className="flex justify-between text-gray-400">
+                        <div className="flex justify-between text-gray-400 text-sm sm:text-base">
                           <span>
                             {items.reduce((sum, item) => sum + item.quantity, 0)} {' '}
                             {language === 'ru' ? 'товаров' : 'ta mahsulot'}
                           </span>
                         </div>
-                        <div className="flex justify-between text-xl font-bold">
+                        <div className="flex justify-between text-lg sm:text-xl font-bold flex-wrap gap-2">
                           <span className="text-white">{t.cart.total}:</span>
                           <span className="text-red-500">{formatPrice(getTotal())}</span>
                         </div>
