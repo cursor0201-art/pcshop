@@ -73,7 +73,7 @@ export function Header() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center"
+                className="flex items-center gap-2.5"
               >
                 <Image
                   src="/logo.png"
@@ -83,6 +83,9 @@ export function Header() {
                   className="h-7 w-auto object-contain md:h-8"
                   priority
                 />
+                <span className="text-xl font-bold text-white tracking-tight">
+                  PC<span className="text-red-500">_Shop</span>
+                </span>
               </motion.div>
             </Link>
 
