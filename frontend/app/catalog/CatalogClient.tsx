@@ -548,7 +548,7 @@ export default function CatalogPage() {
                               handleBrandChange(brand);
                               setCurrentPage(1);
                             }}
-                            className="w-5 h-5 rounded border-gray-600 bg-neutral-850 text-red-500 focus:ring-red-500 focus:ring-offset-0 cursor-pointer"
+                            className="w-5 h-5 rounded border-gray-600 bg-neutral-800 text-red-500 focus:ring-red-500 focus:ring-offset-0 cursor-pointer"
                           />
                           <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
                             {brand}

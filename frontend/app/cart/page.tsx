@@ -298,7 +298,7 @@ export default function CartPage() {
                           required
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full px-4 py-2.5 rounded-lg bg-neutral-850 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none"
+                          className="w-full px-4 py-2.5 rounded-lg bg-neutral-800 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none"
                         />
                       </div>
 
@@ -311,7 +311,7 @@ export default function CartPage() {
                           required
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-2.5 rounded-lg bg-neutral-850 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none"
+                          className="w-full px-4 py-2.5 rounded-lg bg-neutral-800 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none"
                         />
                       </div>
 
@@ -324,7 +324,7 @@ export default function CartPage() {
                           value={formData.address}
                           onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                           rows={2}
-                          className="w-full px-4 py-2.5 rounded-lg bg-neutral-850 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none resize-none"
+                          className="w-full px-4 py-2.5 rounded-lg bg-neutral-800 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none resize-none"
                         />
                       </div>
 
@@ -336,7 +336,7 @@ export default function CartPage() {
                           value={formData.comment}
                           onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
                           rows={2}
-                          className="w-full px-4 py-2.5 rounded-lg bg-neutral-850 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none resize-none"
+                          className="w-full px-4 py-2.5 rounded-lg bg-neutral-800 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none resize-none"
                         />
                       </div>
 
