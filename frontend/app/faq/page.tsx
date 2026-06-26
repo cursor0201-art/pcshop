@@ -183,6 +183,13 @@ export default function FAQPage() {
                 <Phone className="w-5 h-5 text-red-500" />
                 <span>+998 (99) 823-09-90</span>
               </a>
+              <a 
+                href="tel:+998888907000" 
+                className="flex items-center justify-center gap-3 py-3 rounded-xl bg-neutral-900 border border-gray-800 hover:border-gray-700 text-white font-bold transition-all"
+              >
+                <Phone className="w-5 h-5 text-red-500" />
+                <span>+998 (88) 890-70-00</span>
+              </a>
             </div>
           </div>
 

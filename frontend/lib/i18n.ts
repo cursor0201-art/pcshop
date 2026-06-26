@@ -103,7 +103,9 @@ export const translations = {
     footer: {
       contacts: 'Контакты',
       address: 'ул. Лабзак, 2А, Ташкент',
+      address2: 'Торговые ряды Малика, 31б, Ташкент',
       phone: '+998 (99) 823-09-90',
+      phone2: '+998 (88) 890-70-00',
       telegram: '@pcshop_uzz',
       rights: 'Все права защищены',
     },
@@ -215,7 +217,9 @@ export const translations = {
     footer: {
       contacts: 'Aloqa',
       address: "Labzak ko'chasi, 2A, Toshkent",
+      address2: 'Malika savdo qatorlari, 31b, Toshkent',
       phone: '+998 (99) 823-09-90',
+      phone2: '+998 (88) 890-70-00',
       telegram: '@pcshop_uzz',
       rights: 'Barcha huquqlar himoyalangan',
     },

@@ -82,14 +82,14 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "ComputerStore",
     "name": "PcShop_uz",
-    "image": "https://images.pexels.com/photos/13019724/pexels-photo-13019724.jpeg",
+    "image": "https://storepcshop.uz/logo.png",
     "@id": "https://storepcshop.uz/#localbusiness",
     "url": "https://storepcshop.uz",
-    "telephone": "+998998230990",
+    "telephone": ["+998998230990", "+998888907000"],
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Юнусабад, Киёт 57",
+      "streetAddress": "ул. Лабзак, 2А",
       "addressLocality": "Ташкент",
       "addressRegion": "Ташкент",
       "postalCode": "100000",
@@ -97,8 +97,21 @@ export default function RootLayout({
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 41.3500,
-      "longitude": 69.2800
+      "latitude": 41.3223,
+      "longitude": 69.2653
+    },
+    "department": {
+      "@type": "ComputerStore",
+      "name": "PcShop_uz — Малика",
+      "telephone": "+998888907000",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Торговые ряды Малика, 31б",
+        "addressLocality": "Ташкент",
+        "addressRegion": "Ташкент",
+        "postalCode": "100000",
+        "addressCountry": "UZ"
+      }
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",

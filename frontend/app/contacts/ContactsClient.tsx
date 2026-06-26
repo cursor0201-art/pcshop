@@ -13,13 +13,13 @@ export default function ContactsPage() {
       document.title = 'Контакты | Компьютерный магазин PcShop_uz';
       const descMeta = document.querySelector('meta[name="description"]');
       if (descMeta) {
-        descMeta.setAttribute('content', 'Свяжитесь с PcShop_uz. 📍 Адрес: ул. Лабзак, 2А. 📞 Телефон: +998 (99) 823-09-90. Telegram: @pcshop_uzz. Быстрый ответ и качественный сервис.');
+        descMeta.setAttribute('content', 'Свяжитесь с PcShop_uz. 📍 Адрес 1: ул. Лабзак, 2А. 📍 Адрес 2: Торговые ряды Малика, 31б. 📞 Телефоны: +998 (99) 823-09-90, +998 (88) 890-70-00. Telegram: @pcshop_uzz.');
       }
     } else {
       document.title = 'Aloqa | PcShop_uz kompyuter do\'koni';
       const descMeta = document.querySelector('meta[name="description"]');
       if (descMeta) {
-        descMeta.setAttribute('content', 'PcShop_uz bilan bog\'laning. 📍 Manzil: Labzak ko\'chasi, 2A. 📞 Telefon: +998 (99) 823-09-90. Telegram: @pcshop_uzz. Tezkor javob va sifatli xizmat.');
+        descMeta.setAttribute('content', 'PcShop_uz bilan bog\'laning. 📍 Manzil 1: Labzak ko\'chasi, 2A. 📍 Manzil 2: Malika savdo qatorlari, 31b. 📞 Telefonlar: +998 (99) 823-09-90, +998 (88) 890-70-00. Telegram: @pcshop_uzz.');
       }
     }
   }, [language]);
@@ -32,41 +32,30 @@ export default function ContactsPage() {
     }
   }, []);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: '', email: '', phone: '', message: '' });
-
-    setTimeout(() => setIsSubmitted(false), 5000);
-  };
-
   const contactInfo = [
     {
       icon: MapPin,
-      title: language === 'ru' ? 'Адрес' : 'Manzil',
+      title: language === 'ru' ? 'Адрес 1' : 'Manzil 1',
       value: t.footer.address,
       link: 'https://maps.app.goo.gl/9nR8HzUUeveYd7MD6',
     },
     {
+      icon: MapPin,
+      title: language === 'ru' ? 'Адрес 2' : 'Manzil 2',
+      value: (t.footer as any).address2 || 'Торговые ряды Малика, 31б, Ташкент',
+      link: 'https://maps.app.goo.gl/3wiRcPUki5V5Z2zd8',
+    },
+    {
       icon: Phone,
-      title: language === 'ru' ? 'Телефон' : 'Telefon',
+      title: language === 'ru' ? 'Телефон 1' : 'Telefon 1',
       value: t.footer.phone,
       link: 'tel:+998998230990',
+    },
+    {
+      icon: Phone,
+      title: language === 'ru' ? 'Телефон 2' : 'Telefon 2',
+      value: (t.footer as any).phone2 || '+998 (88) 890-70-00',
+      link: 'tel:+998888907000',
     },
     {
       icon: Send,
@@ -106,14 +95,14 @@ export default function ContactsPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <div className="space-y-6">
+            <div className="space-y-4">
               {contactInfo.map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex items-start gap-4 p-6 rounded-2xl bg-neutral-900 border border-gray-800"
+                  transition={{ delay: index * 0.08 }}
+                  className="flex items-start gap-4 p-5 rounded-2xl bg-neutral-900 border border-gray-800"
                 >
                   <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center flex-shrink-0">
                     <item.icon className="w-6 h-6 text-red-500" />
@@ -137,11 +126,11 @@ export default function ContactsPage() {
               ))}
             </div>
 
-            {/* Map placeholder */}
+            {/* Map 1 — Лабзак */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.5 }}
               className="mt-8 rounded-2xl overflow-hidden bg-neutral-900 border border-gray-800"
             >
               <div className="aspect-video relative">
@@ -161,8 +150,38 @@ export default function ContactsPage() {
                 <p className="text-white font-medium">{t.footer.address}</p>
                 <p className="text-sm text-gray-400">
                   {language === 'ru'
-                    ? 'Мы находимся в Шайхантахурском районе'
-                    : 'Biz Shayxontohur tumanida joylashganmiz'}
+                    ? 'Шайхантахурский район'
+                    : 'Shayxontohur tumani'}
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Map 2 — Малика */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="mt-6 rounded-2xl overflow-hidden bg-neutral-900 border border-gray-800"
+            >
+              <div className="aspect-video relative">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2998.5!2d69.2285!3d41.3115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b534a2e01e3%3A0xbc81e07f3e3e4eb1!2sMalika%20Savdo%20Majmuasi!5e0!3m2!1sru!2s"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent pointer-events-none" />
+              </div>
+              <div className="p-4">
+                <p className="text-white font-medium">{(t.footer as any).address2 || 'Торговые ряды Малика, 31б, Ташкент'}</p>
+                <p className="text-sm text-gray-400">
+                  {language === 'ru'
+                    ? 'Рынок Малика'
+                    : 'Malika bozori'}
                 </p>
               </div>
             </motion.div>
@@ -185,7 +204,7 @@ export default function ContactsPage() {
                   : 'Biz doimo Telegram yoki telefon orqali aloqadamiz.'}
               </p>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 <a
                   href={tgLink}
                   target={tgLink.startsWith('http') ? '_blank' : undefined}
@@ -202,7 +221,17 @@ export default function ContactsPage() {
                 >
                   <Phone className="w-6 h-6 text-red-500" />
                   <span className="text-white group-hover:text-red-500 text-lg font-medium transition-colors">
-                    {language === 'ru' ? 'Позвонить' : 'Qo\'ng\'iroq'}
+                    +998 (99) 823-09-90
+                  </span>
+                </a>
+
+                <a
+                  href="tel:+998888907000"
+                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-neutral-800 border border-gray-700 hover:border-red-500/50 hover:bg-neutral-800/80 transition-all group"
+                >
+                  <Phone className="w-6 h-6 text-red-500" />
+                  <span className="text-white group-hover:text-red-500 text-lg font-medium transition-colors">
+                    +998 (88) 890-70-00
                   </span>
                 </a>
               </div>

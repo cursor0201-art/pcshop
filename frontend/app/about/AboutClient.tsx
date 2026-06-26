@@ -225,8 +225,8 @@ export default function AboutPage() {
                   </h4>
                   <p className="text-gray-400 text-sm">
                     {language === 'ru'
-                      ? 'Бесплатный самовывоз из нашего магазина на Лабзаке.'
-                      : 'Labzakdagi do\'konimizdan bepul olib ketish.'}
+                      ? 'Бесплатный самовывоз из наших магазинов: ул. Лабзак, 2А и Торговые ряды Малика, 31б.'
+                      : 'Bizning do\'konlarimizdan bepul olib ketish: Labzak ko\'chasi, 2A va Malika savdo qatorlari, 31b.'}
                   </p>
                 </div>
               </div>

@@ -260,7 +260,7 @@ export default async function Page({ params }: Props) {
                   <Phone className="w-8 h-8 text-red-500 flex-shrink-0" />
                   <div>
                     <h3 className="text-white font-semibold">Консультация эксперта</h3>
-                    <p className="text-xs text-gray-400 mt-1">Звоните по телефону +998 (99) 823-09-90 или пишите @pcshop_uzz.</p>
+                    <p className="text-xs text-gray-400 mt-1">Звоните: +998 (99) 823-09-90 или +998 (88) 890-70-00. Telegram: @pcshop_uzz.</p>
                   </div>
                 </div>
               </div>

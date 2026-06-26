@@ -92,7 +92,7 @@ export function Footer() {
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-gray-400">
-                <MapPin className="w-5 h-5 text-red-500" />
+                <MapPin className="w-5 h-5 text-red-500 flex-shrink-0" />
                 <a
                   href="https://maps.app.goo.gl/9nR8HzUUeveYd7MD6"
                   target="_blank"
@@ -103,13 +103,30 @@ export function Footer() {
                 </a>
               </div>
               <div className="flex items-center gap-3 text-gray-400">
-                <Phone className="w-5 h-5 text-red-500" />
+                <MapPin className="w-5 h-5 text-red-500 flex-shrink-0" />
+                <a
+                  href="https://maps.app.goo.gl/3wiRcPUki5V5Z2zd8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  {t.footer.address2}
+                </a>
+              </div>
+              <div className="flex items-center gap-3 text-gray-400">
+                <Phone className="w-5 h-5 text-red-500 flex-shrink-0" />
                 <a href="tel:+998998230990" className="hover:text-white transition-colors">
                   {t.footer.phone}
                 </a>
               </div>
               <div className="flex items-center gap-3 text-gray-400">
-                <Send className="w-5 h-5 text-red-500" />
+                <Phone className="w-5 h-5 text-red-500 flex-shrink-0" />
+                <a href="tel:+998888907000" className="hover:text-white transition-colors">
+                  {t.footer.phone2}
+                </a>
+              </div>
+              <div className="flex items-center gap-3 text-gray-400">
+                <Send className="w-5 h-5 text-red-500 flex-shrink-0" />
                 <a
                   href={tgLink}
                   target={tgLink.startsWith('http') ? '_blank' : undefined}
