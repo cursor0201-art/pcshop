@@ -31,8 +31,13 @@ export function Footer() {
   const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
   const [categories, setCategories] = useState<any[]>([]);
+  const [tgLink, setTgLink] = useState('https://telegram.me/pcshop_uzz');
 
   useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      setTgLink('tg://resolve?domain=pcshop_uzz');
+    }
     getCategories().then((data) => {
       if (data && data.length > 0) {
         setCategories(data.slice(0, 6));
@@ -104,9 +109,9 @@ export function Footer() {
               <div className="flex items-center gap-3 text-gray-400">
                 <Send className="w-5 h-5 text-red-500" />
                 <a
-                  href="https://telegram.me/pcshop_uzz"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={tgLink}
+                  target={tgLink.startsWith('http') ? '_blank' : undefined}
+                  rel={tgLink.startsWith('http') ? 'noopener noreferrer' : undefined}
                   className="hover:text-white transition-colors"
                 >
                   {t.footer.telegram}
@@ -172,9 +177,9 @@ export function Footer() {
           {/* Social Links */}
           <div className="flex items-center gap-3">
             <a
-              href="https://telegram.me/pcshop_uzz"
-              target="_blank"
-              rel="noopener noreferrer"
+              href={tgLink}
+              target={tgLink.startsWith('http') ? '_blank' : undefined}
+              rel={tgLink.startsWith('http') ? 'noopener noreferrer' : undefined}
               className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-red-500 hover:text-white transition-all"
             >
               <Send className="w-5 h-5" />
