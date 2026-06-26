@@ -1,0 +1,1113 @@
+{
+    "categories": [
+        {
+            "id": 3,
+            "name_ru": "Клавиатура",
+            "name_uz": "Klaviatura",
+            "slug": "klaviatura",
+            "description_ru": "Современная клавиатура для ПК — это надежный инструмент для работы, учебы и игр. Эргономичный дизайн с полноразмерной раскладкой и тихим, мягким ходом клавиш обеспечивает максимальный комфорт при долгом использовании. Устройство оснащено прочным корпусом, ножками для регулировки наклона и поддерживает быстрое подключение через USB.",
+            "description_uz": "Kompyuter klaviaturasi — ish, o'qish va o'yinlar uchun mo'ljallangan ishonchli va qulay qurilma. Ergonomik dizaynga ega bo'lib, to'liq o'lchamli tartib (raskladka) va tugmalarning yumshoq bosilishi uzoq vaqt davomida charchamasdan ishlash imkonini beradi. Qurilma mustahkam korpus, qiyalikni sozlash oyoqchalari bilan jihozlangan va USB porti orqali tez ulanishni qo'llab-quvvatlaydi.",
+            "is_active": true
+        },
+        {
+            "id": 4,
+            "name_ru": "Материнская плата",
+            "name_uz": "Ona plata",
+            "slug": "materinskaya-plata",
+            "description_ru": "Материнская плата является «сердцем» любого ПК. Она обеспечивает надежное взаимодействие между процессором, оперативной памятью и видеокартой, а также распределяет питание от блока питания ко всем компонентам.Основные преимущества качественной материнской платы:Надежная система питания (VRM): Гарантирует стабильную работу даже под максимальными нагрузками.Широкие возможности расширения: Поддержка современных стандартов PCIe для высокоскоростных видеокарт, несколько слотов для M.2 накопителей и высокоскоростная оперативная память.Отличное охлаждение: Массивные радиаторы для отвода тепла от цепей питания.Интерфейсы ввода-вывода: Наличие портов USB Type-C, быстрый LAN (Ethernet) и современные аудиочипы.Выбор этой платы позволяет создать как мощную игровую систему, так и высокопроизводительную рабочую станцию.",
+            "description_uz": "Ana plata shaxsiy kompyuterning eng asosiy tizim platasi hisoblanadi. U barcha muhim komponentlarni, jumladan protsessor, tezkor xotira (RAM) va video kartani yagona tizimga birlashtiradi hamda ular o'rtasida ma'lumot almashinuvini ta'minlaydi.Sifatli ana plataning asosiy afzalliklari:Kuchli quvvat tizimi (VRM): Kompyuter eng yuqori yuklamalarda ishlaganda ham barqarorlikni ta'minlaydi.Kengaytirish imkoniyatlari: Zamonaviy yuqori tezlikdagi video kartalar uchun PCIe standartlarini qo'llab-quvvatlaydi, bir nechta M.2 slotlari va tezkor xotira uchun joylar mavjud.Samarali sovutish tizimi: Qizib ketishning oldini oluvchi mustahkam radiatorlar mavjud.Interfeyslar: USB Type-C portlari, yuqori tezlikdagi LAN (Ethernet) ulagichlari va zamonaviy audio tizimlari o'rnatilgan.Ushbu anakartni tanlash kuchli o'yin kompyuterini (Gaming PC) yoki yuqori unumdorlikka ega ish stantsiyasini yig'ishga imkon beradi.",
+            "is_active": true
+        },
+        {
+            "id": 5,
+            "name_ru": "Наушники",
+            "name_uz": "Quloqchilar",
+            "slug": "naushniki",
+            "description_ru": "Погрузитесь в мир качественного звука с нашими наушниками для ПК! Идеальное решение как для напряженных игровых сессий, так и для работы или просмотра фильмов. Они оснащены сверхчувствительным микрофоном, мягкими амбушюрами для комфорта даже при длительном использовании и прочным кабелем. Насыщенные басы и чистые высокие частоты позволят вам уловить каждую деталь.Основные преимущества:🎯 Точное позиционирование звука: Слышите каждый шаг в играх и детали диалогов в фильмах.🎙️ Чистая связь: Встроенный микрофон для идеальных переговоров в OLX Uzbekistan или во время стримов.🎧 Эргономичный дизайн: Регулируемое оголовье и дышащие материалы предотвращают усталость.",
+            "description_uz": "Kompyuter quloqchinlari (наушники) yordamida sifatli ovoz dunyosiga sho'ng'ing! Bu ham qizg'in o'yin seanslari, ham ish yoki kino ko'rish uchun ideal tanlovdir. Ular yuqori sezgir mikrofon, uzoq vaqt foydalanishda ham qulaylik ta'minlovchi yumshoq yostiqchalar (амбушюры) va mustahkam kabel bilan jihozlangan. Boy bas va tiniq baland chastotalar har bir ovoz detalini aniq eshitish imkonini beradi.Asosiy afzalliklari:🎯 Ovozni aniq joylashuvi: O'yinlarda har bir qadamni va filmlarda dialoglarni aniq eshiting.🎙️ Tiniq muloqot: OLX Uzbekistan platformasida yoki onlayn suhbatlarda mukammal aloqa uchun o'rnatilgan mikrofon.🎧 Ergonomik dizayn: Sozlanadigan bosh qismi va nafas oluvchi materiallar charchoqning oldini oladi.",
+            "is_active": true
+        },
+        {
+            "id": 7,
+            "name_ru": "Процессор",
+            "name_uz": "Protsessor",
+            "slug": "processor",
+            "description_ru": "Центральный процессор для ПКЭто сердце вашей вычислительной системы, которое обеспечивает максимальную скорость работы в играх, профессиональных программах и режиме многозадачности.Ключевые преимущества:Высокая вычислительная мощность: Позволяет мгновенно справляться с ресурсоемкими задачами, обработкой видео и запуском современных требовательных игр.Оптимизированное энергопотребление: Усовершенствованный техпроцесс обеспечивает отличную производительность без лишнего нагрева.Современные технологии: Поддержка актуальных стандартов оперативной памяти и скоростных линий передачи данных.",
+            "description_uz": "Kompyuter uchun markaziy protsessorBu tizimingizning asosiy «miyasi» bo'lib, o'yinlarda, murakkab dasturlarda va ko'p vazifali rejimda eng yuqori tezlikni ta'minlaydi.Asosiy afzalliklari:Yuqori hisoblash quvvati: Resurs talab qiladigan vazifalar, video tahrirlash va zamonaviy talabchan o'yinlarni kechikishlarsiz bajarish imkonini beradi.Optimallashtirilgan energiya sarfi: Zamonaviy texnologiya ortiqcha qizib ketishlarsiz yuqori samaradorlikni kafolatlaydi.Zamonaviy texnologiyalar: Tezkor xotira (RAM) va ma'lumotlarni uzatishning so'nggi standartlarini qo'llab-quvvatlaydi.Ushbu qurilmaning ishlash tamoyillari haqida ko'proq ma'lumot olish uchun Vikipediyadagi protsessor sahifasiga tashrif buyurishingiz mumkin.",
+            "is_active": true
+        },
+        {
+            "id": 8,
+            "name_ru": "Оперативная память",
+            "name_uz": "Operativ xotira",
+            "slug": "operativnaya-pamyat",
+            "description_ru": "Оперативная память (ОЗУ) — это сверхбыстрое временное хранилище данных, необходимое для мгновенной работы процессора с запущенными приложениями, открытыми вкладками и играми. От объема и скорости оперативной памяти напрямую зависит скорость загрузки и общая плавность работы вашего ПК.Ключевые преимущества современной оперативной памяти:Высокая скорость: мгновенный доступ к информации обеспечивает комфортный игровой процесс и быструю работу в тяжелых программах.Стабильная многозадачность: позволяет держать открытыми множество вкладок и программ одновременно без зависаний.Энергоэффективность: современные модули потребляют мало энергии и оптимизируют работу всего компьютера.",
+            "description_uz": "Tezkor xotira (Operativ xotira yoki RAM) — bu protsessorning ishga tushirilgan ilovalar, ochiq brauzer oynalari va o'yinlar bilan bir zumda ishlashini ta'minlovchi o'ta tezkor va vaqtinchalik ma'lumotlar ombori. Kompyuterning tezkor ishlash tezligi va dasturlarning qotmasdan ochilishi bevosita tezkor xotiraning hajmiga bog'liq.Zamonaviy tezkor xotiraning asosiy afzalliklari:Yuqori tezlik: ma'lumotlarga zudlik bilan kirish qulay o'yin jarayoni va og'ir dasturlarda tezkor ishlashni ta'minlaydi.Barqaror ko'p vazifalilik: bir vaqtning o'zida ko'plab ilovalar va sahifalarni qotmasdan ochiq ushlab turish imkonini beradi.Kam quvvat sarfi: zamonaviy modellar kam energiya sarflaydi va kompyuterning umumiy unumdorligini optimallashtiradi.",
+            "is_active": true
+        },
+        {
+            "id": 9,
+            "name_ru": "Видеокарта",
+            "name_uz": "Videokarta",
+            "slug": "videokarta",
+            "description_ru": "Современная видеокарта — это главный компонент вашего ПК, отвечающий за обработку графики. Мощный графический чип позволяет запускать требовательные игры на ультра-настройках, комфортно монтировать видео, работать с 3D-моделированием и нейросетями. Узнайте все о ключевых параметрах (память, шина, охлаждение) и сделайте правильный выбор!",
+            "description_uz": "Zamonaviy videokarta — bu kompyuteringizning grafikani qayta ishlash uchun mas'ul bo'lgan eng muhim qismidir. Kuchli grafik protsessor eng talabchan o'yinlarni yuqori sifatda o'ynash, videolarni tez montaj qilish hamda 3D modellar va neyron tarmoqlar bilan ishlash imkonini beradi. Videoda uning asosiy parametrlari (xotirasi, shinalari va sovutish tizimi) bilan tanishing va to'g'ri tanlov qiling!",
+            "is_active": true
+        },
+        {
+            "id": 10,
+            "name_ru": "SSD Накопитель",
+            "name_uz": "SSD Disk",
+            "slug": "ssd-nakopitel",
+            "description_ru": "SSD (Solid State Drive / Твердотельный накопитель) — это электронное устройство долговременной памяти для ПК. В отличие от классических жестких дисков (HDD), здесь нет движущихся механических деталей, а данные хранятся на микросхемах (флеш-памяти).Основные преимущества:Высокая скорость: Операционная система загружается за несколько секунд, а приложения и игры открываются практически мгновенно.Надежность и бесшумность: Отсутствие подвижных элементов делает SSD устойчивым к ударам, вибрациям и падениям, а также обеспечивает тихую работу.Энергоэффективность: Потребляет меньше энергии, что снижает нагрев внутри корпуса ПК.Популярные форм-факторы и интерфейсы:2.5\" SATA: Универсальный формат для большинства ПК и ноутбуков, работающий через кабель.M.2 NVMe: Компактный и сверхбыстрый стандарт, подключаемый прямо в материнскую плату, который отлично подходит для современных игровых сборок и работы с графикой.",
+            "description_uz": "SSD (Solid State Drive / Qattiq holatdagi yurituvchi) — kompyuter va noutbuklar uchun mo‘ljallangan ma’lumotlarni saqlash qurilmasi. Mexanik qismlarga ega eskirgan HDD'lardan farqli o‘laroq, SSD flesh-xotiradan foydalanadi. Bu esa kompyuterning ishlash tezligini bir necha barobar oshiradi.Asosiy afzalliklari:Yuqori tezlik: Operatsion tizim soniyalarda yuklanadi va og‘ir dasturlar tez ochiladi.Shovqinsiz va ishonchli: Ichida harakatlanuvchi mexanizmlar bo‘lmagani uchun zarbalarga chidamli va mutlaqo jim ishlaydi.Kam quvvat sarfi: Kam energiya sarflaydi va kamroq qiziydi.Ommabop turlari:2.5 dyuymli SATA: Ko‘pchilik kompyuterlar uchun mos bo‘lgan klassik format.M.2 NVMe: Eng so‘nggi va tezkor standart bo‘lib, to‘g‘ridan-to‘g‘ri anakartga o‘rnatiladi.",
+            "is_active": true
+        },
+        {
+            "id": 11,
+            "name_ru": "Игровые ноутбуки",
+            "name_uz": "O'yin noutbuklari",
+            "slug": "igrovye-noutbuki",
+            "description_ru": "Современные геймерские ноутбуки предлагают бескомпромиссную мощность в компактном корпусе. Главная особенность таких устройств — продвинутая система охлаждения, предотвращающая перегрев при максимальных нагрузках.Основные преимущества:Топовое железо: Новейшие процессоры и дискретные видеокарты (например, NVIDIA серии RTX 40 или RTX 50) обеспечивают стабильно высокий FPS.Плавные экраны: Дисплеи с высокой частотой обновления (от 144 Гц до 240+ Гц), быстрой матрицей (IPS или OLED) и высоким разрешением делают игровой процесс максимально реалистичным.Качественный звук и удобство: Подсветка клавиатуры, мощные динамики и передовые сетевые адаптеры для игры без задержек.",
+            "description_uz": "O'yin noutbuklari - bu ish unumdorligi bo'yicha to'liq statsionar kompyuterlarga teng keladigan kuchli portativ qurilmalardir. Ular eng so'nggi video o'yinlarni yuqori grafik sozlamalarida ishga tushirish, og'ir dasturlar bilan ishlash va murakkab muammolarni hal qilish uchun yaratilgan.Asosiy afzalliklari:Kuchli ichki qismlar: Eng so'nggi protsessorlar va alohida video kartalar (masalan, NVIDIA RTX 40 yoki RTX 50 seriyalari) barqaror va yuqori kadrlar tezligini (FPS) ta'minlaydi.Yorqin va silliq ekranlar: Yangilanish chastotasi yuqori (144 Gts dan 240+ Gts gacha), tezkor matritsali (IPS yoki OLED) displeylar o'yin jarayonini imkon qadar real qiladi.Yuqori sifatli ovoz va qulaylik: Klaviatura yoritgichi, kuchli dinamiklar va kechikishlarsiz o'yin uchun ilg‘or tarmoq adapterlari.",
+            "is_active": true
+        },
+        {
+            "id": 13,
+            "name_ru": "Игровое кресло",
+            "name_uz": "O'yin o'rindig'i",
+            "slug": "igrovoe-kreslo",
+            "description_ru": "Погрузитесь в мир виртуальных развлечений с максимальным комфортом! Это эргономичное игровое кресло создано специально для тех, кто проводит много времени за компьютером.Основные преимущества:Анатомическая поддержка: В комплект входят две регулируемые подушки — для шеи и поясницы, которые гарантируют здоровую осанку.Индивидуальная настройка: Угол наклона спинки регулируется вплоть до полного горизонтального положения (до 180°) для отдыха между катками.Надежность: Прочный стальной каркас и усиленная крестовина выдерживают нагрузку до 150 кг.Премиум-материалы: Дышащая, износостойкая экокожа легко чистится и обеспечивает комфорт в любое время года.Регулируемые подлокотники: Поддерживают руки, снимая напряжение с плеч и запястий.",
+            "description_uz": "Ergonomik dizayn va maksimal qulaylik:Kreslo tananing shaklini mukammal takrorlaydi, bu esa to'g'ri qomatni ta'minlaydi va ko'p soatlik o'yin seanslari yoki ish paytida bo'yin va beldagi zo'riqishni kamaytiradi.O'zingizga moslash imkoniyati:Kresloni bo'yingizga va xohishingizga qarab osongina sozlashingiz mumkin:Suyanchiqning qiyaligi: to'liq dam olish uchun 180° gacha orqaga yotqizish imkonini beradi.Sozlanadigan qo'l dayamalari: yelka va bilaklardagi zo'riqishni yo'qotadi.Bo'yin va bel uchun yostiqlar: umurtqa pog'onasini qo'shimcha qo'llab-quvvatlaydi.Mustahkamlik va materiallar:O'rindiq qoplamasi eskirishga chidamli, nafas oluvchi ekokojadan tayyorlangan bo'lib, uni tozalash oson va teginish uchun yoqimli. Mustahkam metall karkas va yuqori darajadagi gazlift hatto intensiv foydalanishda ham xavfsizlik va uzoq umr ko'rishni kafolatlaydi.",
+            "is_active": true
+        },
+        {
+            "id": 6,
+            "name_ru": "Мышки",
+            "name_uz": "Sichqonchalar",
+            "slug": "myshki",
+            "description_ru": "Эта современная компьютерная мышь создана для тех, кто ценит комфорт, скорость и точность. Эргономичный дизайн обеспечивает идеальную поддержку руки, предотвращая усталость даже после долгих часов за компьютером. Высокоточный оптический сенсор с регулируемым разрешением (DPI) гарантирует плавное и мгновенное перемещение курсора на любой поверхности. Бесшумные переключатели клавиш позволяют работать, не отвлекая окружающих. Устройство легко подключается к ПК или ноутбуку через надежный USB-кабель или по беспроводной сети.Эргономика: Специальная форма для хвата любой рукой.Точность: Быстрый отклик с технологией оптического слежения.Универсальность: Подходит для игр, учебы и профессиональной деятельности.",
+            "description_uz": "Ushbu zamonaviy kompyuter sichqonchasi qulaylik, tezlik va aniqlikni qadrlaydiganlar uchun yaratilgan. Uning ergonomik dizayni qo'lingizni mukammal darajada qo'llab-quvvatlab, kompyuterda uzoq vaqt ishlagandan keyin ham charchoqni oldini oladi. Sozlanishi mumkin bo'lgan aniqlik (DPI) bilan yuqori aniqlikdagi optik sensor istalgan sirtda kursorning silliq va tez harakatlanishini ta'minlaydi. Ovozsiz tugmachalar atrofidagilarga xalaqit bermasdan ishlash imkonini beradi. Qurilma shaxsiy kompyuter yoki noutbukga ishonchli USB kabeli yoki simsiz tarmoq orqali oson ulanadi.Ergonomika: Istalgan qo'l uchun maxsus shakl.Aniqlik: Optik kuzatuv texnologiyasi bilan tezkor javob berish.Universallik: O'yinlar, o'qish va professional faoliyat uchun juda mos keladi.",
+            "is_active": false
+        },
+        {
+            "id": 12,
+            "name_ru": "Готовые сборки ПК",
+            "name_uz": "Tayor PC",
+            "slug": "gotovye-sborki-pk",
+            "description_ru": "Этот сбалансированный компьютер создан для тех, кто не хочет идти на компромиссы. Высокопроизводительный процессор в сочетании с мощной видеокартой гарантируют безупречную работу в тяжелых программах и невероятную графику в современных играх. Быстрый SSD-накопитель обеспечивает мгновенную загрузку операционной системы, а эффективная система охлаждения сохраняет компоненты в безопасности даже во время длительных игровых сессий.Ключевые преимущества:🚀 Максимальная производительность: легко справляется с любыми рабочими задачами, стримингом и 4K-геймингом.💨 Эффективный отвод тепла: тихие и мощные кулеры для идеальной циркуляции воздуха.🛠️ Полная готовность к работе: система полностью собрана, протестирована и готова к использованию сразу после покупки.",
+            "description_uz": "Barcha vazifalar uchun kuchli o'yin kompyuterlariUshbu muvozanatli kompyuter murosaga kelishni istamaydiganlar uchun maxsus yaratilgan. Yuqori unumdor protsessor kuchli grafik karta bilan uyg'unlashgan holda og'ir dasturlarda benuqson ishlashni va zamonaviy o'yinlarda ajoyib grafikani kafolatlaydi. Tezkor SSD diski operatsion tizimning bir zumda yuklanishini ta'minlaydi, samarali sovutish tizimi esa hatto uzoq davom etadigan o'yin seanslarida ham barcha komponentlarning xavfsizligini saqlab qoladi.Asosiy afzalliklari:🚀 Maksimal unumdorlik: har qanday ish vazifalari, striming va 4K formatdagi o'yinlarni osonlikcha bajaradi.💨 Issiqlikni samarali chiqarib yuborish: mukammal havo aylanishini ta'minlovchi shovqinsiz va kuchli ventilyatorlar.🛠️ Ishga to'liq tayyor: tizim to'liq yig'ilgan, sinovdan o'tgan va xarid qilingandan so'ng darhol foydalanishga tayyor.",
+            "is_active": false
+        }
+    ],
+    "products": [
+        {
+            "id": 2,
+            "category_id": 4,
+            "name_ru": "Материнская плата ASUS ProArt X870E-Creator WiFi",
+            "name_uz": "ASUS ProArt X870E-Creator WiFi ona platasi",
+            "slug": "asus-proart-x870e-creator-wifi",
+            "description_ru": "Профессиональная материнская плата ASUS ProArt X870E-Creator WiFi. Оснащена сокетом AM5, поддержкой Wi-Fi 7, портами USB4, 10Gb Ethernet и 2.5Gb Ethernet. Идеальное решение для создания контента и высокопроизводительных систем.",
+            "description_uz": "Professional ASUS ProArt X870E-Creator WiFi ona platasi. AM5 soketi, Wi-Fi 7, USB4 portlari, 10Gb Ethernet va 2.5Gb Ethernet bilan jihozlangan. Kontent yaratish va yuqori unumdorlikka ega tizimlar uchun ideal yechim.",
+            "price": 5400000.0,
+            "price_usd": 450.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "ASUS",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Сокет",
+                    "name_uz": "Soket",
+                    "value_ru": "AM5",
+                    "value_uz": "AM5"
+                },
+                {
+                    "name_ru": "Сетевые порты",
+                    "name_uz": "Tarmoq portlari",
+                    "value_ru": "10Gb + 2.5Gb Ethernet",
+                    "value_uz": "10Gb + 2.5Gb Ethernet"
+                },
+                {
+                    "name_ru": "Беспроводная связь",
+                    "name_uz": "Simsiz aloqa",
+                    "value_ru": "Wi-Fi 7",
+                    "value_uz": "Wi-Fi 7"
+                },
+                {
+                    "name_ru": "Разъемы USB",
+                    "name_uz": "USB ulagichlari",
+                    "value_ru": "USB4",
+                    "value_uz": "USB4"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "category_id": 4,
+            "name_ru": "Материнская плата MSI MPG X870E EDGE TI WIFI",
+            "name_uz": "MSI MPG X870E EDGE TI WIFI ona platasi",
+            "slug": "msi-mpg-x870e-edge-ti-wifi",
+            "description_ru": "Высокопроизводительная игровая материнская плата MSI MPG X870E EDGE TI WIFI с поддержкой процессоров AMD Ryzen серии 9000. Отличается стильным серебристым дизайном, поддержкой современных стандартов PCIe 5.0, Wi-Fi 7 и расширенными возможностями для разгона.",
+            "description_uz": "AMD Ryzen 9000 seriyali protsessorlarni qo'llab-quvvatlaydigan yuqori unumdor MSI MPG X870E EDGE TI WIFI o'yin ona platasi. Zamonaviy kumushrang dizayn, PCIe 5.0, Wi-Fi 7 standartlari va overclocking uchun keng imkoniyatlari bilan ajralib turadi.",
+            "price": 3960000.0,
+            "price_usd": 330.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "MSI",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Сокет",
+                    "name_uz": "Soket",
+                    "value_ru": "AM5",
+                    "value_uz": "AM5"
+                },
+                {
+                    "name_ru": "Чипсет",
+                    "name_uz": "Chipset",
+                    "value_ru": "AMD X870E",
+                    "value_uz": "AMD X870E"
+                },
+                {
+                    "name_ru": "Беспроводная связь",
+                    "name_uz": "Simsiz aloqa",
+                    "value_ru": "Wi-Fi 7",
+                    "value_uz": "Wi-Fi 7"
+                },
+                {
+                    "name_ru": "Форм-фактор",
+                    "name_uz": "Form-faktor",
+                    "value_ru": "ATX",
+                    "value_uz": "ATX"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "category_id": 4,
+            "name_ru": "Материнская плата MSI Z890 GAMING PLUS WIFI",
+            "name_uz": "MSI Z890 GAMING PLUS WIFI ona platasi",
+            "slug": "msi-z890-gaming-plus-wifi",
+            "description_ru": "Игровая материнская плата MSI Z890 GAMING PLUS WIFI, разработанная для новейших процессоров Intel. Поддерживает современные стандарты передачи данных, оптимизирована для стабильного гейминга и оснащена эффективной системой охлаждения.",
+            "description_uz": "Eng so'nggi Intel protsessorlari uchun ishlab chiqilgan MSI Z890 GAMING PLUS WIFI o'yin ona platasi. Zamonaviy ma'lumot uzatish standartlarini qo'llab-quvvatlaydi, barqaror o'yin uchun optimallashtirilgan va samarali sovutish tizimi bilan jihozlangan.",
+            "price": 2640000.0,
+            "price_usd": 220.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "MSI",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Чипсет",
+                    "name_uz": "Chipset",
+                    "value_ru": "Intel Z890",
+                    "value_uz": "Intel Z890"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "Gaming Plus",
+                    "value_uz": "Gaming Plus"
+                },
+                {
+                    "name_ru": "Беспроводная связь",
+                    "name_uz": "Simsiz aloqa",
+                    "value_ru": "Wi-Fi",
+                    "value_uz": "Wi-Fi"
+                },
+                {
+                    "name_ru": "Форм-фактор",
+                    "name_uz": "Form-faktor",
+                    "value_ru": "ATX",
+                    "value_uz": "ATX"
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "category_id": 8,
+            "name_ru": "Оперативная память Team T-Force Delta RGB 16GB (2×8GB) DDR5-6000",
+            "name_uz": "Team T-Force Delta RGB 16GB (2×8GB) DDR5-6000 operativ xotirasi",
+            "slug": "team-t-force-delta-rgb-16gb-ddr5-6000",
+            "description_ru": "Высокопроизводительный комплект оперативной памяти DDR5 объемом 16 ГБ (2×8 ГБ) с частотой 6000 МГц. Оснащен яркой настраиваемой RGB-подсветкой и стильным радиатором охлаждения.",
+            "description_uz": "6000 MGts chastotali 16 GB (2×8 GB) hajmli yuqori unumdor DDR5 operativ xotira to'plami. Yorqin sozlanishi RGB yoritilishi va zamonaviy sovutish radiatori bilan jihozlangan.",
+            "price": 2400000.0,
+            "price_usd": 200.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 5,
+            "brand": "Team Group",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Объем",
+                    "name_uz": "Hajmi",
+                    "value_ru": "16GB (2×8GB)",
+                    "value_uz": "16GB (2×8GB)"
+                },
+                {
+                    "name_ru": "Тип памяти",
+                    "name_uz": "Xotira turi",
+                    "value_ru": "DDR5",
+                    "value_uz": "DDR5"
+                },
+                {
+                    "name_ru": "Частота",
+                    "name_uz": "Chastota",
+                    "value_ru": "6000 МГц",
+                    "value_uz": "6000 MGts"
+                },
+                {
+                    "name_ru": "Подсветка",
+                    "name_uz": "Yoritish",
+                    "value_ru": "RGB",
+                    "value_uz": "RGB"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "category_id": 4,
+            "name_ru": "Материнская плата ASUS ROG STRIX X870E-E GAMING WIFI",
+            "name_uz": "ASUS ROG STRIX X870E-E GAMING WIFI ona platasi",
+            "slug": "asus-rog-strix-x870e-e-gaming-wifi",
+            "description_ru": "Флагманская игровая материнская плата ASUS ROG STRIX X870E-E GAMING WIFI. Поддерживает процессоры AMD Ryzen серии 9000, оснащена продвинутой системой охлаждения, поддержкой Wi-Fi 7 и премиальными компонентами для экстремального гейминга.",
+            "description_uz": "Flagman o'yin ona platasi ASUS ROG STRIX X870E-E GAMING WIFI. AMD Ryzen 9000 seriyali protsessorlarni qo'llab-quvvatlaydi, ilg'or sovutish tizimi, Wi-Fi 7 va ekstremal geyming uchun yuqori sifatli komponentlar bilan jihozlangan.",
+            "price": 5400000.0,
+            "price_usd": 450.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "ASUS",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Сокет",
+                    "name_uz": "Soket",
+                    "value_ru": "AM5",
+                    "value_uz": "AM5"
+                },
+                {
+                    "name_ru": "Чипсет",
+                    "name_uz": "Chipset",
+                    "value_ru": "AMD X870E",
+                    "value_uz": "AMD X870E"
+                },
+                {
+                    "name_ru": "Беспроводная связь",
+                    "name_uz": "Simsiz aloqa",
+                    "value_ru": "Wi-Fi 7",
+                    "value_uz": "Wi-Fi 7"
+                },
+                {
+                    "name_ru": "Форм-фактор",
+                    "name_uz": "Form-faktor",
+                    "value_ru": "ATX",
+                    "value_uz": "ATX"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "category_id": 4,
+            "name_ru": "Материнская плата MSI PRO Z890-S WIFI PZ",
+            "name_uz": "MSI PRO Z890-S WIFI PZ ona platasi",
+            "slug": "msi-pro-z890-s-wifi-pz",
+            "description_ru": "Надежная и эффективная материнская плата серии PRO, предназначенная для профессиональных рабочих станций и продуктивных сборок. Поддерживает процессоры Intel, оснащена современной системой охлаждения и встроенным Wi-Fi модулем.",
+            "description_uz": "Professional ish stansiyalari va samarali tizimlar uchun mo'ljallangan, ishonchli va samarali PRO seriyali ona plata. Intel protsessorlarini qo'llab-quvvatlaydi, zamonaviy sovutish tizimi va o'rnatilgan Wi-Fi moduli bilan jihozlangan.",
+            "price": 3600000.0,
+            "price_usd": 300.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "MSI",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Чипсет",
+                    "name_uz": "Chipset",
+                    "value_ru": "Intel Z890",
+                    "value_uz": "Intel Z890"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "PRO",
+                    "value_uz": "PRO"
+                },
+                {
+                    "name_ru": "Беспроводная связь",
+                    "name_uz": "Simsiz aloqa",
+                    "value_ru": "Wi-Fi",
+                    "value_uz": "Wi-Fi"
+                },
+                {
+                    "name_ru": "Форм-фактор",
+                    "name_uz": "Form-faktor",
+                    "value_ru": "ATX",
+                    "value_uz": "ATX"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "category_id": 3,
+            "name_ru": "Игровая клавиатура Razer Huntsman V3 Pro Tenkeyless",
+            "name_uz": "Razer Huntsman V3 Pro Tenkeyless o'yin klaviaturasi",
+            "slug": "razer-huntsman-v3-pro-tenkeyless",
+            "description_ru": "Профессиональная TKL-клавиатура с аналоговыми оптическими переключателями второго поколения. Обладает регулируемым срабатыванием, режимом Rapid Trigger для мгновенной реакции и многофункциональным колесиком управления.",
+            "description_uz": "Ikkinchi avlod analog optik kalitli professional TKL klaviaturasi. Sozlanishi mumkin bo'lgan ishlash, zudlik bilan javob qaytarish uchun Rapid Trigger rejimi va ko'p funksiyali boshqaruv g'ildiragiga ega.",
+            "price": 2148000.0,
+            "price_usd": 179.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "Razer",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Тип переключателей",
+                    "name_uz": "Kalit turi",
+                    "value_ru": "Аналоговые оптические",
+                    "value_uz": "Analog optik"
+                },
+                {
+                    "name_ru": "Подсветка",
+                    "name_uz": "Yorug'lik",
+                    "value_ru": "Razer Chroma RGB",
+                    "value_uz": "Razer Chroma RGB"
+                },
+                {
+                    "name_ru": "Особенности",
+                    "name_uz": "Xususiyatlari",
+                    "value_ru": "Rapid Trigger",
+                    "value_uz": "Rapid Trigger"
+                },
+                {
+                    "name_ru": "Форм-фактор",
+                    "name_uz": "Form-faktor",
+                    "value_ru": "Tenkeyless (TKL)",
+                    "value_uz": "Tenkeyless (TKL)"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "category_id": 3,
+            "name_ru": "Механическая клавиатура GravaStar V60",
+            "name_uz": "GravaStar V60 mexanik klaviaturasi",
+            "slug": "gravastar-v60",
+            "description_ru": "Уникальная компактная механическая клавиатура GravaStar V60 с футуристическим прозрачным дизайном. Оснащена RGB-подсветкой, высококачественными переключателями и эргономичной структурой для геймеров.",
+            "description_uz": "Futurist, shaffof dizaynga ega noyob ixcham mexanik GravaStar V60 klaviaturasi. RGB yoritilishi, yuqori sifatli kalitlar va geymerlar uchun ergonomik tuzilma bilan jihozlangan.",
+            "price": 1440000.0,
+            "price_usd": 120.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "GravaStar",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Тип",
+                    "name_uz": "Turi",
+                    "value_ru": "Механическая",
+                    "value_uz": "Mexanik"
+                },
+                {
+                    "name_ru": "Подсветка",
+                    "name_uz": "Yorug'lik",
+                    "value_ru": "RGB",
+                    "value_uz": "RGB"
+                },
+                {
+                    "name_ru": "Дизайн",
+                    "name_uz": "Dizayn",
+                    "value_ru": "Прозрачный / Футуристичный",
+                    "value_uz": "Shaffof / Futurist"
+                },
+                {
+                    "name_ru": "Форм-фактор",
+                    "name_uz": "Form-faktor",
+                    "value_ru": "60%",
+                    "value_uz": "60%"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "category_id": 3,
+            "name_ru": "Механическая клавиатура Mercury GravaStar V75 Pro",
+            "name_uz": "Mercury GravaStar V75 Pro mexanik klaviaturasi",
+            "slug": "mercury-gravastar-v75-pro",
+            "description_ru": "Эффектная механическая клавиатура Mercury GravaStar V75 Pro с уникальным ярким дизайном в стиле граффити. Обладает прочной конструкцией, отзывчивыми переключателями и стильными элементами, выделяющими её среди игровых аксессуаров.",
+            "description_uz": "Noyob va yorqin graffiti uslubidagi Mercury GravaStar V75 Pro mexanik klaviaturasi. Mustahkam konstruksiya, sezgir kalitlar va uni o'yin aksessuarlari orasida ajralib turadigan zamonaviy elementlarga ega.",
+            "price": 2160000.0,
+            "price_usd": 180.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "GravaStar",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Тип",
+                    "name_uz": "Turi",
+                    "value_ru": "Механическая",
+                    "value_uz": "Mexanik"
+                },
+                {
+                    "name_ru": "Дизайн",
+                    "name_uz": "Dizayn",
+                    "value_ru": "Яркий / Граффити",
+                    "value_uz": "Yorqin / Graffiti"
+                },
+                {
+                    "name_ru": "Форм-фактор",
+                    "name_uz": "Form-faktor",
+                    "value_ru": "75%",
+                    "value_uz": "75%"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "category_id": 5,
+            "name_ru": "Игровые вакуумные наушники Horizon In-ear Type-C",
+            "name_uz": "Horizon In-ear Type-C o'yin quloqchinlari",
+            "slug": "horizon-in-ear-type-c-gaming-earphones",
+            "description_ru": "Компактные игровые наушники Horizon с подключением через разъем Type-C. Обеспечивают качественный звук, удобную посадку и оснащены надежным плетеным кабелем.",
+            "description_uz": "Type-C ulagichi orqali ulanadigan ixcham Horizon o'yin quloqchinlari. Sifatli ovoz, qulay joylashuvni ta'minlaydi va mustahkam o'rilgan kabel bilan jihozlangan.",
+            "price": 620000.0,
+            "price_usd": 51.67,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 10,
+            "brand": "Horizon",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Тип подключения",
+                    "name_uz": "Ulanish turi",
+                    "value_ru": "Type-C",
+                    "value_uz": "Type-C"
+                },
+                {
+                    "name_ru": "Тип наушников",
+                    "name_uz": "Quloqchin turi",
+                    "value_ru": "Внутриканальные (вакуумные)",
+                    "value_uz": "Ichki kanalli (vakuum)"
+                },
+                {
+                    "name_ru": "Кабель",
+                    "name_uz": "Kabel",
+                    "value_ru": "Плетеный",
+                    "value_uz": "O'rilgan"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "category_id": 5,
+            "name_ru": "Беспроводная игровая гарнитура Steelseries Arctis Nova 7P Wireless",
+            "name_uz": "Steelseries Arctis Nova 7P Wireless simsiz o'yin quloqchini",
+            "slug": "steelseries-arctis-nova-7p-wireless",
+            "description_ru": "Универсальная беспроводная гарнитура Steelseries Arctis Nova 7P Wireless. Обеспечивает качественный звук, многоплатформенную совместимость (PC, PlayStation, Switch, Mobile) и включает комплект сменных панелей (Booster Pack Bundle).",
+            "description_uz": "Universal simsiz Steelseries Arctis Nova 7P Wireless quloqchini. Sifatli ovoz, ko'p platformali moslik (PC, PlayStation, Switch, Mobile) ta'minlaydi va almashtiriladigan panellar to'plamini (Booster Pack Bundle) o'z ichiga oladi.",
+            "price": 2028000.0,
+            "price_usd": 169.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 10,
+            "brand": "Steelseries",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Тип подключения",
+                    "name_uz": "Ulanish turi",
+                    "value_ru": "Беспроводное (2.4GHz)",
+                    "value_uz": "Simsiz (2.4GHz)"
+                },
+                {
+                    "name_ru": "Платформы",
+                    "name_uz": "Platformalar",
+                    "value_ru": "Multi-platform",
+                    "value_uz": "Multi-platform"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "category_id": 5,
+            "name_ru": "Беспроводная игровая гарнитура Logitech G733",
+            "name_uz": "Logitech G733 simsiz o'yin quloqchini",
+            "slug": "logitech-g733-wireless",
+            "description_ru": "Стильная и легкая беспроводная гарнитура Logitech G733 с поддержкой технологии LIGHTSPEED и RGB-подсветкой LIGHTSYNC. Обеспечивает комфорт при длительном использовании и качественное звучание.",
+            "description_uz": "LIGHTSPEED texnologiyasi va LIGHTSYNC RGB yoritilishini qo'llab-quvvatlaydigan zamonaviy va yengil simsiz Logitech G733 quloqchini. Uzoq vaqt foydalanishda qulaylik va sifatli ovozni ta'minlaydi.",
+            "price": 1668000.0,
+            "price_usd": 139.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "Logitech",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Тип подключения",
+                    "name_uz": "Ulanish turi",
+                    "value_ru": "Беспроводное (LIGHTSPEED)",
+                    "value_uz": "Simsiz (LIGHTSPEED)"
+                },
+                {
+                    "name_ru": "Подсветка",
+                    "name_uz": "Yorug'lik",
+                    "value_ru": "LIGHTSYNC RGB",
+                    "value_uz": "LIGHTSYNC RGB"
+                },
+                {
+                    "name_ru": "Дизайн",
+                    "name_uz": "Dizayn",
+                    "value_ru": "Легкий и стильный",
+                    "value_uz": "Yengil va zamonaviy"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "category_id": 7,
+            "name_ru": "Процессор AMD Ryzen 9 9950X3D",
+            "name_uz": "AMD Ryzen 9 9950X3D protsessori",
+            "slug": "amd-ryzen-9-9950x3d",
+            "description_ru": "Флагманский процессор AMD Ryzen 9 9950X3D с технологией 3D V-Cache, обеспечивающий непревзойденную производительность в играх и ресурсоемких профессиональных приложениях.",
+            "description_uz": "O'yinlar va resurs talab qiladigan professional ilovalarda tengsiz unumdorlikni ta'minlaydigan 3D V-Cache texnologiyasiga ega flagman AMD Ryzen 9 9950X3D protsessori.",
+            "price": 7260000.0,
+            "price_usd": 605.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 12,
+            "brand": "AMD",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Сокет",
+                    "name_uz": "Soket",
+                    "value_ru": "AM5",
+                    "value_uz": "AM5"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "Ryzen 9",
+                    "value_uz": "Ryzen 9"
+                },
+                {
+                    "name_ru": "Технология",
+                    "name_uz": "Texnologiya",
+                    "value_ru": "3D V-Cache",
+                    "value_uz": "3D V-Cache"
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "category_id": 7,
+            "name_ru": "Процессор AMD Ryzen 7 9800X3D",
+            "name_uz": "AMD Ryzen 7 9800X3D protsessori",
+            "slug": "amd-ryzen-7-9800x3d",
+            "description_ru": "Высокопроизводительный игровой процессор AMD Ryzen 7 9800X3D с технологией 3D V-Cache. Обеспечивает исключительную скорость в современных играх и эффективную многопоточную работу.",
+            "description_uz": "3D V-Cache texnologiyasiga ega yuqori unumdor AMD Ryzen 7 9800X3D o'yin protsessori. Zamonaviy o'yinlarda ajoyib tezlik va samarali ko'p tarmoqli ishlashni ta'minlaydi.",
+            "price": 4560000.0,
+            "price_usd": 380.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "AMD",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Сокет",
+                    "name_uz": "Soket",
+                    "value_ru": "AM5",
+                    "value_uz": "AM5"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "Ryzen 7",
+                    "value_uz": "Ryzen 7"
+                },
+                {
+                    "name_ru": "Технология",
+                    "name_uz": "Texnologiya",
+                    "value_ru": "3D V-Cache",
+                    "value_uz": "3D V-Cache"
+                }
+            ]
+        },
+        {
+            "id": 18,
+            "category_id": 9,
+            "name_ru": "Видеокарта MSI GeForce RTX 5060 Ti VENTUS 2X OC Edition 16Gb",
+            "name_uz": "MSI GeForce RTX 5060 Ti VENTUS 2X OC Edition 16Gb videokartasi",
+            "slug": "msi-geforce-rtx-5060-ti-ventus-2x-oc",
+            "description_ru": "Компактная и эффективная видеокарта MSI GeForce RTX 5060 Ti VENTUS 2X OC Edition с 16 ГБ видеопамяти GDDR7. Оснащена системой охлаждения с двумя вентиляторами и заводским разгоном для стабильной работы в современных играх.",
+            "description_uz": "16 GB GDDR7 video xotirasiga ega ixcham va samarali MSI GeForce RTX 5060 Ti VENTUS 2X OC Edition videokartasi. Ikkita ventilyatorli sovutish tizimi va zamonaviy o'yinlarda barqaror ishlash uchun zavod overclocking bilan jihozlangan.",
+            "price": 6600000.0,
+            "price_usd": 550.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "MSI",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Объем памяти",
+                    "name_uz": "Xotira hajmi",
+                    "value_ru": "16GB",
+                    "value_uz": "16GB"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "VENTUS 2X",
+                    "value_uz": "VENTUS 2X"
+                },
+                {
+                    "name_ru": "Тип памяти",
+                    "name_uz": "Xotira turi",
+                    "value_ru": "GDDR7",
+                    "value_uz": "GDDR7"
+                }
+            ]
+        },
+        {
+            "id": 17,
+            "category_id": 9,
+            "name_ru": "Видеокарта Gigabyte GeForce RTX 5070 Ti Gaming OC 16GB",
+            "name_uz": "Gigabyte GeForce RTX 5070 Ti Gaming OC 16GB videokartasi",
+            "slug": "gigabyte-geforce-rtx-5070-ti-gaming-oc",
+            "description_ru": "Мощная видеокарта Gigabyte GeForce RTX 5070 Ti Gaming OC с 16 ГБ видеопамяти. Оснащена эффективной системой охлаждения WINDFORCE, заводским разгоном и поддержкой современных графических технологий для максимальной производительности в играх.",
+            "description_uz": "16 GB video xotirasiga ega kuchli Gigabyte GeForce RTX 5070 Ti Gaming OC videokartasi. Samarali WINDFORCE sovutish tizimi, zavod overclocking va o'yinlarda maksimal unumdorlik uchun zamonaviy grafik texnologiyalarini qo'llab-quvvatlaydi.",
+            "price": 14400000.0,
+            "price_usd": 1200.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 10,
+            "brand": "Gigabyte",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": false,
+            "characteristics": [
+                {
+                    "name_ru": "Объем памяти",
+                    "name_uz": "Xotira hajmi",
+                    "value_ru": "16GB",
+                    "value_uz": "16GB"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "Gaming OC",
+                    "value_uz": "Gaming OC"
+                },
+                {
+                    "name_ru": "Система охлаждения",
+                    "name_uz": "Sovutish tizimi",
+                    "value_ru": "WINDFORCE",
+                    "value_uz": "WINDFORCE"
+                }
+            ]
+        },
+        {
+            "id": 22,
+            "category_id": 11,
+            "name_ru": "Игровой ноутбук Lenovo Legion 5 15IAX10",
+            "name_uz": "Lenovo Legion 5 15IAX10 o'yin noutbuki",
+            "slug": "lenovo-legion-5-15iax10",
+            "description_ru": "Надежный и производительный игровой ноутбук Lenovo Legion 5 15IAX10. Модель создана для комфортного гейминга и продуктивной работы, обеспечивая стабильную производительность и качественное охлаждение.",
+            "description_uz": "Ishonchli va unumdor Lenovo Legion 5 15IAX10 o'yin noutbuki. Ushbu model barqaror unumdorlik va sifatli sovutishni ta'minlab, qulay o'yin va samarali ishlash uchun yaratilgan.",
+            "price": 18000000.0,
+            "price_usd": 1500.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "Lenovo",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": true,
+            "characteristics": [
+                {
+                    "name_ru": "Экран",
+                    "name_uz": "Ekrani",
+                    "value_ru": "15.6 дюймов",
+                    "value_uz": "15.6 dyuym"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "Legion 5",
+                    "value_uz": "Legion 5"
+                },
+                {
+                    "name_ru": "Назначение",
+                    "name_uz": "Maqsadi",
+                    "value_ru": "Игровой",
+                    "value_uz": "O'yin uchun"
+                }
+            ]
+        },
+        {
+            "id": 20,
+            "category_id": 11,
+            "name_ru": "Игровой ноутбук ASUS ROG Strix G16 G614FR",
+            "name_uz": "ASUS ROG Strix G16 G614FR o'yin noutbuki",
+            "slug": "asus-rog-strix-g16-g614fr",
+            "description_ru": "Мощный игровой ноутбук ASUS ROG Strix G16 G614FR, сочетающий передовые компоненты, высокочастотный дисплей и эффективную систему охлаждения ROG Intelligent Cooling для максимального погружения в игровой процесс.",
+            "description_uz": "ASUS ROG Strix G16 G614FR kuchli o'yin noutbuki, u ilg'or komponentlar, yuqori chastotali displey va o'yin jarayoniga maksimal darajada sho'ng'ish uchun samarali ROG Intelligent Cooling sovutish tizimini o'zida mujassam etgan.",
+            "price": 28800000.0,
+            "price_usd": 2400.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "ASUS",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": true,
+            "characteristics": [
+                {
+                    "name_ru": "Система охлаждения",
+                    "name_uz": "Sovutish tizimi",
+                    "value_ru": "ROG Intelligent Cooling",
+                    "value_uz": "ROG Intelligent Cooling"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "ROG Strix",
+                    "value_uz": "ROG Strix"
+                },
+                {
+                    "name_ru": "Экран",
+                    "name_uz": "Ekrani",
+                    "value_ru": "16 дюймов",
+                    "value_uz": "16 dyuym"
+                }
+            ]
+        },
+        {
+            "id": 21,
+            "category_id": 11,
+            "name_ru": "Игровой ноутбук ASUS ROG Zephyrus G16 GU605",
+            "name_uz": "ASUS ROG Zephyrus G16 GU605 o'yin noutbuki",
+            "slug": "asus-rog-zephyrus-g16-gu605",
+            "description_ru": "льтратонкий и мощный игровой ноутбук ASUS ROG Zephyrus G16. Сочетает премиальный дизайн, высокую производительность для современных игр и профессиональных задач, а также качественный дисплей для безупречного изображения.",
+            "description_uz": "Ultra yupqa va kuchli ASUS ROG Zephyrus G16 o'yin noutbuki. Premium dizayn, zamonaviy o'yinlar va professional vazifalar uchun yuqori unumdorlik, shuningdek, benuqson tasvir uchun sifatli displeyni o'zida mujassam etgan.",
+            "price": 24000000.0,
+            "price_usd": 2000.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 13,
+            "brand": "ASUS",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": true,
+            "characteristics": [
+                {
+                    "name_ru": "Экран",
+                    "name_uz": "Ekrani",
+                    "value_ru": "16 дюймов",
+                    "value_uz": "16 dyuym"
+                },
+                {
+                    "name_ru": "Серия",
+                    "name_uz": "Seriya",
+                    "value_ru": "ROG Zephyrus",
+                    "value_uz": "ROG Zephyrus"
+                },
+                {
+                    "name_ru": "Корпус",
+                    "name_uz": "Korpus",
+                    "value_ru": "Ультратонкий",
+                    "value_uz": "Ultra yupqa"
+                }
+            ]
+        },
+        {
+            "id": 26,
+            "category_id": 13,
+            "name_ru": "Игровое кресло AndaSeat Novis L",
+            "name_uz": "AndaSeat Novis L o'yin kreslosi",
+            "slug": "andaseat-novis-l",
+            "description_ru": "Эргономичное игровое кресло AndaSeat Novis L премиум-класса. Модель сочетает в себе высокую прочность, стильный дизайн с текстильной отделкой и отличную поддержку для спины во время длительных сессий.",
+            "description_uz": "AndaSeat Novis L premium darajadagi ergonomik o'yin kreslosi. Model o'zida yuqori mustahkamlik, to'qimachilik qoplamali zamonaviy dizayn va uzoq vaqt foydalanishda bel uchun ajoyib yordamni mujassam etadi.",
+            "price": 2209000.0,
+            "price_usd": 184.08,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 14,
+            "brand": "AndaSeat",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": true,
+            "characteristics": [
+                {
+                    "name_ru": "Тип",
+                    "name_uz": "Turi",
+                    "value_ru": "Игровое кресло",
+                    "value_uz": "O'yin kreslosi"
+                },
+                {
+                    "name_ru": "Размер",
+                    "name_uz": "O'lchami",
+                    "value_ru": "L",
+                    "value_uz": "L"
+                },
+                {
+                    "name_ru": "Материал",
+                    "name_uz": "Material",
+                    "value_ru": "Текстиль",
+                    "value_uz": "To'qimachilik"
+                }
+            ]
+        },
+        {
+            "id": 25,
+            "category_id": 13,
+            "name_ru": "Игровое кресло AndaSeat Novis XL",
+            "name_uz": "AndaSeat Novis XL o'yin kreslosi",
+            "slug": "andaseat-novis-xl",
+            "description_ru": "Эргономичное игровое кресло AndaSeat Novis XL премиум-класса. Разработано для обеспечения максимального комфорта при длительных игровых сессиях и работе, отличается прочной конструкцией и стильным текстильным покрытием.",
+            "description_uz": "AndaSeat Novis XL premium darajadagi ergonomik o'yin kreslosi. Uzoq davom etadigan o'yin seanslari va ish davomida maksimal qulaylikni ta'minlash uchun ishlab chiqilgan, mustahkam konstruksiya va zamonaviy to'qimachilik qoplamasi bilan ajralib turadi.",
+            "price": 2339000.0,
+            "price_usd": 194.92,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 14,
+            "brand": "AndaSeat",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": true,
+            "characteristics": [
+                {
+                    "name_ru": "Тип",
+                    "name_uz": "Turi",
+                    "value_ru": "Игровое кресло",
+                    "value_uz": "O'yin kreslosi"
+                },
+                {
+                    "name_ru": "Материал",
+                    "name_uz": "Material",
+                    "value_ru": "Текстиль",
+                    "value_uz": "To'qimachilik"
+                },
+                {
+                    "name_ru": "Особенности",
+                    "name_uz": "Xususiyatlari",
+                    "value_ru": "Эргономичная поддержка",
+                    "value_uz": "Ergonomik qo'llab-quvvatlash"
+                }
+            ]
+        },
+        {
+            "id": 24,
+            "category_id": 11,
+            "name_ru": "Игровой ноутбук Thunderobot Storm 17",
+            "name_uz": "Thunderobot Storm 17 o'yin noutbuki",
+            "slug": "thunderobot-storm-17",
+            "description_ru": "Мощный игровой ноутбук Thunderobot Storm 17 с большим 17.3-дюймовым QHD-дисплеем и частотой обновления 165 Гц. Оснащен процессором Intel Core i7-13620H и видеокартой GeForce RTX 5070 для отличной производительности в играх.",
+            "description_uz": "17.3 dyuymli katta QHD displey va 165 Gts yangilanish chastotasiga ega kuchli Thunderobot Storm 17 o'yin noutbuki. O'yinlarda ajoyib unumdorlik uchun Intel Core i7-13620H protsessori va GeForce RTX 5070 videokartasi bilan jihozlangan.",
+            "price": 15600000.0,
+            "price_usd": 1300.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "Thunderobot",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": true,
+            "characteristics": [
+                {
+                    "name_ru": "Экран",
+                    "name_uz": "Ekrani",
+                    "value_ru": "17.3\" QHD 165Hz",
+                    "value_uz": "17.3\" QHD 165Hz"
+                },
+                {
+                    "name_ru": "Видеокарта",
+                    "name_uz": "Videokarta",
+                    "value_ru": "GeForce RTX 5070",
+                    "value_uz": "GeForce RTX 5070"
+                },
+                {
+                    "name_ru": "Процессор",
+                    "name_uz": "Protsessor",
+                    "value_ru": "Intel Core i7-13620H",
+                    "value_uz": "Intel Core i7-13620H"
+                }
+            ]
+        },
+        {
+            "id": 23,
+            "category_id": 11,
+            "name_ru": "Игровой ноутбук Thunderobot Radiant 16",
+            "name_uz": "Thunderobot Radiant 16 o'yin noutbuki",
+            "slug": "thunderobot-radiant-16",
+            "description_ru": "Мощный игровой ноутбук Thunderobot Radiant 16, оснащенный процессором Intel Core i9-14900HX и видеокартой GeForce RTX 5080. Дисплей с частотой 300 Гц и разрешением WQXGA обеспечивает невероятную плавность и детализацию в играх.",
+            "description_uz": "Intel Core i9-14900HX protsessori va GeForce RTX 5080 videokartasi bilan jihozlangan kuchli Thunderobot Radiant 16 o'yin noutbuki. 300 Gts chastotali va WQXGA o'lchamli displey o'yinlarda ajoyib ravonlik va tafsilotlarni ta'minlaydi.",
+            "price": 26400000.0,
+            "price_usd": 2200.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 12,
+            "brand": "Thunderobot",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": true,
+            "characteristics": [
+                {
+                    "name_ru": "Экран",
+                    "name_uz": "Ekrani",
+                    "value_ru": "16\" WQXGA 300Hz",
+                    "value_uz": "16\" WQXGA 300Hz"
+                },
+                {
+                    "name_ru": "Процессор",
+                    "name_uz": "Protsessor",
+                    "value_ru": "Intel Core i9-14900HX",
+                    "value_uz": "Intel Core i9-14900HX"
+                },
+                {
+                    "name_ru": "Видеокарта",
+                    "name_uz": "Videokarta",
+                    "value_ru": "GeForce RTX 5080",
+                    "value_uz": "GeForce RTX 5080"
+                },
+                {
+                    "name_ru": "ОС",
+                    "name_uz": "OS",
+                    "value_ru": "Windows 11 Home",
+                    "value_uz": "Windows 11 Home"
+                }
+            ]
+        },
+        {
+            "id": 19,
+            "category_id": 10,
+            "name_ru": "SSD-накопитель PNY CS2150 M.2 NVMe",
+            "name_uz": "PNY CS2150 M.2 NVMe SSD-xotirasi",
+            "slug": "pny-cs2150-m2-nvme",
+            "description_ru": "Высокоскоростной SSD-накопитель PNY CS2150 форм-фактора M.2 NVMe. Обеспечивает быстрый запуск системы, молниеносную загрузку игр и высокую скорость передачи данных для повседневных и профессиональных задач.",
+            "description_uz": "M.2 NVMe formatidagi yuqori tezlikdagi PNY CS2150 SSD-xotirasi. Tizimning tez ishga tushishini, o'yinlarning chaqmoqdek yuklanishini va kundalik hamda professional vazifalar uchun ma'lumotlarni uzatishning yuqori tezligini ta'minlaydi.",
+            "price": 2400000.0,
+            "price_usd": 200.0,
+            "old_price": null,
+            "old_price_usd": null,
+            "stock": 15,
+            "brand": "PNY",
+            "image": null,
+            "warranty_months": 12,
+            "is_active": true,
+            "is_new": false,
+            "is_featured": true,
+            "characteristics": [
+                {
+                    "name_ru": "Интерфейс",
+                    "name_uz": "Interfeys",
+                    "value_ru": "NVMe",
+                    "value_uz": "NVMe"
+                },
+                {
+                    "name_ru": "Тип накопителя",
+                    "name_uz": "Xotira turi",
+                    "value_ru": "SSD",
+                    "value_uz": "SSD"
+                },
+                {
+                    "name_ru": "Форм-фактор",
+                    "name_uz": "Form-faktor",
+                    "value_ru": "M.2 (2280)",
+                    "value_uz": "M.2 (2280)"
+                }
+            ]
+        }
+    ]
+}
