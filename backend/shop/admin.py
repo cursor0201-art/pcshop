@@ -40,11 +40,13 @@ class ProductForm(forms.ModelForm):
         widgets = {
             'price': DecimalTextInput(attrs={'placeholder': 'UZS'}),
             'price_usd': DecimalTextInput(attrs={'placeholder': 'USD'}),
+            'old_price': DecimalTextInput(attrs={'placeholder': 'UZS'}),
+            'old_price_usd': DecimalTextInput(attrs={'placeholder': 'USD'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in ['price', 'price_usd']:
+        for field in ['price', 'price_usd', 'old_price', 'old_price_usd']:
             val = self.initial.get(field)
             if val is not None:
                 try:
@@ -56,9 +58,9 @@ class ProductForm(forms.ModelForm):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
-    list_display = ('id', 'name_ru', 'name_uz', 'price', 'price_usd', 'stock', 'is_active', 'category')
-    list_editable = ('is_active',)
-    list_filter = ('category', 'is_active')
+    list_display = ('id', 'name_ru', 'price', 'price_usd', 'old_price', 'old_price_usd', 'is_new', 'is_featured', 'stock', 'is_active', 'category')
+    list_editable = ('is_active', 'is_new', 'is_featured')
+    list_filter = ('category', 'is_active', 'is_new', 'is_featured')
     search_fields = ('name_ru', 'name_uz')
     prepopulated_fields = {'slug': ('name_ru',)}
     exclude = ('image', 'image_file')

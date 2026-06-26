@@ -292,7 +292,8 @@ export default function HomePage() {
     getCategories().then(setCategories);
     getProducts().then((data) => {
       setAllProducts(data);
-      setProducts(data.slice(0, 8));
+      const featured = data.filter((p: any) => p.is_featured);
+      setProducts(featured.length > 0 ? featured.slice(0, 8) : data.slice(0, 8));
     });
   }, []);
 

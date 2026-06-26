@@ -105,6 +105,12 @@ class Product(models.Model):
     warranty_months = models.IntegerField(default=12, verbose_name="Гарантия (месяцев)")
     is_active = models.BooleanField(default=True, verbose_name="Активен (показывать на сайте)")
     
+    # Promotion & badge fields
+    old_price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, verbose_name="Старая цена (UZS)", help_text="Для отображения скидки. Если заполнена только одна валюта, вторая рассчитается по курсу.")
+    old_price_usd = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, verbose_name="Старая цена (USD)", help_text="Для отображения скидки в $. Рассчитается автоматически при указании UZS.")
+    is_new = models.BooleanField(default=False, verbose_name="Новинка (NEW)", help_text="Показывать зеленый бейдж NEW.")
+    is_featured = models.BooleanField(default=False, verbose_name="Популярный (на главной)", help_text="Выводить в секции Популярные товары на главной странице.")
+    
     # Auto SEO fields
     seo_title_ru = models.CharField(max_length=255, blank=True, null=True, verbose_name="SEO Title (RU)")
     seo_title_uz = models.CharField(max_length=255, blank=True, null=True, verbose_name="SEO Title (UZ)")
@@ -134,7 +140,7 @@ class Product(models.Model):
             
         if not self.seo_description_ru:
             desc_part = (self.description_ru[:150] + "...") if self.description_ru else ""
-            self.seo_description_ru = f"Купить {self.name_ru} по выгодной цене с гарантией в PcShop_uz. {desc_part} Доставка по Ташкенту и Узбекистану."
+            self.seo_description_ru = f"Купить {self.name_ru} по выгодной цене с гарантией in PcShop_uz. {desc_part} Доставка по Ташкенту и Узбекистану."
         if not self.seo_description_uz:
             desc_part = (self.description_uz[:150] + "...") if self.description_uz else ""
             self.seo_description_uz = f"{self.name_uz} kafolat bilan PcShop_uz do'konida arzon narxda sotib oling. {desc_part} Toshkent va O'zbekiston bo'ylab yetkazib berish."
@@ -153,6 +159,7 @@ class Product(models.Model):
         except Exception:
             rate = decimal.Decimal('12800.00')
 
+        # Conversion for price
         if self.price is None and self.price_usd is None:
             pass
         elif self.price_usd and not self.price:
@@ -167,6 +174,24 @@ class Product(models.Model):
                         self.price = (self.price_usd * rate).quantize(decimal.Decimal('1.00'))
                     elif self.price != orig.price and self.price_usd == orig.price_usd:
                         self.price_usd = (self.price / rate).quantize(decimal.Decimal('1.00'))
+                except Product.DoesNotExist:
+                    pass
+
+        # Conversion for old_price
+        if self.old_price is None and self.old_price_usd is None:
+            pass
+        elif self.old_price_usd and not self.old_price:
+            self.old_price = (self.old_price_usd * rate).quantize(decimal.Decimal('1.00'))
+        elif self.old_price and not self.old_price_usd:
+            self.old_price_usd = (self.old_price / rate).quantize(decimal.Decimal('1.00'))
+        else:
+            if self.pk:
+                try:
+                    orig = Product.objects.get(pk=self.pk)
+                    if self.old_price_usd != orig.old_price_usd and self.old_price == orig.old_price:
+                        self.old_price = (self.old_price_usd * rate).quantize(decimal.Decimal('1.00'))
+                    elif self.old_price != orig.old_price and self.old_price_usd == orig.old_price_usd:
+                        self.old_price_usd = (self.old_price / rate).quantize(decimal.Decimal('1.00'))
                 except Product.DoesNotExist:
                     pass
             
