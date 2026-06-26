@@ -70,7 +70,7 @@ if (typeof window === 'undefined') {
   try {
     fsModule = require('fs');
     pathModule = require('path');
-    CACHE_DIR = pathModule.join(process.cwd(), '.next');
+    CACHE_DIR = pathModule.join(process.cwd(), 'api-cache');
   } catch (e) {
     // Ignore error
   }
@@ -81,13 +81,8 @@ function readFromFileCache(key: string): any {
   try {
     const filePath = pathModule.join(CACHE_DIR, `${key}-cache.json`);
     if (fsModule.existsSync(filePath)) {
-      const stats = fsModule.statSync(filePath);
-      const now = Date.now();
-      // Keep build cache fresh for 5 minutes during build
-      if (now - stats.mtimeMs < 5 * 60 * 1000) {
-        const data = fsModule.readFileSync(filePath, 'utf8');
-        return JSON.parse(data);
-      }
+      const data = fsModule.readFileSync(filePath, 'utf8');
+      return JSON.parse(data);
     }
   } catch (e) {
     // Ignore cache read errors

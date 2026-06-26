@@ -1,0 +1,11 @@
+[
+  { "id": 1, "name_ru": "Готовые ПК", "name_uz": "Tayyor PK", "slug": "ready-pc", "description_ru": "Готовые игровые и рабочие компьютеры", "description_uz": "Tayyor o'yin va ish kompyuterlari" },
+  { "id": 2, "name_ru": "Процессоры", "name_uz": "Protsessorlar", "slug": "processors", "description_ru": "Процессоры Intel и AMD", "description_uz": "Intel va AMD protsessorlari" },
+  { "id": 3, "name_ru": "Видеокарты", "name_uz": "Videokartalar", "slug": "videocards", "description_ru": "Игровые и профессиональные видеокарты", "description_uz": "O'yin va professional videokartalar" },
+  { "id": 4, "name_ru": "Материнские платы", "name_uz": "Platalar", "slug": "motherboards", "description_ru": "Материнские платы для любых сокетов", "description_uz": "Har qanday soketlar uchun ona platalar" },
+  { "id": 5, "name_ru": "Оперативная память", "name_uz": "Operativ xotira", "slug": "ram", "description_ru": "Модули оперативной памяти DDR4 и DDR5", "description_uz": "DDR4 va DDR5 operativ xotira modullari" },
+  { "id": 6, "name_ru": "SSD", "name_uz": "SSD", "slug": "ssd", "description_ru": "Быстрые твердотельные накопители", "description_uz": "Tezkor qattiq disklar" },
+  { "id": 7, "name_ru": "Мониторы", "name_uz": "Monitorlar", "slug": "monitors", "description_ru": "Игровые и офисные мониторы", "description_uz": "O'yin va ofis monitorlari" },
+  { "id": 8, "name_ru": "Клавиатуры", "name_uz": "Klaviaturalar", "slug": "keyboards", "description_ru": "Механические и мембранные клавиатуры", "description_uz": "Mexanik va membranali klaviaturalar" },
+  { "id": 9, "name_ru": "Мышки", "name_uz": "Mishkalar", "slug": "mice", "description_ru": "Игровые и эргономичные мыши", "description_uz": "O'yin va ergonomik sichqonlar" }
+]

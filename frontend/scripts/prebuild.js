@@ -14,7 +14,7 @@ if (baseUrl.includes('pcshop.uz') && !baseUrl.includes('storepcshop.uz') && !bas
   baseUrl = 'https://informal-rodina-bave-hub-2e898989.koyeb.app/api';
 }
 
-const CACHE_DIR = path.join(process.cwd(), '.next');
+const CACHE_DIR = path.join(process.cwd(), 'api-cache');
 
 async function fetchWithRetry(url, retries = 3) {
   for (let i = 0; i < retries; i++) {
