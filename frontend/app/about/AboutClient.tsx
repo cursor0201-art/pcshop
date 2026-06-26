@@ -14,13 +14,13 @@ export default function AboutPage() {
       document.title = 'О нас | Компьютерный магазин PcShop_uz';
       const descMeta = document.querySelector('meta[name="description"]');
       if (descMeta) {
-        descMeta.setAttribute('content', 'Узнайте больше о PcShop_uz. Мы предлагаем качественные комплектующие для ПК и готовые игровые сборки с гарантией в Ташкенте с 2019 года.');
+        descMeta.setAttribute('content', 'Узнайте больше о PcShop_uz. Мы предлагаем качественные комплектующие для ПК и готовые игровые сборки с гарантией в Ташкенте с 2016 года.');
       }
     } else {
       document.title = 'Biz haqimizda | PcShop_uz kompyuter do\'koni';
       const descMeta = document.querySelector('meta[name="description"]');
       if (descMeta) {
-        descMeta.setAttribute('content', 'PcShop_uz haqida ko\'proq ma\'lumot oling. Biz 2019 yildan beri Toshkentda kafolatli o\'yin kompyuterlari va butlovchi qismlarni taqdim etamiz.');
+        descMeta.setAttribute('content', 'PcShop_uz haqida ko\'proq ma\'lumot oling. Biz 2016 yildan beri Toshkentda kafolatli o\'yin kompyuterlari va butlovchi qismlarni taqdim etamiz.');
       }
     }
   }, [language]);
@@ -59,7 +59,7 @@ export default function AboutPage() {
   const stats = [
     { icon: Users, value: '2000+', label: language === 'ru' ? 'Довольных клиентов' : 'Mamnun mijozlar' },
     { icon: Package, value: '5000+', label: language === 'ru' ? 'Выполненных заказов' : 'Yetkazilgan buyurtmalar' },
-    { icon: Clock, value: '5+', label: language === 'ru' ? 'Лет на рынке' : 'Yildan beri bozorda' },
+    { icon: Clock, value: '10+', label: language === 'ru' ? 'Лет на рынке' : 'Yildan beri bozorda' },
   ];
 
   const achievements = [
@@ -80,7 +80,7 @@ export default function AboutPage() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 mb-6">
             <span className="text-sm text-red-400">
-              {language === 'ru' ? 'С 2019 года' : '2019 dan beri'}
+              {language === 'ru' ? 'С 2016 года' : '2016 dan beri'}
             </span>
           </div>
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-6">{t.about.title}</h1>
