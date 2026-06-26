@@ -75,13 +75,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Logo & Description */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center">
-                <span className="text-white font-bold text-xl">P</span>
-              </div>
-              <span className="text-xl font-bold text-white">
-                PcShop<span className="text-red-500">_uz</span>
-              </span>
+            <Link href="/" className="inline-flex items-center mb-4">
+              <Image
+                src="/logo.png"
+                alt="PcShop_uz"
+                width={150}
+                height={25}
+                className="h-7 w-auto object-contain md:h-8"
+                priority
+              />
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">
               {t.about.description}
