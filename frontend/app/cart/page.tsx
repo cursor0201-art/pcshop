@@ -94,8 +94,20 @@ export default function CartPage() {
 
       const itemsText = items.map(item => {
         const name = language === 'ru' ? item.name_ru : item.name_uz;
-        const itemPhoto = item.image ? `\n🖼 Фото: ${item.image}` : '';
-        return `— ${name} x${item.quantity} = ${formatPrice(item.price * item.quantity)}${itemPhoto}`;
+        
+        let imageUrl = item.image;
+        if (imageUrl && !imageUrl.startsWith('http')) {
+          imageUrl = `https://informal-rodina-bave-hub-2e898989.koyeb.app${imageUrl}`;
+        }
+        
+        const productUrl = item.slug 
+          ? `https://storepcshop.uz/product?slug=${item.slug}`
+          : `https://storepcshop.uz/product/${item.id}`;
+          
+        const itemPhoto = imageUrl ? `\n🖼 Фото: ${imageUrl}` : '';
+        const itemLink = `\n🔗 Товар: ${productUrl}`;
+        
+        return `— ${name} x${item.quantity} = ${formatPrice(item.price * item.quantity)}${itemLink}${itemPhoto}`;
       }).join('\n\n');
 
       const totalText = language === 'ru' ? `💰 Итого: ${formatPrice(getTotal())}` : `💰 Jami: ${formatPrice(getTotal())}`;
