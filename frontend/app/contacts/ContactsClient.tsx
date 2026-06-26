@@ -23,6 +23,15 @@ export default function ContactsPage() {
       }
     }
   }, [language]);
+  const [tgLink, setTgLink] = useState('https://telegram.me/pcshop_uzz');
+
+  useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      setTgLink('tg://resolve?domain=pcshop_uzz');
+    }
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -63,7 +72,7 @@ export default function ContactsPage() {
       icon: Send,
       title: 'Telegram',
       value: t.footer.telegram,
-      link: 'https://telegram.me/pcshop_uzz',
+      link: tgLink,
     },
     {
       icon: Clock,
@@ -178,9 +187,9 @@ export default function ContactsPage() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a
-                  href="https://telegram.me/pcshop_uzz"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={tgLink}
+                  target={tgLink.startsWith('http') ? '_blank' : undefined}
+                  rel={tgLink.startsWith('http') ? 'noopener noreferrer' : undefined}
                   className="flex items-center justify-center gap-3 p-4 rounded-xl bg-neutral-800 border border-gray-700 hover:border-red-500/50 hover:bg-neutral-800/80 transition-all group"
                 >
                   <Send className="w-6 h-6 text-red-500" />

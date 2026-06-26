@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle, ChevronDown, MessageCircle, Phone, MapPin, Clock } from 'lucide-react';
@@ -42,6 +42,14 @@ const FAQ_ITEMS = [
 export default function FAQPage() {
   const { language } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [tgLink, setTgLink] = useState('https://telegram.me/pcshop_uzz');
+
+  useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      setTgLink('tg://resolve?domain=pcshop_uzz');
+    }
+  }, []);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -160,9 +168,9 @@ export default function FAQPage() {
             </div>
             <div className="flex flex-col gap-4">
               <a 
-                href="https://telegram.me/pcshop_uzz" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+                href={tgLink} 
+                target={tgLink.startsWith('http') ? '_blank' : undefined} 
+                rel={tgLink.startsWith('http') ? 'noopener noreferrer' : undefined} 
                 className="flex items-center justify-center gap-3 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-orange-500 text-white font-bold transition-all"
               >
                 <MessageCircle className="w-5 h-5" />

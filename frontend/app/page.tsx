@@ -280,7 +280,15 @@ export default function HomePage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [tgLink, setTgLink] = useState('https://telegram.me/pcshop_uzz');
   const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      setTgLink('tg://resolve?domain=pcshop_uzz');
+    }
+  }, []);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
@@ -657,9 +665,9 @@ export default function HomePage() {
                   : "Telegram orqali biz bilan bog'laning - istalgan mahsulotni tanlash va buyurtma qilishda yordam beramiz"}
               </motion.p>
               <motion.a
-                href="https://telegram.me/pcshop_uzz"
-                target="_blank"
-                rel="noopener noreferrer"
+                href={tgLink}
+                target={tgLink.startsWith('http') ? '_blank' : undefined}
+                rel={tgLink.startsWith('http') ? 'noopener noreferrer' : undefined}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-red-600 font-semibold shadow-lg hover:shadow-xl transition-shadow"

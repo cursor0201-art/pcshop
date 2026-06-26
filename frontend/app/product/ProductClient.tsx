@@ -80,6 +80,14 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'specs' | 'reviews'>('specs');
   const [showAddedToCart, setShowAddedToCart] = useState(false);
+  const [tgLink, setTgLink] = useState('https://telegram.me/pcshop_uzz');
+
+  useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      setTgLink('tg://resolve?domain=pcshop_uzz');
+    }
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -474,9 +482,9 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
 
               {/* Telegram */}
               <a
-                href="https://telegram.me/pcshop_uzz"
-                target="_blank"
-                rel="noopener noreferrer"
+                href={tgLink}
+                target={tgLink.startsWith('http') ? '_blank' : undefined}
+                rel={tgLink.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="flex items-center justify-center gap-3 p-4 rounded-xl bg-neutral-900 border border-gray-800 hover:border-red-500/50 transition-colors"
               >
                 <Send className="w-5 h-5 text-red-500" />
