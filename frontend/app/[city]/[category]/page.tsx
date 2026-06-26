@@ -120,12 +120,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: descRu,
       keywords: `${catInfo.ru}, купить ${catInfo.ru.toLowerCase()} ${cityInfo.prepRu}, ${catInfo.uz} ${cityInfo.prepUz}, PcShop_uz ${cityInfo.ru}`,
       alternates: {
-        canonical: `https://pcshop.uz/${params.city}/${params.category}`,
+        canonical: `https://storepcshop.uz/${params.city}/${params.category}`,
       },
       openGraph: {
         title: titleRu,
         description: descRu,
-        url: `https://pcshop.uz/${params.city}/${params.category}`,
+        url: `https://storepcshop.uz/${params.city}/${params.category}`,
         type: 'website',
       }
     };
@@ -145,12 +145,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: descRu,
       keywords: `${name}, купить ${name} ${cityInfo.prepRu}, ${name} цена в ${cityInfo.prepRu}, PcShop_uz`,
       alternates: {
-        canonical: `https://pcshop.uz/${params.city}/${params.category}`,
+        canonical: `https://storepcshop.uz/${params.city}/${params.category}`,
       },
       openGraph: {
         title: titleRu,
         description: descRu,
-        url: `https://pcshop.uz/${params.city}/${params.category}`,
+        url: `https://storepcshop.uz/${params.city}/${params.category}`,
         images: product.images?.[0] ? [{ url: product.images[0] }] : [],
       }
     };
@@ -173,19 +173,19 @@ export default async function Page({ params }: Props) {
           "@type": "ListItem",
           "position": 1,
           "name": "Главная",
-          "item": "https://pcshop.uz"
+          "item": "https://storepcshop.uz"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": cityInfo.ru,
-          "item": `https://pcshop.uz/${params.city}/${params.category}`
+          "item": `https://storepcshop.uz/${params.city}/${params.category}`
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": catInfo.ru,
-          "item": `https://pcshop.uz/${params.city}/${params.category}`
+          "item": `https://storepcshop.uz/${params.city}/${params.category}`
         }
       ]
     };
@@ -321,19 +321,19 @@ export default async function Page({ params }: Props) {
           "@type": "ListItem",
           "position": 1,
           "name": "Главная",
-          "item": "https://pcshop.uz"
+          "item": "https://storepcshop.uz"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": cityInfo.ru,
-          "item": `https://pcshop.uz/${params.city}/${params.category}`
+          "item": `https://storepcshop.uz/${params.city}/${params.category}`
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": name,
-          "item": `https://pcshop.uz/${params.city}/${params.category}`
+          "item": `https://storepcshop.uz/${params.city}/${params.category}`
         }
       ]
     };
@@ -352,7 +352,7 @@ export default async function Page({ params }: Props) {
       "mpn": product.slug,
       "offers": {
         "@type": "Offer",
-        "url": `https://pcshop.uz/${params.city}/${product.slug}`,
+        "url": `https://storepcshop.uz/${params.city}/${product.slug}`,
         "priceCurrency": "UZS",
         "price": product.price,
         "itemCondition": "https://schema.org/NewCondition",

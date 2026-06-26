@@ -179,13 +179,13 @@ export default function ConfiguratorPage() {
         "@type": "ListItem",
         "position": 1,
         "name": "Главная",
-        "item": "https://pcshop.uz"
+        "item": "https://storepcshop.uz"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Конфигуратор ПК",
-        "item": "https://pcshop.uz/configurator"
+        "item": "https://storepcshop.uz/configurator"
       }
     ]
   };

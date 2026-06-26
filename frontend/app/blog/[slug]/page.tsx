@@ -55,12 +55,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: post.excerpt_ru,
     keywords: post.keywords_ru,
     alternates: {
-      canonical: `https://pcshop.uz/blog/${post.slug}`,
+      canonical: `https://storepcshop.uz/blog/${post.slug}`,
     },
     openGraph: {
       title: post.title_ru,
       description: post.excerpt_ru,
-      url: `https://pcshop.uz/blog/${post.slug}`,
+      url: `https://storepcshop.uz/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
@@ -85,14 +85,14 @@ export default async function BlogPostPage({ params }: Props) {
     "author": {
       "@type": "Organization",
       "name": "PcShop_uz",
-      "url": "https://pcshop.uz"
+      "url": "https://storepcshop.uz"
     },
     "publisher": {
       "@type": "Organization",
       "name": "PcShop_uz",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://pcshop.uz/logo.png"
+        "url": "https://storepcshop.uz/logo.png"
       }
     },
     "description": post.excerpt_ru

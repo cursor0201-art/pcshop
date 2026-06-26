@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Контакты магазина компьютерной техники PcShop_uz в Ташкенте. Телефон: +998 (99) 823-09-90. Наш адрес: Юнусабад, Киёт 57. Напишите нам в Telegram.',
   keywords: 'контакты PcShop_uz, телефон компьютерного магазина Ташкент, адрес PcShop Ташкент, купить компьютер Узбекистан',
   alternates: {
-    canonical: 'https://pcshop.uz/contacts',
+    canonical: 'https://storepcshop.uz/contacts',
   },
 };
 
@@ -19,13 +19,13 @@ export default function Page() {
         "@type": "ListItem",
         "position": 1,
         "name": "Главная",
-        "item": "https://pcshop.uz"
+        "item": "https://storepcshop.uz"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Контакты",
-        "item": "https://pcshop.uz/contacts"
+        "item": "https://storepcshop.uz/contacts"
       }
     ]
   };

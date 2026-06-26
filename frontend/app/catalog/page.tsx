@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Широкий выбор комплектующих для компьютеров, видеокарт RTX, мощных процессоров и готовых игровых ПК в Ташкенте. Фильтры по бренду, цене и наличию. Доставка по Узбекистану.',
   keywords: 'каталог комплектующих ПК, купить видеокарту Ташкент, процессоры купить Узбекистан, готовые игровые компьютеры Ташкент',
   alternates: {
-    canonical: 'https://pcshop.uz/catalog',
+    canonical: 'https://storepcshop.uz/catalog',
   },
 };
 
@@ -20,13 +20,13 @@ export default function Page() {
         "@type": "ListItem",
         "position": 1,
         "name": "Главная",
-        "item": "https://pcshop.uz"
+        "item": "https://storepcshop.uz"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Каталог",
-        "item": "https://pcshop.uz/catalog"
+        "item": "https://storepcshop.uz/catalog"
       }
     ]
   };

@@ -8,7 +8,7 @@ import { Footer } from '@/components/footer';
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pcshop.uz'),
+  metadataBase: new URL('https://storepcshop.uz'),
   title: 'PcShop_uz - Игровые ПК и комплектующие в Узбекистане (Ташкент)',
   description: 'Купить готовые игровые ПК и качественные комплектующие для компьютеров в Ташкенте с доставкой по всему Узбекистану. Официальная гарантия 1 год. Сборка ПК под заказ.',
   keywords: 'купить компьютер в Ташкенте, игровой компьютер Ташкент, видеокарта Ташкент, RTX Ташкент, процессор Ташкент, сборка ПК Ташкент, компьютерный магазин Узбекистан, комплектующие для ПК Узбекистан, PcShop_uz',
@@ -24,17 +24,17 @@ export const metadata: Metadata = {
     apple: '/icon.png',
   },
   alternates: {
-    canonical: 'https://pcshop.uz',
+    canonical: 'https://storepcshop.uz',
     languages: {
-      'ru-RU': 'https://pcshop.uz/?lang=ru',
-      'uz-UZ': 'https://pcshop.uz/?lang=uz',
+      'ru-RU': 'https://storepcshop.uz/?lang=ru',
+      'uz-UZ': 'https://storepcshop.uz/?lang=uz',
     },
   },
   openGraph: {
     title: 'PcShop_uz - Игровые ПК и комплектующие в Узбекистане',
     description: 'Магазин компьютерной техники в Узбекистане. Быстрая доставка, гарантия качества и выгодные цены.',
     type: 'website',
-    url: 'https://pcshop.uz',
+    url: 'https://storepcshop.uz',
     siteName: 'PcShop_uz',
     locale: 'ru_RU',
     images: [
@@ -64,8 +64,8 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "PcShop_uz",
-    "url": "https://pcshop.uz",
-    "logo": "https://pcshop.uz/logo.png",
+    "url": "https://storepcshop.uz",
+    "logo": "https://storepcshop.uz/logo.png",
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+998-99-823-09-90",
@@ -83,8 +83,8 @@ export default function RootLayout({
     "@type": "ComputerStore",
     "name": "PcShop_uz",
     "image": "https://images.pexels.com/photos/13019724/pexels-photo-13019724.jpeg",
-    "@id": "https://pcshop.uz/#localbusiness",
-    "url": "https://pcshop.uz",
+    "@id": "https://storepcshop.uz/#localbusiness",
+    "url": "https://storepcshop.uz",
     "telephone": "+998998230990",
     "priceRange": "$$",
     "address": {
@@ -120,12 +120,12 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "PcShop_uz",
-    "url": "https://pcshop.uz",
+    "url": "https://storepcshop.uz",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://pcshop.uz/catalog?search={search_term_string}"
+        "urlTemplate": "https://storepcshop.uz/catalog?search={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     }

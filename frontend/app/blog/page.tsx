@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'Читайте статьи, обзоры и руководства от экспертов PcShop_uz. Как выбрать игровой ПК, какую видеокарту купить в Ташкенте, подбор процессоров AMD и Intel.',
   keywords: 'блог о компьютерах, комплектующие для ПК Узбекистан, сборка ПК Ташкент, обзоры видеокарт, процессоры AMD Intel',
   alternates: {
-    canonical: 'https://pcshop.uz/blog',
+    canonical: 'https://storepcshop.uz/blog',
   },
 };
 
@@ -25,13 +25,13 @@ export default function BlogListPage() {
         "@type": "ListItem",
         "position": 1,
         "name": "Главная",
-        "item": "https://pcshop.uz"
+        "item": "https://storepcshop.uz"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Блог",
-        "item": "https://pcshop.uz/blog"
+        "item": "https://storepcshop.uz/blog"
       }
     ]
   };

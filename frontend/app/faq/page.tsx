@@ -70,13 +70,13 @@ export default function FAQPage() {
         "@type": "ListItem",
         "position": 1,
         "name": "Главная",
-        "item": "https://pcshop.uz"
+        "item": "https://storepcshop.uz"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "FAQ",
-        "item": "https://pcshop.uz/faq"
+        "item": "https://storepcshop.uz/faq"
       }
     ]
   };
