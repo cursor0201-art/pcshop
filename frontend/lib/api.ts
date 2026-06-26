@@ -62,6 +62,52 @@ export interface Review {
   created_at: string;
 }
 
+let fsModule: any = null;
+let pathModule: any = null;
+let CACHE_DIR = '';
+
+if (typeof window === 'undefined') {
+  try {
+    fsModule = require('fs');
+    pathModule = require('path');
+    CACHE_DIR = pathModule.join(process.cwd(), '.next');
+  } catch (e) {
+    // Ignore error
+  }
+}
+
+function readFromFileCache(key: string): any {
+  if (typeof window !== 'undefined' || !fsModule || !pathModule || !CACHE_DIR) return null;
+  try {
+    const filePath = pathModule.join(CACHE_DIR, `${key}-cache.json`);
+    if (fsModule.existsSync(filePath)) {
+      const stats = fsModule.statSync(filePath);
+      const now = Date.now();
+      // Keep build cache fresh for 5 minutes during build
+      if (now - stats.mtimeMs < 5 * 60 * 1000) {
+        const data = fsModule.readFileSync(filePath, 'utf8');
+        return JSON.parse(data);
+      }
+    }
+  } catch (e) {
+    // Ignore cache read errors
+  }
+  return null;
+}
+
+function writeToFileCache(key: string, data: any) {
+  if (typeof window !== 'undefined' || !fsModule || !pathModule || !CACHE_DIR) return;
+  try {
+    if (!fsModule.existsSync(CACHE_DIR)) {
+      fsModule.mkdirSync(CACHE_DIR, { recursive: true });
+    }
+    const filePath = pathModule.join(CACHE_DIR, `${key}-cache.json`);
+    fsModule.writeFileSync(filePath, JSON.stringify(data), 'utf8');
+  } catch (e) {
+    // Ignore cache write errors
+  }
+}
+
 let cachedCategories: Category[] | null = null;
 let categoriesCacheTime = 0;
 
@@ -160,6 +206,16 @@ export async function getCategories(): Promise<Category[]> {
     return cachedCategories;
   }
 
+  // Server-side / Build-time file cache check
+  if (isServer) {
+    const fileCached = readFromFileCache('categories');
+    if (fileCached) {
+      cachedCategories = fileCached;
+      categoriesCacheTime = Date.now();
+      return fileCached;
+    }
+  }
+
   // If cache expired on client, revalidate in background and return stale cache
   if (!isServer && cachedCategories && (now - categoriesCacheTime >= CACHE_DURATION_MS)) {
     fetchCategoriesInBackground();
@@ -184,6 +240,9 @@ export async function getCategories(): Promise<Category[]> {
     
     cachedCategories = parsed;
     categoriesCacheTime = Date.now();
+    if (isServer) {
+      writeToFileCache('categories', parsed);
+    }
     return parsed;
   } catch (err) {
     console.error('Error fetching categories from:', `${BASE_URL}/categories/`, err);
@@ -211,6 +270,23 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
     return products;
   }
 
+  // Server-side / Build-time file cache check
+  if (isServer) {
+    const fileCached = readFromFileCache('products');
+    if (fileCached) {
+      cachedProducts = fileCached;
+      productsCacheTime = Date.now();
+      let products = [...fileCached];
+      if (options?.category_slug) {
+        products = products.filter(p => (p as any).category_slug === options.category_slug);
+      }
+      if (options?.limit) {
+        products = products.slice(0, options.limit);
+      }
+      return products;
+    }
+  }
+
   // If cache expired on client, revalidate in background and return stale cache
   if (!isServer && cachedProducts && (now - productsCacheTime >= CACHE_DURATION_MS)) {
     fetchProductsInBackground();
@@ -235,6 +311,9 @@ export async function getProducts(options?: { category_slug?: string; limit?: nu
     
     cachedProducts = parsed;
     productsCacheTime = Date.now();
+    if (isServer) {
+      writeToFileCache('products', parsed);
+    }
 
     let products = [...parsed];
     if (options?.category_slug) {
