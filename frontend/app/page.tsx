@@ -657,7 +657,7 @@ export default function HomePage() {
                   : "Telegram orqali biz bilan bog'laning - istalgan mahsulotni tanlash va buyurtma qilishda yordam beramiz"}
               </motion.p>
               <motion.a
-                href="https://t.me/pcshop_uzz"
+                href="https://telegram.me/pcshop_uzz"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}

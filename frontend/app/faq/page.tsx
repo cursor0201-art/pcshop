@@ -160,7 +160,7 @@ export default function FAQPage() {
             </div>
             <div className="flex flex-col gap-4">
               <a 
-                href="https://t.me/pcshop_uzz" 
+                href="https://telegram.me/pcshop_uzz" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center justify-center gap-3 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-orange-500 text-white font-bold transition-all"

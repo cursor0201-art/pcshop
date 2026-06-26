@@ -474,7 +474,7 @@ export default function ProductPage({ overrideSlug }: { overrideSlug?: string })
 
               {/* Telegram */}
               <a
-                href="https://t.me/pcshop_uzz"
+                href="https://telegram.me/pcshop_uzz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 p-4 rounded-xl bg-neutral-900 border border-gray-800 hover:border-red-500/50 transition-colors"

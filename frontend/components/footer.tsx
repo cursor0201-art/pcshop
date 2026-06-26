@@ -104,7 +104,7 @@ export function Footer() {
               <div className="flex items-center gap-3 text-gray-400">
                 <Send className="w-5 h-5 text-red-500" />
                 <a
-                  href="https://t.me/pcshop_uzz"
+                  href="https://telegram.me/pcshop_uzz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
@@ -172,7 +172,7 @@ export function Footer() {
           {/* Social Links */}
           <div className="flex items-center gap-3">
             <a
-              href="https://t.me/pcshop_uzz"
+              href="https://telegram.me/pcshop_uzz"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-red-500 hover:text-white transition-all"

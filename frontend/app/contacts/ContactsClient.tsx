@@ -63,7 +63,7 @@ export default function ContactsPage() {
       icon: Send,
       title: 'Telegram',
       value: t.footer.telegram,
-      link: 'https://t.me/pcshop_uzz',
+      link: 'https://telegram.me/pcshop_uzz',
     },
     {
       icon: Clock,
@@ -178,7 +178,7 @@ export default function ContactsPage() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a
-                  href="https://t.me/pcshop_uzz"
+                  href="https://telegram.me/pcshop_uzz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-3 p-4 rounded-xl bg-neutral-800 border border-gray-700 hover:border-red-500/50 hover:bg-neutral-800/80 transition-all group"

@@ -110,8 +110,17 @@ export default function CartPage() {
       message += `\n${itemsHeader}\n${itemsText}\n\n${totalText}`;
 
       const adminUsername = 'pcshop_uzz';
-      const telegramUrl = `https://t.me/${adminUsername}?text=${encodeURIComponent(message)}`;
-      window.open(telegramUrl, '_blank');
+      const messageEncoded = encodeURIComponent(message);
+      const telegramUrl = `https://telegram.me/${adminUsername}?text=${messageEncoded}`;
+      const nativeUrl = `tg://resolve?domain=${adminUsername}&text=${messageEncoded}`;
+      
+      // Try opening the native app directly (works instantly without web proxy blocks)
+      window.location.href = nativeUrl;
+      
+      // Also open the unblocked web link in a new tab as a fallback
+      setTimeout(() => {
+        window.open(telegramUrl, '_blank');
+      }, 500);
 
       // 3. Update UI and clear cart
       setOrderSuccess(true);

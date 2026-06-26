@@ -74,7 +74,7 @@ export default function RootLayout({
       "availableLanguage": ["Russian", "Uzbek"]
     },
     "sameAs": [
-      "https://t.me/pcshop_uzz"
+      "https://telegram.me/pcshop_uzz"
     ]
   };
 
