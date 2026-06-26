@@ -16,7 +16,7 @@ export default function CartPage() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    phone: '',
+    phone: '+998',
     address: '',
     comment: '',
   });
@@ -334,7 +334,20 @@ export default function CartPage() {
                           type="text"
                           required
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          onChange={(e) => {
+                            let val = e.target.value;
+                            // Keep only digits and '+'
+                            val = val.replace(/[^\d+]/g, '');
+                            // Ensure it starts with '+'
+                            if (val.length > 0 && !val.startsWith('+')) {
+                              val = '+' + val.replace(/\+/g, '');
+                            }
+                            // Prevent deleting the +998 prefix
+                            if (val.length < 4) {
+                              val = '+998';
+                            }
+                            setFormData({ ...formData, phone: val });
+                          }}
                           className="w-full px-4 py-2.5 rounded-lg bg-neutral-800 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none"
                         />
                       </div>
