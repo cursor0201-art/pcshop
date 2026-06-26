@@ -22,6 +22,7 @@ export default function CartPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [nativeRedirectUrl, setNativeRedirectUrl] = useState('');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -129,16 +130,13 @@ export default function CartPage() {
 
       const adminUsername = 'pcshop_uzz';
       const messageEncoded = encodeURIComponent(message);
-      const telegramUrl = `https://telegram.me/${adminUsername}?text=${messageEncoded}`;
       const nativeUrl = `tg://resolve?domain=${adminUsername}&text=${messageEncoded}`;
       
+      // Store the link for manual click fallback on success screen
+      setNativeRedirectUrl(nativeUrl);
+
       // Try opening the native app directly (works instantly without web proxy blocks)
       window.location.href = nativeUrl;
-      
-      // Also open the unblocked web link in a new tab as a fallback
-      setTimeout(() => {
-        window.open(telegramUrl, '_blank');
-      }, 500);
 
       // 3. Update UI and clear cart
       setOrderSuccess(true);
@@ -192,11 +190,22 @@ export default function CartPage() {
                 <Send className="w-10 h-10 text-green-500" />
               </div>
               <h2 className="text-2xl font-bold text-white mb-4">{t.checkout.success}</h2>
-              <p className="text-gray-400">
+              <p className="text-gray-400 mb-8">
                 {language === 'ru'
-                  ? 'Мы скоро с вами свяжемся'
-                  : "Tez orada siz bilan bog'lanamiz"}
+                  ? 'Мы скоро с вами свяжемся. Если приложение Telegram не открылось автоматически, нажмите кнопку ниже:'
+                  : "Tez orada siz bilan bog'lanamiz. Agar Telegram ilovasi avtomatik ravishda ochilmagan bo'lsa, quyidagi tugmani bosing:"}
               </p>
+              {nativeRedirectUrl && (
+                <a
+                  href={nativeRedirectUrl}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-medium transition-colors"
+                >
+                  <Send className="w-5 h-5" />
+                  <span>
+                    {language === 'ru' ? 'Открыть Telegram вручную' : 'Telegramni qo\'lda ochish'}
+                  </span>
+                </a>
+              )}
             </motion.div>
           ) : (
             <motion.div
