@@ -200,26 +200,14 @@ class Product(models.Model):
             if cloud_url:
                 self.image = cloud_url
                 self.image_file = None
-            else:
-                try:
-                    self.image_file.seek(0)
-                    file_name = self.image_file.name
-                    file_content = self.image_file.read()
-                    self.image_file.seek(0)
-                    
-                    import mimetypes
-                    mime_type, _ = mimetypes.guess_type(file_name)
-                    if not mime_type:
-                        mime_type = "image/jpeg"
-                    
-                    import base64
-                    base64_data = base64.b64encode(file_content).decode('utf-8')
-                    self.image = f"data:{mime_type};base64,{base64_data}"
-                    self.image_file = None
-                except Exception as e:
-                    print("Base64 conversion failed:", e)
 
         super().save(*args, **kwargs)
+
+        if self.image_file:
+            # Local storage fallback: use Django's local media file URL
+            self.image = self.image_file.url
+            self.image_file = None
+            super().save(update_fields=['image', 'image_file'])
 
     class Meta:
         verbose_name = 'Товар'
@@ -325,25 +313,14 @@ class ProductImage(models.Model):
             if cloud_url:
                 self.image = cloud_url
                 self.image_file = None
-            else:
-                try:
-                    self.image_file.seek(0)
-                    file_name = self.image_file.name
-                    file_content = self.image_file.read()
-                    self.image_file.seek(0)
-                    
-                    import mimetypes
-                    mime_type, _ = mimetypes.guess_type(file_name)
-                    if not mime_type:
-                        mime_type = "image/jpeg"
-                    
-                    import base64
-                    base64_data = base64.b64encode(file_content).decode('utf-8')
-                    self.image = f"data:{mime_type};base64,{base64_data}"
-                    self.image_file = None
-                except Exception as e:
-                    print("Base64 conversion failed:", e)
+
         super().save(*args, **kwargs)
+
+        if self.image_file:
+            # Local storage fallback: use Django's local media file URL
+            self.image = self.image_file.url
+            self.image_file = None
+            super().save(update_fields=['image', 'image_file'])
 
     class Meta:
         verbose_name = 'Дополнительное изображение'

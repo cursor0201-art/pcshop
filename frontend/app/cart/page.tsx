@@ -104,7 +104,8 @@ export default function CartPage() {
         
         let imageUrl = item.image;
         if (imageUrl && !imageUrl.startsWith('http')) {
-          imageUrl = `https://informal-rodina-bave-hub-2e898989.koyeb.app${imageUrl}`;
+          const backendDomain = BASE_URL.replace('/api', '');
+          imageUrl = `${backendDomain}${imageUrl}`;
         }
         
         const productUrl = item.slug 
@@ -135,12 +136,14 @@ export default function CartPage() {
       // Store the link for manual click fallback on success screen
       setNativeRedirectUrl(nativeUrl);
 
-      // Try opening the native app directly (works instantly without web proxy blocks)
-      window.location.href = nativeUrl;
-
-      // 3. Update UI and clear cart
+      // 1. Update UI and clear cart first for instant lag-free feedback
       setOrderSuccess(true);
       clearCart();
+
+      // 2. Try opening the native app directly after UI has updated
+      setTimeout(() => {
+        window.location.href = nativeUrl;
+      }, 100);
     } catch (error) {
       console.error('Error submitting order:', error);
       alert(language === 'ru' 

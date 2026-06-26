@@ -146,6 +146,15 @@ async function fetchProductsInBackground() {
   }
 }
 
+const getImageUrl = (url: string) => {
+  if (!url) return '';
+  if (url.startsWith('/media/')) {
+    const backendDomain = BASE_URL.replace('/api', '');
+    return `${backendDomain}${url}`;
+  }
+  return url;
+};
+
 function parseProductsData(data: any[]): Product[] {
   return data.map((p: any) => {
     const specs: Record<string, string> = {};
@@ -154,6 +163,14 @@ function parseProductsData(data: any[]): Product[] {
         specs[char.name_ru] = char.value_ru;
       });
     }
+
+    const rawImages = p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []);
+    const images = rawImages.map((img: string) => getImageUrl(img));
+    
+    const images_detail = (p.images_detail || []).map((img: any) => ({
+      ...img,
+      url: getImageUrl(img.url)
+    }));
 
     return {
       id: p.id,
@@ -170,8 +187,8 @@ function parseProductsData(data: any[]): Product[] {
       stock: p.stock || 0,
       specs,
       characteristics: p.characteristics || [],
-      images: p.images && Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
-      images_detail: p.images_detail || [],
+      images,
+      images_detail,
       is_featured: p.is_featured ?? false,
       is_new: p.is_new ?? false,
       warranty_months: p.warranty_months || 12,
