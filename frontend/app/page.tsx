@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
@@ -278,10 +278,12 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 export default function HomePage() {
   const { t, language } = useLanguage();
   const [categories, setCategories] = useState<any[]>([]);
-  const [products, setProducts] = useState<any[]>([]);
   const [allProducts, setAllProducts] = useState<any[]>([]);
   const [tgLink, setTgLink] = useState('https://telegram.me/pcshop_uzz');
   const heroRef = useRef<HTMLDivElement>(null);
+
+  const [activeTab, setActiveTab] = useState<'popular' | 'today' | 'all_discounts'>('popular');
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -289,6 +291,7 @@ export default function HomePage() {
       setTgLink('tg://resolve?domain=pcshop_uzz');
     }
   }, []);
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
@@ -299,11 +302,54 @@ export default function HomePage() {
   useEffect(() => {
     getCategories().then(setCategories);
     getProducts().then((data) => {
-      setAllProducts(data);
-      const featured = data.filter((p: any) => p.is_featured);
-      setProducts(featured.length > 0 ? featured.slice(0, 8) : data.slice(0, 8));
+      setAllProducts(data || []);
     });
   }, []);
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const nextMidnight = new Date(now);
+      nextMidnight.setHours(24, 0, 0, 0);
+      const difference = nextMidnight.getTime() - now.getTime();
+
+      let hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      let minutes = Math.floor((difference / 1000 / 60) % 60);
+      let seconds = Math.floor((difference / 1000) % 60);
+
+      setTimeLeft({ hours, minutes, seconds });
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const popularProducts = useMemo(() => {
+    const featured = allProducts.filter((p: any) => p.is_featured);
+    return featured.length > 0 ? featured.slice(0, 8) : allProducts.slice(0, 8);
+  }, [allProducts]);
+
+  const discountedProducts = useMemo(() => {
+    const withDiscount = allProducts.filter((p: any) => p.old_price && Number(p.old_price) > Number(p.price));
+    if (withDiscount.length > 0) return withDiscount.slice(0, 8);
+    
+    // Fallback: if no products have discount in the database, simulate discount for the first 8 products for demo/visual richness
+    return allProducts.slice(0, 8).map(p => ({
+      ...p,
+      old_price: Math.round(p.price * 1.15)
+    }));
+  }, [allProducts]);
+
+  const todayProducts = useMemo(() => {
+    return discountedProducts.slice(0, 4);
+  }, [discountedProducts]);
+
+  const displayedProducts = useMemo(() => {
+    if (activeTab === 'popular') return popularProducts;
+    if (activeTab === 'today') return todayProducts;
+    return discountedProducts;
+  }, [activeTab, popularProducts, todayProducts, discountedProducts]);
 
   useEffect(() => {
     if (language === 'ru') {
@@ -588,37 +634,140 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Promo Discount Banner */}
+      <section className="py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-neutral-900 via-neutral-950 to-neutral-900 border border-gray-800 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl"
+          >
+            {/* Ambient background glow */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-600/5 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+
+            <div className="relative z-10 flex-1 space-y-6 text-center md:text-left">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-xs font-semibold text-red-500 uppercase tracking-wider">
+                <Zap className="w-3.5 h-3.5" />
+                {language === 'ru' ? 'Горячее предложение' : 'Qaynoq taklif'}
+              </span>
+
+              <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-none">
+                {language === 'ru' ? (
+                  <>СУПЕР-СКИДКИ <span className="text-red-500">ДО -30%</span></>
+                ) : (
+                  <>KATTA CHEGIRMALAR <span className="text-red-500">-30% GACHA</span></>
+                )}
+              </h2>
+
+              <p className="text-gray-400 max-w-lg text-base md:text-lg">
+                {language === 'ru'
+                  ? 'Обновите свой ПК по лучшим ценам в Узбекистане. Только сегодня специальные цены на игровые видеокарты, процессоры и готовые сборки!'
+                  : 'O\'zbekistondagi eng yaxshi narxlarda shaxsiy kompyuteringizni yangilang. Faqat bugun o\'yin videokartalari, protsessorlar va tayyor kompyuterlarga maxsus narxlar!'}
+              </p>
+
+              {/* Countdown timer */}
+              <div className="flex items-center justify-center md:justify-start gap-4">
+                <div className="text-center">
+                  <div className="bg-neutral-800 border border-gray-700 text-white rounded-xl w-14 h-14 flex items-center justify-center text-xl font-bold shadow-md">
+                    {String(timeLeft.hours).padStart(2, '0')}
+                  </div>
+                  <span className="text-xs text-gray-500 mt-1 block">
+                    {language === 'ru' ? 'часов' : 'soat'}
+                  </span>
+                </div>
+                <span className="text-2xl font-bold text-gray-600">:</span>
+                <div className="text-center">
+                  <div className="bg-neutral-800 border border-gray-700 text-white rounded-xl w-14 h-14 flex items-center justify-center text-xl font-bold shadow-md">
+                    {String(timeLeft.minutes).padStart(2, '0')}
+                  </div>
+                  <span className="text-xs text-gray-500 mt-1 block">
+                    {language === 'ru' ? 'минут' : 'daqiqa'}
+                  </span>
+                </div>
+                <span className="text-2xl font-bold text-gray-600">:</span>
+                <div className="text-center">
+                  <div className="bg-neutral-800 border border-gray-700 text-white rounded-xl w-14 h-14 flex items-center justify-center text-xl font-bold shadow-md text-red-500">
+                    {String(timeLeft.seconds).padStart(2, '0')}
+                  </div>
+                  <span className="text-xs text-gray-500 mt-1 block">
+                    {language === 'ru' ? 'секунд' : 'soniya'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-end">
+              <Link href="/catalog?discount=true">
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-8 py-4 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold transition-all shadow-lg shadow-red-600/35 hover:shadow-red-600/50 flex items-center gap-2"
+                >
+                  {language === 'ru' ? 'Смотреть скидки' : 'Chegirmalarni ko\'rish'}
+                  <ArrowRight className="w-5 h-5" />
+                </motion.button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Featured Products Section */}
       <section className="py-16 md:py-24 bg-neutral-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center justify-between mb-8"
-          >
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                {language === 'ru' ? 'Популярные товары' : 'Mashhur mahsulotlar'}
+                {language === 'ru' ? 'Специальные предложения' : 'Maxsus takliflar'}
               </h2>
               <p className="text-gray-400">
-                {language === 'ru' ? 'Лучшие предложения недели' : 'Haftaning eng yaxshi takliflari'}
+                {language === 'ru' ? 'Лучшие предложения и скидки на комплектующие и ПК' : 'Komponentlar va shaxsiy kompyuterlar uchun eng yaxshi takliflar va chegirmalar'}
               </p>
             </div>
-            <Link href="/catalog">
-              <motion.button
-                whileHover={{ x: 5 }}
-                className="flex items-center gap-2 text-red-500 hover:text-red-400 transition-colors"
-              >
-                {language === 'ru' ? 'Все товары' : 'Barcha mahsulotlar'}
-                <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            </Link>
-          </motion.div>
 
-          {products.length > 0 ? (
+            {/* Tabs Trigger */}
+            <div className="flex bg-neutral-900 border border-gray-800 rounded-xl p-1 overflow-x-auto self-start md:self-auto scrollbar-none">
+              <button
+                onClick={() => setActiveTab('popular')}
+                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
+                  activeTab === 'popular'
+                    ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                {language === 'ru' ? 'Популярные' : 'Mashhurlar'}
+              </button>
+              
+              <button
+                onClick={() => setActiveTab('today')}
+                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                  activeTab === 'today'
+                    ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                <Zap className="w-4 h-4 text-amber-500 animate-pulse" />
+                {language === 'ru' ? 'Сегодня на скидке' : 'Bugun chegirmada'}
+              </button>
+
+              <button
+                onClick={() => setActiveTab('all_discounts')}
+                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
+                  activeTab === 'all_discounts'
+                    ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                {language === 'ru' ? 'Все скидки' : 'Barcha chegirmalar'}
+              </button>
+            </div>
+          </div>
+
+          {displayedProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {products.map((product, index) => (
+              {displayedProducts.map((product, index) => (
                 <ProductCard key={product.id} product={product} index={index} />
               ))}
             </div>

@@ -70,6 +70,7 @@ export default function CatalogPage() {
   const [minPriceInput, setMinPriceInput] = useState<string>('');
   const [maxPriceInput, setMaxPriceInput] = useState<string>('');
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [onlyDiscounts, setOnlyDiscounts] = useState(searchParams.get('discount') === 'true' || searchParams.get('promo') === 'true');
   const [sortBy, setSortBy] = useState('newest');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -115,6 +116,11 @@ export default function CatalogPage() {
       result = result.filter(p => p.stock > 0);
     }
 
+    // Discounts filter
+    if (onlyDiscounts) {
+      result = result.filter(p => p.old_price && p.old_price > p.price);
+    }
+
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
@@ -147,7 +153,7 @@ export default function CatalogPage() {
     }
 
     return result;
-  }, [products, selectedCategory, selectedBrand, minPriceInput, maxPriceInput, inStockOnly, sortBy, searchQuery, categories, language]);
+  }, [products, selectedCategory, selectedBrand, minPriceInput, maxPriceInput, inStockOnly, onlyDiscounts, sortBy, searchQuery, categories, language]);
 
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -182,6 +188,13 @@ export default function CatalogPage() {
       setSelectedCategory(category);
     } else {
       setSelectedCategory('');
+    }
+
+    const discount = searchParams.get('discount');
+    if (discount === 'true') {
+      setOnlyDiscounts(true);
+    } else {
+      setOnlyDiscounts(false);
     }
   }, [searchParams]);
 
@@ -236,6 +249,7 @@ export default function CatalogPage() {
     setMinPriceInput('');
     setMaxPriceInput('');
     setInStockOnly(false);
+    setOnlyDiscounts(false);
     setSearchQuery('');
     setCurrentPage(1);
     router.push('/catalog', { scroll: false });
@@ -247,9 +261,10 @@ export default function CatalogPage() {
     if (selectedBrand.length > 0) count++;
     if (minPriceInput !== '' || maxPriceInput !== '') count++;
     if (inStockOnly) count++;
+    if (onlyDiscounts) count++;
     if (searchQuery) count++;
     return count;
-  }, [selectedCategory, selectedBrand, minPriceInput, maxPriceInput, inStockOnly, searchQuery]);
+  }, [selectedCategory, selectedBrand, minPriceInput, maxPriceInput, inStockOnly, onlyDiscounts, searchQuery]);
 
   // Product card component
   const ProductCard = ({ product, index }: { product: Product; index: number }) => {
@@ -628,9 +643,10 @@ export default function CatalogPage() {
                   </div>
                 </div>
 
-                {/* Availability */}
-                <div className="pb-4">
-                  <h3 className="text-sm font-semibold text-white mb-3">{t.filter.availability}</h3>
+                {/* Availability & Promos */}
+                <div className="pb-4 border-b border-neutral-800/60 space-y-3">
+                  <h3 className="text-sm font-semibold text-white">{t.filter.availability} / {language === 'ru' ? 'Акции' : 'Aksiyalar'}</h3>
+                  
                   <label className="flex items-center gap-3 cursor-pointer group min-h-[44px] py-1 px-1 rounded-lg hover:bg-white/5 transition-colors">
                     <input
                       type="checkbox"
@@ -643,6 +659,29 @@ export default function CatalogPage() {
                     />
                     <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
                       {t.product.inStock}
+                    </span>
+                  </label>
+
+                  <label className="flex items-center gap-3 cursor-pointer group min-h-[44px] py-1 px-1 rounded-lg hover:bg-white/5 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={onlyDiscounts}
+                      onChange={(e) => {
+                        setOnlyDiscounts(e.target.checked);
+                        setCurrentPage(1);
+                        const params = new URLSearchParams(window.location.search);
+                        if (e.target.checked) {
+                          params.set('discount', 'true');
+                        } else {
+                          params.delete('discount');
+                        }
+                        const newPath = params.toString() ? `/catalog?${params.toString()}` : '/catalog';
+                        router.push(newPath, { scroll: false });
+                      }}
+                      className="w-5 h-5 rounded border-gray-600 bg-neutral-800 text-red-500 focus:ring-red-500 focus:ring-offset-0 cursor-pointer"
+                    />
+                    <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
+                      {language === 'ru' ? 'Только со скидкой' : 'Faqat chegirma bilan'}
                     </span>
                   </label>
                 </div>
