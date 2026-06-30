@@ -55,12 +55,29 @@ class ProductForm(forms.ModelForm):
                 except (ValueError, TypeError):
                     pass
 
+class HasDiscountFilter(admin.SimpleListFilter):
+    title = 'Скидка'
+    parameter_name = 'has_discount'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', 'Со скидкой'),
+            ('no', 'Без скидки'),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            return queryset.filter(old_price__gt=models.F('price'))
+        if self.value() == 'no':
+            return queryset.filter(models.Q(old_price__isnull=True) | models.Q(old_price__lte=models.F('price')))
+        return queryset
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
-    list_display = ('id', 'name_ru', 'price', 'price_usd', 'old_price', 'old_price_usd', 'is_new', 'is_featured', 'stock', 'is_active', 'category')
-    list_editable = ('is_active', 'is_new', 'is_featured')
-    list_filter = ('category', 'is_active', 'is_new', 'is_featured')
+    list_display = ('id', 'name_ru', 'price', 'old_price', 'is_new', 'is_featured', 'stock', 'is_active', 'category')
+    list_editable = ('price', 'old_price', 'is_active', 'is_new', 'is_featured')
+    list_filter = ('category', HasDiscountFilter, 'is_active', 'is_new', 'is_featured')
     search_fields = ('name_ru', 'name_uz')
     prepopulated_fields = {'slug': ('name_ru',)}
     exclude = ('image', 'image_file')
