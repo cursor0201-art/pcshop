@@ -66,7 +66,7 @@ export default function ContactsPage() {
     {
       icon: Clock,
       title: language === 'ru' ? 'Режим работы' : 'Ish vaqti',
-      value: language === 'ru' ? '09:00 - 20:00 (без выходных)' : '09:00 - 20:00 (dam olish kunlarisiz)',
+      value: language === 'ru' ? '11:00 - 21:00 (без выходных)' : '11:00 - 21:00 (dam olish kunlarisiz)',
       link: null,
     },
   ];
