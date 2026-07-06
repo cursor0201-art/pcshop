@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Cpu, Monitor, Headphones, Zap, Truck, Shield, Clock, ChevronRight, Star } from 'lucide-react';
+import { ArrowRight, Cpu, Monitor, Headphones, Zap, Truck, Shield, Clock, ChevronRight, Star, Percent } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart } from '@/hooks/useCart';
 import { getCategories, getProducts } from '@/lib/api';
@@ -164,6 +164,12 @@ function ProductCard({ product, index }: { product: any; index: number }) {
               {product.is_new && (
                 <span className="px-2 py-1 bg-green-500 text-white text-xs font-medium rounded-lg">
                   NEW
+                </span>
+              )}
+              {product.is_weekly_offer && (
+                <span className="px-2 py-1 bg-amber-500 text-neutral-950 text-xs font-bold rounded-lg flex items-center gap-1">
+                  <Zap className="w-3 h-3 fill-current" />
+                  {language === 'ru' ? 'НЕДЕЛЯ' : 'HAFTA'}
                 </span>
               )}
               {discount > 0 && (
@@ -740,12 +746,13 @@ export default function HomePage() {
 
               <button
                 onClick={() => setActiveTab('today_discounts')}
-                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
+                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
                   activeTab === 'today_discounts'
                     ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
+                <Percent className="w-4 h-4 text-red-400" />
                 {language === 'ru' ? 'Скидки на сегодня' : 'Bugungi chegirmalar'}
               </button>
             </div>

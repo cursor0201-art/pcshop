@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Filter, X, ChevronDown, Grid3X3, LayoutList,
-  ArrowUpDown, Search, SlidersHorizontal
+  ArrowUpDown, Search, SlidersHorizontal, Zap
 } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useCart } from '@/hooks/useCart';
@@ -30,6 +30,7 @@ interface Product {
   images: string[];
   is_featured: boolean;
   is_new: boolean;
+  is_weekly_offer: boolean;
   warranty_months: number;
   brand: string;
   created_at: string;
@@ -306,6 +307,12 @@ export default function CatalogPage() {
               {product.is_new && (
                 <span className="px-2 py-1 bg-green-500 text-white text-xs font-medium rounded-lg">
                   NEW
+                </span>
+              )}
+              {product.is_weekly_offer && (
+                <span className="px-2 py-1 bg-amber-500 text-neutral-950 text-xs font-bold rounded-lg flex items-center gap-1">
+                  <Zap className="w-3 h-3 fill-current" />
+                  {language === 'ru' ? 'НЕДЕЛЯ' : 'HAFTA'}
                 </span>
               )}
               {discount > 0 && (
