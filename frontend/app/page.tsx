@@ -282,7 +282,7 @@ export default function HomePage() {
   const [tgLink, setTgLink] = useState('https://telegram.me/pcshop_uzz');
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const [activeTab, setActiveTab] = useState<'popular' | 'today' | 'all_discounts'>('popular');
+  const [activeTab, setActiveTab] = useState<'popular' | 'weekly' | 'all_discounts'>('popular');
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -341,15 +341,18 @@ export default function HomePage() {
     }));
   }, [allProducts]);
 
-  const todayProducts = useMemo(() => {
+  const weeklyProducts = useMemo(() => {
+    const weekly = allProducts.filter((p: any) => p.is_weekly_offer);
+    if (weekly.length > 0) return weekly;
+    // Fallback: show first 4 discounted products if none explicitly marked
     return discountedProducts.slice(0, 4);
-  }, [discountedProducts]);
+  }, [allProducts, discountedProducts]);
 
   const displayedProducts = useMemo(() => {
     if (activeTab === 'popular') return popularProducts;
-    if (activeTab === 'today') return todayProducts;
+    if (activeTab === 'weekly') return weeklyProducts;
     return discountedProducts;
-  }, [activeTab, popularProducts, todayProducts, discountedProducts]);
+  }, [activeTab, popularProducts, weeklyProducts, discountedProducts]);
 
   useEffect(() => {
     if (language === 'ru') {
@@ -650,21 +653,21 @@ export default function HomePage() {
             <div className="relative z-10 flex-1 space-y-6 text-center md:text-left">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-xs font-semibold text-red-500 uppercase tracking-wider">
                 <Zap className="w-3.5 h-3.5" />
-                {language === 'ru' ? 'Горячее предложение' : 'Qaynoq taklif'}
+                {language === 'ru' ? 'Предложение недели' : 'Haftalik taklif'}
               </span>
 
               <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-none">
                 {language === 'ru' ? (
-                  <>СУПЕР-СКИДКИ <span className="text-red-500">ДО -30%</span></>
+                  <>ПРЕДЛОЖЕНИЯ НЕДЕЛИ <span className="text-red-500">С КРУТЫМИ СКИДКАМИ</span></>
                 ) : (
-                  <>KATTA CHEGIRMALAR <span className="text-red-500">-30% GACHA</span></>
+                  <>HAFTALIK TAKLIFLAR <span className="text-red-500">KATTA CHEGIRMALAR BILAN</span></>
                 )}
               </h2>
 
               <p className="text-gray-400 max-w-lg text-base md:text-lg">
                 {language === 'ru'
-                  ? 'Обновите свой ПК по лучшим ценам в Узбекистане. Только сегодня специальные цены на игровые видеокарты, процессоры и готовые сборки!'
-                  : 'O\'zbekistondagi eng yaxshi narxlarda shaxsiy kompyuteringizni yangilang. Faqat bugun o\'yin videokartalari, protsessorlar va tayyor kompyuterlarga maxsus narxlar!'}
+                  ? 'Обновите свой ПК по лучшим ценам в Узбекистане. Специальные цены на этой неделе на игровые видеокарты, процессоры и готовые сборки!'
+                  : 'O\'zbekistondagi eng yaxshi narxlarda shaxsiy kompyuteringizni yangilang. Ushbu haftada o\'yin videokartalari, protsessorlar va tayyor kompyuterlarga maxsus narxlar!'}
               </p>
 
               {/* Countdown timer */}
@@ -741,15 +744,15 @@ export default function HomePage() {
               </button>
               
               <button
-                onClick={() => setActiveTab('today')}
+                onClick={() => setActiveTab('weekly')}
                 className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
-                  activeTab === 'today'
+                  activeTab === 'weekly'
                     ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
                 <Zap className="w-4 h-4 text-amber-500 animate-pulse" />
-                {language === 'ru' ? 'Сегодня на скидке' : 'Bugun chegirmada'}
+                {language === 'ru' ? 'Предложения недели' : 'Haftalik takliflar'}
               </button>
 
               <button

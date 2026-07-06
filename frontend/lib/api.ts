@@ -49,6 +49,7 @@ export interface Product {
   images_detail?: { url: string; color_name: string | null; color_code: string | null }[];
   is_featured: boolean;
   is_new: boolean;
+  is_weekly_offer: boolean;
   warranty_months: number;
   brand: string;
   created_at: string;
@@ -194,6 +195,7 @@ function parseProductsData(data: any[]): Product[] {
       images_detail,
       is_featured: p.is_featured ?? false,
       is_new: p.is_new ?? false,
+      is_weekly_offer: p.is_weekly_offer ?? false,
       warranty_months: p.warranty_months || 12,
       brand: p.brand || '',
       created_at: p.created_at || '',

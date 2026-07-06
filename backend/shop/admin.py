@@ -75,9 +75,9 @@ class HasDiscountFilter(admin.SimpleListFilter):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
-    list_display = ('id', 'name_ru', 'price', 'old_price', 'is_new', 'is_featured', 'stock', 'is_active', 'category')
-    list_editable = ('price', 'old_price', 'is_active', 'is_new', 'is_featured')
-    list_filter = ('category', HasDiscountFilter, 'is_active', 'is_new', 'is_featured')
+    list_display = ('id', 'name_ru', 'price', 'old_price', 'is_new', 'is_featured', 'is_weekly_offer', 'stock', 'is_active', 'category')
+    list_editable = ('price', 'old_price', 'is_active', 'is_new', 'is_featured', 'is_weekly_offer')
+    list_filter = ('category', HasDiscountFilter, 'is_active', 'is_new', 'is_featured', 'is_weekly_offer')
     search_fields = ('name_ru', 'name_uz')
     prepopulated_fields = {'slug': ('name_ru',)}
     exclude = ('image', 'image_file')

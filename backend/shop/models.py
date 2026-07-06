@@ -110,6 +110,7 @@ class Product(models.Model):
     old_price_usd = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, verbose_name="Старая цена (USD)", help_text="Для отображения скидки в $. Рассчитается автоматически при указании UZS.")
     is_new = models.BooleanField(default=False, verbose_name="Новинка (NEW)", help_text="Показывать зеленый бейдж NEW.")
     is_featured = models.BooleanField(default=False, verbose_name="Популярный (на главной)", help_text="Выводить в секции Популярные товары на главной странице.")
+    is_weekly_offer = models.BooleanField(default=False, verbose_name="Предложение недели", help_text="Показывать в специальном блоке предложений недели на главной.")
     
     # Auto SEO fields
     seo_title_ru = models.CharField(max_length=255, blank=True, null=True, verbose_name="SEO Title (RU)")
