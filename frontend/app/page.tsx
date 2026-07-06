@@ -282,7 +282,7 @@ export default function HomePage() {
   const [tgLink, setTgLink] = useState('https://telegram.me/pcshop_uzz');
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const [activeTab, setActiveTab] = useState<'popular' | 'weekly' | 'all_discounts'>('popular');
+  const [activeTab, setActiveTab] = useState<'weekly' | 'today_discounts'>('weekly');
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -325,11 +325,6 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, []);
 
-  const popularProducts = useMemo(() => {
-    const featured = allProducts.filter((p: any) => p.is_featured);
-    return featured.length > 0 ? featured.slice(0, 8) : allProducts.slice(0, 8);
-  }, [allProducts]);
-
   const discountedProducts = useMemo(() => {
     const withDiscount = allProducts.filter((p: any) => p.old_price && Number(p.old_price) > Number(p.price));
     if (withDiscount.length > 0) return withDiscount.slice(0, 8);
@@ -349,10 +344,9 @@ export default function HomePage() {
   }, [allProducts, discountedProducts]);
 
   const displayedProducts = useMemo(() => {
-    if (activeTab === 'popular') return popularProducts;
     if (activeTab === 'weekly') return weeklyProducts;
     return discountedProducts;
-  }, [activeTab, popularProducts, weeklyProducts, discountedProducts]);
+  }, [activeTab, weeklyProducts, discountedProducts]);
 
   useEffect(() => {
     if (language === 'ru') {
@@ -733,17 +727,6 @@ export default function HomePage() {
             {/* Tabs Trigger */}
             <div className="flex bg-neutral-900 border border-gray-800 rounded-xl p-1 overflow-x-auto self-start md:self-auto scrollbar-none">
               <button
-                onClick={() => setActiveTab('popular')}
-                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
-                  activeTab === 'popular'
-                    ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                {language === 'ru' ? 'Популярные' : 'Mashhurlar'}
-              </button>
-              
-              <button
                 onClick={() => setActiveTab('weekly')}
                 className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
                   activeTab === 'weekly'
@@ -756,14 +739,14 @@ export default function HomePage() {
               </button>
 
               <button
-                onClick={() => setActiveTab('all_discounts')}
+                onClick={() => setActiveTab('today_discounts')}
                 className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
-                  activeTab === 'all_discounts'
+                  activeTab === 'today_discounts'
                     ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
-                {language === 'ru' ? 'Все скидки' : 'Barcha chegirmalar'}
+                {language === 'ru' ? 'Скидки на сегодня' : 'Bugungi chegirmalar'}
               </button>
             </div>
           </div>
