@@ -175,6 +175,17 @@ export default function RootLayout({
                   });
                 });
               }
+              // Automatically reload the page when a ChunkLoadError occurs (due to new deployment)
+              window.addEventListener('error', function(e) {
+                if (e.message && (e.message.indexOf('ChunkLoadError') > -1 || e.message.indexOf('Loading chunk') > -1)) {
+                  window.location.reload();
+                }
+              }, true);
+              window.addEventListener('unhandledrejection', function(e) {
+                if (e.reason && (e.reason.name === 'ChunkLoadError' || (e.reason.message && (e.reason.message.indexOf('ChunkLoadError') > -1 || e.reason.message.indexOf('Loading chunk') > -1)))) {
+                  window.location.reload();
+                }
+              });
             `
           }}
         />
