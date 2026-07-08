@@ -593,7 +593,7 @@ export default function HomePage() {
             <StatCounter value={500} label={t.stats.products} />
             <StatCounter value={2000} label={t.stats.customers} />
             <StatCounter value={3500} label={t.stats.orders} />
-            <StatCounter value={5} label={t.stats.years} />
+            <StatCounter value={10} label={t.stats.years} />
           </div>
         </div>
       </section>

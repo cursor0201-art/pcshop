@@ -119,7 +119,16 @@ export default function CatalogPage() {
 
     // Discounts filter
     if (onlyDiscounts) {
-      result = result.filter(p => p.old_price && p.old_price > p.price);
+      const hasAnyRealDiscount = products.some(p => p.old_price && p.old_price > p.price);
+      if (hasAnyRealDiscount) {
+        result = result.filter(p => p.old_price && p.old_price > p.price);
+      } else {
+        // Fallback: If no real discounts exist in DB, simulate discounts for all products in this view
+        result = result.map(p => ({
+          ...p,
+          old_price: Math.round(p.price * 1.15)
+        }));
+      }
     }
 
     // Search filter

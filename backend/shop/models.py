@@ -31,7 +31,7 @@ def upload_file_to_cloud(image_file):
             data={'reqtype': 'fileupload'},
             files={'fileToUpload': (file_name, file_content)},
             headers=headers,
-            timeout=15
+            timeout=5
         )
         if res.status_code == 200 and res.text.strip().startswith('http'):
             return res.text.strip()
@@ -52,7 +52,7 @@ def upload_file_to_cloud(image_file):
             'https://telegra.ph/upload',
             files={'file': (file_name, file_content)},
             headers=headers,
-            timeout=15
+            timeout=5
         )
         if res.status_code == 200:
             data = res.json()
@@ -171,9 +171,11 @@ class Product(models.Model):
             if self.pk:
                 try:
                     orig = Product.objects.get(pk=self.pk)
+                    # If only USD price changed
                     if self.price_usd != orig.price_usd and self.price == orig.price:
                         self.price = (self.price_usd * rate).quantize(decimal.Decimal('1.00'))
-                    elif self.price != orig.price and self.price_usd == orig.price_usd:
+                    # If only UZS price changed, or BOTH changed (UZS is primary source of truth)
+                    else:
                         self.price_usd = (self.price / rate).quantize(decimal.Decimal('1.00'))
                 except Product.DoesNotExist:
                     pass
@@ -189,10 +191,15 @@ class Product(models.Model):
             if self.pk:
                 try:
                     orig = Product.objects.get(pk=self.pk)
+                    # If only USD old price changed
                     if self.old_price_usd != orig.old_price_usd and self.old_price == orig.old_price:
                         self.old_price = (self.old_price_usd * rate).quantize(decimal.Decimal('1.00'))
-                    elif self.old_price != orig.old_price and self.old_price_usd == orig.old_price_usd:
-                        self.old_price_usd = (self.old_price / rate).quantize(decimal.Decimal('1.00'))
+                    # If only UZS old price changed, or BOTH changed (UZS is primary source of truth)
+                    else:
+                        if self.old_price is not None:
+                            self.old_price_usd = (self.old_price / rate).quantize(decimal.Decimal('1.00'))
+                        else:
+                            self.old_price_usd = None
                 except Product.DoesNotExist:
                     pass
             

@@ -99,10 +99,12 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'client_name', 'client_phone', 'total_amount', 'comment', 'status', 'created_at', 'items')
 
     def create(self, validated_data):
+        from django.db import transaction
         items_data = validated_data.pop('items')
-        order = Order.objects.create(**validated_data)
-        for item_data in items_data:
-            OrderItem.objects.create(order=order, **item_data)
+        with transaction.atomic():
+            order = Order.objects.create(**validated_data)
+            for item_data in items_data:
+                OrderItem.objects.create(order=order, **item_data)
         return order
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -111,3 +113,4 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('id', 'user', 'username', 'product', 'rating', 'comment', 'created_at')
+        read_only_fields = ('user',)

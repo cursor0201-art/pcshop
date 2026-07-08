@@ -80,7 +80,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', HasDiscountFilter, 'is_active', 'is_new', 'is_featured', 'is_weekly_offer')
     search_fields = ('name_ru', 'name_uz')
     prepopulated_fields = {'slug': ('name_ru',)}
-    exclude = ('image', 'image_file')
     inlines = [ProductCharacteristicInline, ProductImageInline]
 
 class OrderItemInline(admin.TabularInline):

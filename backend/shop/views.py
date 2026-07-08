@@ -7,32 +7,36 @@ from .models import Category, Product, Order, Review, TelegramSettings
 from .serializers import CategorySerializer, ProductSerializer, OrderSerializer, ReviewSerializer
 
 def send_telegram_notification(order):
-    settings = TelegramSettings.objects.filter(is_active=True).first()
-    if not settings:
-        return
+    import threading
+    def run():
+        settings = TelegramSettings.objects.filter(is_active=True).first()
+        if not settings:
+            return
 
-    text = f"🛒 <b>Новый заказ #{order.id}</b>\n\n"
-    text += f"👤 <b>Клиент:</b> {order.client_name}\n"
-    text += f"📞 <b>Телефон:</b> {order.client_phone}\n\n"
-    text += "🛍 <b>Товары:</b>\n"
-    
-    for idx, item in enumerate(order.items.all(), 1):
-        text += f"{idx}. {item.product.name_ru} x {item.quantity} шт. - {item.price} сум\n"
-    
-    text += f"\n💰 <b>Итого:</b> {order.total_amount} сум\n"
-    if order.comment:
-        text += f"📝 <b>Комментарий:</b> {order.comment}\n"
+        text = f"🛒 <b>Новый заказ #{order.id}</b>\n\n"
+        text += f"👤 <b>Клиент:</b> {order.client_name}\n"
+        text += f"📞 <b>Телефон:</b> {order.client_phone}\n\n"
+        text += "🛍 <b>Товары:</b>\n"
+        
+        for idx, item in enumerate(order.items.all(), 1):
+            text += f"{idx}. {item.product.name_ru} x {item.quantity} шт. - {item.price} сум\n"
+        
+        text += f"\n💰 <b>Итого:</b> {order.total_amount} сум\n"
+        if order.comment:
+            text += f"📝 <b>Комментарий:</b> {order.comment}\n"
 
-    url = f"https://api.telegram.org/bot{settings.bot_token}/sendMessage"
-    payload = {
-        "chat_id": settings.chat_id,
-        "text": text,
-        "parse_mode": "HTML"
-    }
-    try:
-        requests.post(url, json=payload)
-    except Exception as e:
-        print(f"Error sending telegram message: {e}")
+        url = f"https://api.telegram.org/bot{settings.bot_token}/sendMessage"
+        payload = {
+            "chat_id": settings.chat_id,
+            "text": text,
+            "parse_mode": "HTML"
+        }
+        try:
+            requests.post(url, json=payload, timeout=5)
+        except Exception as e:
+            print(f"Error sending telegram message: {e}")
+
+    threading.Thread(target=run).start()
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -95,3 +99,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

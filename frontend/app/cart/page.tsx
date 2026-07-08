@@ -139,11 +139,6 @@ export default function CartPage() {
       // 1. Update UI and clear cart first for instant lag-free feedback
       setOrderSuccess(true);
       clearCart();
-
-      // 2. Try opening the native app directly after UI has updated
-      setTimeout(() => {
-        window.location.href = nativeUrl;
-      }, 100);
     } catch (error) {
       console.error('Error submitting order:', error);
       alert(language === 'ru' 
