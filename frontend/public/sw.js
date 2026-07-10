@@ -65,11 +65,15 @@ self.addEventListener('fetch', (event) => {
         }
 
         return networkResponse;
-      }).catch(() => {
-        // Fallback for offline page requests
-        if (event.request.headers.get('accept').includes('text/html')) {
-          return caches.match('/');
+      }).catch((err) => {
+        const acceptHeader = event.request.headers.get('accept');
+        if (acceptHeader && acceptHeader.includes('text/html')) {
+          return caches.match('/').then((cachedHome) => {
+            if (cachedHome) return cachedHome;
+            throw err;
+          });
         }
+        throw err;
       });
     })
   );
