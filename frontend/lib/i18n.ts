@@ -126,7 +126,7 @@ export const translations = {
       contacts: 'Aloqa',
     },
     hero: {
-      title: 'Oyun PK va qismlarni arzon narxlarda',
+      title: "O’yin uchun pk va extiyot qismlar",
       subtitle: "O'zbekiston bo'ylab yetkazib berish. 1 yil kafolat.",
       catalogBtn: "Katalogga o'tish",
       buildBtn: "PK yig'ish",
